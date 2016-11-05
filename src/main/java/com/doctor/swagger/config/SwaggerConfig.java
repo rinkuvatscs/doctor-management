@@ -56,7 +56,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName(swaggerGroupName)
                 .select()
-                .paths(PathSelectors.regex("/"+swaggerEnableUrl+"/.*"))
+                .paths(PathSelectors.regex("/"+swaggerEnableUrl+".*"))
                 .build()
                 .apiInfo(apiInfo());
     }

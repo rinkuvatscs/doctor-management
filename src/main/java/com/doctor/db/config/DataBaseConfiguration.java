@@ -5,6 +5,8 @@
  */
 package com.doctor.db.config;
 
+import java.sql.SQLException;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +37,7 @@ public class DataBaseConfiguration {
 	private String pawelDbPassword;
 
 	@Bean
-	public DataSource getDataSource() {
+	public DataSource getDataSource() throws SQLException {
 
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName(dbDriver);
@@ -47,11 +49,14 @@ public class DataBaseConfiguration {
 		dataSource.setUrl(pawelDbURL);
 		dataSource.setPassword(pawelDbPassword);
 		}
+		
 		return dataSource;
 	}
 
 	@Bean(name = "jdbcTemplate")
-	public JdbcTemplate getJdbcTemplate() {
+	public JdbcTemplate getJdbcTemplate() throws SQLException {
+		DataSource dataSource=	getDataSource();
+		System.out.println("conn==="+dataSource.getConnection());
 		return new JdbcTemplate(getDataSource());
 	}
 }
