@@ -45,7 +45,7 @@ public class DoctorDaoImpl implements DoctorDao {
 						+ " not registered . Please try again";
 			}
 		} else {
-			response = doctor.getDoctorName() + " already registered";
+			response = "Sorry, "+doctor.getDoctorName() + " already registered";
 		}
 		
 		return response ;
