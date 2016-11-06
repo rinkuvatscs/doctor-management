@@ -52,6 +52,22 @@ public class DoctorDaoImpl implements DoctorDao {
 	}
 
 	@Override
+	public String deleteDoctor(Integer doctorId) {
+		String response = null;
+		List<Object> args = new ArrayList<>();
+		args.add(doctorId);
+		int row = jdbcTemplate.update(QueryConstants.DELETE_DOCTOR,
+				args.toArray());
+		if (row == 1) {
+			response = "Doctor ID "+doctorId + " deleted successfully";
+		} else {
+			response = "Sorry, Doctor ID " + doctorId +" not exists in record. Please check again";
+		}
+		
+		return response ;
+	}
+	
+	@Override
 	public boolean isDoctorExists(Doctor doctor) {
 
 		boolean isExist = false;
@@ -66,5 +82,7 @@ public class DoctorDaoImpl implements DoctorDao {
 		}
 		return isExist;
 	}
+
+	
 
 }

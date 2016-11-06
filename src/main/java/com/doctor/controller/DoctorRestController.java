@@ -1,9 +1,13 @@
 package com.doctor.controller;
 
+import javax.websocket.server.PathParam;
+
 import io.swagger.annotations.Api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,6 +34,15 @@ public class DoctorRestController {
 	}
 	
 	
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/deletedoctor/{doctorId}")
+	@ResponseBody
+	public DoctorResponse deleteDoctor(@PathVariable Integer doctorId) {
+		if (!StringUtils.isEmpty(doctorId) && doctorId.intValue() > 0)
+			return new DoctorResponse(doctorDao.deleteDoctor(doctorId
+					.intValue()));
+		else
+			return new DoctorResponse();
+	}
 	
 	@RequestMapping("/")
 	public String welcome(){

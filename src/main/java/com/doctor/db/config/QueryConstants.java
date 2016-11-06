@@ -7,4 +7,6 @@ public interface QueryConstants {
 	
 	String IS_DOCTOR_EXIST = "SELECT * FROM doctor_detail WHERE doctor_number = ? OR doctor_adhaar_number = ?";
 	
+	String DELETE_DOCTOR = "delete from doctor_detail WHERE doctor_id = ?" ;
+	
 }
