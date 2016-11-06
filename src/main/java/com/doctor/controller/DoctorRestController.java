@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,24 +20,24 @@ import io.swagger.annotations.ApiResponses;
 
 
 @RestController
-@RequestMapping(value = "/doctor-management", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping("/doctor-management")
 @Api(basePath = "/doctor-management", value = "doctormanagement", description = "Operations with Landlords", produces = "application/json")
 public class DoctorRestController {
 
 	@Autowired
 	private DoctorDao doctorDao;
 	
-	@RequestMapping(method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE,value = "/addDoctor")
+	@RequestMapping(
+			produces = MediaType.APPLICATION_JSON_VALUE, value = "/addDoctor")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "add new doctor", notes = "add new doctor")
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = "Fields are with validation errors"),
             @ApiResponse(code = 201, message = "") })	
+	@ResponseBody
 	public String addDoctor(@RequestBody Doctor doctor) {
 
-		String response = doctorDao.addDoctor(doctor);
-	    return response;
+		return doctorDao.addDoctor(doctor);
 	    		
 	}
 	
