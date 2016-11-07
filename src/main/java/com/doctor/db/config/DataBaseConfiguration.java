@@ -31,32 +31,34 @@ public class DataBaseConfiguration {
 	private String dbUsername;
 	@Value("${db.mysql.password:rinku}")
 	private String dbPassword;
-	@Value("${db.pawel.jdbcurl}")
-	private String pawelDbURL;
-	@Value("${db.pawel.password}")
-	private String pawelDbPassword;
+	@Value("${isDatabaseEnable:yes}")
+	private String isDatabaseEnable;
+	
 
 	@Bean
 	public DataSource getDataSource() throws SQLException {
-
+		
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		if("yes".equalsIgnoreCase(isDatabaseEnable)) {
 		dataSource.setDriverClassName(dbDriver);
 		if(!StringUtils.isEmpty(isLocal) && "yes".equalsIgnoreCase(isLocal)){
 			dataSource.setUrl(dbURL);
 			dataSource.setUsername(dbUsername);
 			dataSource.setPassword(dbPassword);
-		} else {
-		dataSource.setUrl(pawelDbURL);
-		dataSource.setPassword(pawelDbPassword);
+		} 
 		}
-		
 		return dataSource;
 	}
 
 	@Bean(name = "jdbcTemplate")
 	public JdbcTemplate getJdbcTemplate() throws SQLException {
+		JdbcTemplate jdbcTemplate = null ;
+		if("yes".equalsIgnoreCase(isDatabaseEnable)){
 		DataSource dataSource=	getDataSource();
 		System.out.println("conn==="+dataSource.getConnection());
 		return new JdbcTemplate(getDataSource());
+		} else {
+			return jdbcTemplate ;
+		}
 	}
 }
