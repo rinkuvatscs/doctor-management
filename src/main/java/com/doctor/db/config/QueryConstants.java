@@ -10,5 +10,10 @@ public interface QueryConstants {
 	String DELETE_DOCTOR = "delete from doctor_detail WHERE doctor_id = ?";
 
 	String GET_DOCTOR_BY_ID = " SELECT * FROM doctor_detail WHERE doctor_id = ? ";
+	
+	String GET_DOCTOR_BY_ADHAR_NUMBER = " SELECT * FROM doctor_detail WHERE doctor_id = ? ";
 
+	String GET_DOCTOR_BY_MOBILE_NUMBER = " SELECT * FROM doctor_detail WHERE doctor_id = ? ";
+	
+	String GET_DOCTOR_BY_NAME = " SELECT * FROM doctor_detail WHERE doctor_name LIKE ? ";
 }

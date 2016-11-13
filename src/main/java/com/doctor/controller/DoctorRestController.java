@@ -1,5 +1,7 @@
 package com.doctor.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
@@ -38,7 +40,7 @@ public class DoctorRestController {
 			return new DoctorResponse();
 	}
 
-	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctor/{doctorId}")
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyid/{doctorId}")
 	@ResponseBody
 	public Doctor getDoctorById(@PathVariable Integer doctorId) {
 
@@ -46,6 +48,38 @@ public class DoctorRestController {
 			return doctorDao.getDoctorById(doctorId.intValue());
 		else
 			return new Doctor();
+	}
+
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyadharNumber/{adharNumber}")
+	@ResponseBody
+	public Doctor getDoctorByAdharNumber(@PathVariable String adharNumber) {
+
+		if (!StringUtils.isEmpty(adharNumber))
+			return doctorDao.getDoctorByAdharNumber(adharNumber);
+		else
+			return new Doctor();
+	}
+
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbymobilenumber/{mobileNumber}")
+	@ResponseBody
+	public Doctor getDoctorByMobileNumber(@PathVariable String mobileNumber) {
+
+		if (!StringUtils.isEmpty(mobileNumber))
+			return doctorDao.getDoctorByMobileNumber(mobileNumber);
+		else
+			return new Doctor();
+	}
+
+	// Location need to be added within this operation.
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyname/{name}")
+	@ResponseBody
+	public List<Doctor> getDoctorByName(@PathVariable String name) {
+
+		// List is returning.
+		if (!StringUtils.isEmpty(name))
+			return doctorDao.getDoctorByName(name);
+		else
+			return null;
 	}
 
 	@RequestMapping("/")

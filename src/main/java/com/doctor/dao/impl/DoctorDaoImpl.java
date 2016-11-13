@@ -91,4 +91,41 @@ public class DoctorDaoImpl implements DoctorDao {
 		return doctor;
 	}
 
+	@Override
+	public Doctor getDoctorByAdharNumber(String adharNumber) {
+
+		Doctor doctor = new Doctor();
+		Object args[] = { adharNumber };
+		List<Doctor> response = jdbcTemplate.query(QueryConstants.GET_DOCTOR_BY_ADHAR_NUMBER, new DoctorExtractor(),
+				args);
+		if (!StringUtils.isEmpty(response) && response.size() > 0) {
+			doctor = response.get(0);
+		}
+		return doctor;
+	}
+
+	@Override
+	public Doctor getDoctorByMobileNumber(String mobileNumber) {
+
+		Doctor doctor = new Doctor();
+		Object args[] = { mobileNumber };
+		List<Doctor> response = jdbcTemplate.query(QueryConstants.GET_DOCTOR_BY_MOBILE_NUMBER, new DoctorExtractor(),
+				args);
+		if (!StringUtils.isEmpty(response) && response.size() > 0) {
+			doctor = response.get(0);
+		}
+		return doctor;
+	}
+
+	@Override
+	public List<Doctor> getDoctorByName(String name) {
+
+		Object args[] = { "%" + name + "%" };
+		List<Doctor> response = jdbcTemplate.query(QueryConstants.GET_DOCTOR_BY_NAME, new DoctorExtractor(), args);
+		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
+			return response;
+		}
+		return null;
+	}
+
 }
