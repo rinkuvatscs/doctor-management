@@ -35,20 +35,18 @@ public class DoctorDaoImpl implements DoctorDao {
 			args.add(doctor.getDoctorOneTimeConsultingFee());
 			args.add(doctor.getDoctorDaystoCheckFreeInConsultingFee());
 			args.add(doctor.getDoctorShopAddress());
-			
-			int row = jdbcTemplate.update(QueryConstants.ADD_DOCTOR,
-					args.toArray());
+
+			int row = jdbcTemplate.update(QueryConstants.ADD_DOCTOR, args.toArray());
 			if (row == 1) {
 				response = doctor.getDoctorName() + " registered successfully";
 			} else {
-				response = "Sorry, " + doctor.getDoctorName()
-						+ " not registered . Please try again";
+				response = "Sorry, " + doctor.getDoctorName() + " not registered . Please try again";
 			}
 		} else {
-			response = "Sorry, "+doctor.getDoctorName() + " already registered";
+			response = "Sorry, " + doctor.getDoctorName() + " already registered";
 		}
-		
-		return response ;
+
+		return response;
 	}
 
 	@Override
@@ -56,17 +54,16 @@ public class DoctorDaoImpl implements DoctorDao {
 		String response = null;
 		List<Object> args = new ArrayList<>();
 		args.add(doctorId);
-		int row = jdbcTemplate.update(QueryConstants.DELETE_DOCTOR,
-				args.toArray());
+		int row = jdbcTemplate.update(QueryConstants.DELETE_DOCTOR, args.toArray());
 		if (row == 1) {
-			response = "Doctor ID "+doctorId + " deleted successfully";
+			response = "Doctor ID " + doctorId + " deleted successfully";
 		} else {
-			response = "Sorry, Doctor ID " + doctorId +" not exists in record. Please check again";
+			response = "Sorry, Doctor ID " + doctorId + " not exists in record. Please check again";
 		}
-		
-		return response ;
+
+		return response;
 	}
-	
+
 	@Override
 	public boolean isDoctorExists(Doctor doctor) {
 
@@ -74,8 +71,7 @@ public class DoctorDaoImpl implements DoctorDao {
 		List<String> args = new ArrayList<>();
 		args.add(doctor.getDoctorNumber());
 		args.add(doctor.getDoctorAdhaarNumber());
-		List<Doctor> response = jdbcTemplate.query(
-				QueryConstants.IS_DOCTOR_EXIST, new DoctorExtractor(),
+		List<Doctor> response = jdbcTemplate.query(QueryConstants.IS_DOCTOR_EXIST, new DoctorExtractor(),
 				args.toArray());
 		if (!StringUtils.isEmpty(response) && response.size() > 0) {
 			isExist = true;
@@ -83,6 +79,16 @@ public class DoctorDaoImpl implements DoctorDao {
 		return isExist;
 	}
 
-	
+	@Override
+	public Doctor getDoctorById(Integer id) {
+
+		Doctor doctor = new Doctor();
+		int args[] = { id };
+		List<Doctor> response = jdbcTemplate.query(QueryConstants.GET_DOCTOR_BY_ID, new DoctorExtractor(), args);
+		if (!StringUtils.isEmpty(response) && response.size() > 0) {
+			doctor = response.get(0);
+		}
+		return doctor;
+	}
 
 }

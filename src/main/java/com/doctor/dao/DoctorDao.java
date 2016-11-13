@@ -9,4 +9,6 @@ public interface DoctorDao {
 	public boolean isDoctorExists(Doctor doctor);
 
 	public String deleteDoctor(Integer doctorId);
+	
+	public Doctor getDoctorById(Integer id);
 }
