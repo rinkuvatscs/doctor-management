@@ -82,6 +82,28 @@ public class DoctorRestController {
 			return null;
 	}
 
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyexpertisted/{expertisted}")
+	@ResponseBody
+	public List<Doctor> getDoctorByExpertisted(@PathVariable String expertisted) {
+
+		// List is returning.
+		if (!StringUtils.isEmpty(expertisted))
+			return doctorDao.getDoctorByName(expertisted);
+		else
+			return null;
+	}
+
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyconsultingfee/{consultingfee}")
+	@ResponseBody
+	public List<Doctor> getDoctorByConsultingFee(@PathVariable String consultingfee) {
+
+		// List is returning.
+		if (!StringUtils.isEmpty(consultingfee))
+			return doctorDao.getDoctorByName(consultingfee);
+		else
+			return null;
+	}
+
 	@RequestMapping("/")
 	public String welcome() {
 		return "Welcome to Doctor Management Tool";

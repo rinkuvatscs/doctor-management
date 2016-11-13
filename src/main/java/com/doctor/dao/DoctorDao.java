@@ -19,4 +19,8 @@ public interface DoctorDao {
 	public Doctor getDoctorByMobileNumber(String mobileNumber);
 	
 	public List<Doctor> getDoctorByName(String name);
+	
+	public List<Doctor> getDoctorByExpertisted(String expertisted);
+	
+	public List<Doctor> getDoctorByConsultingFee(String consultingFee);
 }

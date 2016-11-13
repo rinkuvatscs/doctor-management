@@ -128,4 +128,28 @@ public class DoctorDaoImpl implements DoctorDao {
 		return null;
 	}
 
+	@Override
+	public List<Doctor> getDoctorByExpertisted(String expertisted) {
+
+		Object args[] = { expertisted };
+		List<Doctor> response = jdbcTemplate.query(QueryConstants.GET_DOCTOR_BY_EXPERTISTED, new DoctorExtractor(),
+				args);
+		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
+			return response;
+		}
+		return null;
+	}
+
+	@Override
+	public List<Doctor> getDoctorByConsultingFee(String consultingFee) {
+
+		Object args[] = { consultingFee };
+		List<Doctor> response = jdbcTemplate.query(QueryConstants.GET_DOCTOR_BY_CONSULTING_FEE, new DoctorExtractor(),
+				args);
+		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
+			return response;
+		}
+		return null;
+	}
+
 }
