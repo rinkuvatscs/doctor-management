@@ -83,8 +83,8 @@ public class DoctorDaoImpl implements DoctorDao {
 	public Doctor getDoctorById(Integer id) {
 
 		Doctor doctor = new Doctor();
-		int args[] = { id };
-		List<Doctor> response = jdbcTemplate.query(QueryConstants.GET_DOCTOR_BY_ID, new DoctorExtractor(), args);
+		Object args[] = { id };
+		List<Doctor> response = jdbcTemplate.query(QueryConstants.GET_DOCTOR_BY_ID, args, new DoctorExtractor());
 		if (!StringUtils.isEmpty(response) && response.size() > 0) {
 			doctor = response.get(0);
 		}

@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +25,7 @@ public class DoctorRestController {
 	@Autowired
 	private DoctorDao doctorDao;
 
-	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/adddoctor")
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/adddoctor", method = RequestMethod.POST)
 	@ResponseBody
 	public DoctorResponse addDoctor(@RequestBody Doctor doctor) {
 
@@ -88,7 +89,7 @@ public class DoctorRestController {
 
 		// List is returning.
 		if (!StringUtils.isEmpty(expertisted))
-			return doctorDao.getDoctorByName(expertisted);
+			return doctorDao.getDoctorByExpertisted(expertisted);
 		else
 			return null;
 	}
@@ -99,7 +100,7 @@ public class DoctorRestController {
 
 		// List is returning.
 		if (!StringUtils.isEmpty(consultingfee))
-			return doctorDao.getDoctorByName(consultingfee);
+			return doctorDao.getDoctorByConsultingFee(consultingfee);
 		else
 			return null;
 	}
