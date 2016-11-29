@@ -35,7 +35,7 @@ public class DoctorExtractor implements ResultSetExtractor<List<Doctor>> {
 		    doctor.setDoctorGovtServent(rs.getBoolean("is_doctor_govt_servant"));
 		    doctor.setDoctorHighestDegree(rs.getString("doctor_highestdegree"));
 		    doctor.setDoctorHomeAddress(rs.getString("doctor_homeaddress"));
-		    doctor.setDoctorId(rs.getInt("doctor_id"));
+		    doctor.setDoctorId(rs.getInt("doctorId"));
 		    doctor.setDoctorName(rs.getString("doctor_name"));
 		    doctor.setDoctorNumber(rs.getString("doctor_number"));
 		    doctor.setDoctorOneTimeConsultingFee(rs.getString("onetime_consulting_fee"));

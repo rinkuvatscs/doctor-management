@@ -1,5 +1,6 @@
 package com.doctor.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,39 +37,41 @@ public class DoctorRestController {
 	@ResponseBody
 	public DoctorResponse deleteDoctor(@PathVariable Integer doctorId) {
 		if (!StringUtils.isEmpty(doctorId) && doctorId.intValue() > 0)
-			return new DoctorResponse(doctorDao.deleteDoctor(doctorId.intValue()));
+			return new DoctorResponse(doctorDao.deleteDoctor(doctorId
+					.intValue()));
 		else
 			return new DoctorResponse();
 	}
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyid/{doctorId}")
 	@ResponseBody
-	public Doctor getDoctorById(@PathVariable Integer doctorId) {
+	public List<Doctor> getDoctorById(@PathVariable Integer doctorId) {
 
 		if (!StringUtils.isEmpty(doctorId) && doctorId.intValue() > 0)
 			return doctorDao.getDoctorById(doctorId.intValue());
 		else
-			return new Doctor();
+			return null;
 	}
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyadharNumber/{adharNumber}")
 	@ResponseBody
-	public Doctor getDoctorByAdharNumber(@PathVariable String adharNumber) {
+	public List<Doctor> getDoctorByAdharNumber(@PathVariable String adharNumber) {
 
+		List<Doctor> doctors = new ArrayList<Doctor>();
 		if (!StringUtils.isEmpty(adharNumber))
-			return doctorDao.getDoctorByAdharNumber(adharNumber);
-		else
-			return new Doctor();
+			doctors = doctorDao.getDoctorByAdharNumber(adharNumber);
+		return doctors;
 	}
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbymobilenumber/{mobileNumber}")
 	@ResponseBody
-	public Doctor getDoctorByMobileNumber(@PathVariable String mobileNumber) {
+	public List<Doctor> getDoctorByMobileNumber(
+			@PathVariable String mobileNumber) {
 
+		List<Doctor> doctors = new ArrayList<Doctor>();
 		if (!StringUtils.isEmpty(mobileNumber))
-			return doctorDao.getDoctorByMobileNumber(mobileNumber);
-		else
-			return new Doctor();
+			doctors = doctorDao.getDoctorByMobileNumber(mobileNumber);
+		return doctors;
 	}
 
 	// Location need to be added within this operation.
@@ -76,33 +79,31 @@ public class DoctorRestController {
 	@ResponseBody
 	public List<Doctor> getDoctorByName(@PathVariable String name) {
 
-		// List is returning.
+		List<Doctor> doctors = new ArrayList<Doctor>();
 		if (!StringUtils.isEmpty(name))
-			return doctorDao.getDoctorByName(name);
-		else
-			return null;
+			doctors = doctorDao.getDoctorByName(name);
+		return doctors;
 	}
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyexpertisted/{expertisted}")
 	@ResponseBody
 	public List<Doctor> getDoctorByExpertisted(@PathVariable String expertisted) {
 
-		// List is returning.
+		List<Doctor> doctors = new ArrayList<Doctor>();
 		if (!StringUtils.isEmpty(expertisted))
-			return doctorDao.getDoctorByExpertisted(expertisted);
-		else
-			return null;
+			doctors = doctorDao.getDoctorByExpertisted(expertisted);
+		return doctors;
 	}
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyconsultingfee/{consultingfee}")
 	@ResponseBody
-	public List<Doctor> getDoctorByConsultingFee(@PathVariable String consultingfee) {
+	public List<Doctor> getDoctorByConsultingFee(
+			@PathVariable String consultingfee) {
 
-		// List is returning.
+		List<Doctor> doctors = new ArrayList<Doctor>();
 		if (!StringUtils.isEmpty(consultingfee))
-			return doctorDao.getDoctorByConsultingFee(consultingfee);
-		else
-			return null;
+			doctors = doctorDao.getDoctorByConsultingFee(consultingfee);
+		return doctors;
 	}
 
 	@RequestMapping("/")
