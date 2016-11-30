@@ -106,6 +106,13 @@ public class DoctorRestController {
 		return doctors;
 	}
 
+	@RequestMapping(value = "/updatedoctor", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public DoctorResponse updateDoctor(@RequestBody Doctor doctor) {
+
+		return new DoctorResponse(doctorDao.updateDoctor(doctor));
+	}
+
 	@RequestMapping("/")
 	public String welcome() {
 		return "Welcome to Doctor Management Tool";

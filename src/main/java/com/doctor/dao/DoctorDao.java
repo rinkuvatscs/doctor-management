@@ -23,4 +23,6 @@ public interface DoctorDao {
 	public List<Doctor> getDoctorByExpertisted(String expertisted);
 	
 	public List<Doctor> getDoctorByConsultingFee(String consultingFee);
+	
+	public String updateDoctor(Doctor doctor);
 }
