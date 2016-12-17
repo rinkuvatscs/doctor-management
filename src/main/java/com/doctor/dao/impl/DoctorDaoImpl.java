@@ -36,17 +36,14 @@ public class DoctorDaoImpl implements DoctorDao {
 			args.add(doctor.getDoctorDaystoCheckFreeInConsultingFee());
 			args.add(doctor.getDoctorShopAddress());
 
-			int row = jdbcTemplate.update(QueryConstants.ADD_DOCTOR,
-					args.toArray());
+			int row = jdbcTemplate.update(QueryConstants.ADD_DOCTOR, args.toArray());
 			if (row == 1) {
 				response = doctor.getDoctorName() + " registered successfully";
 			} else {
-				response = "Sorry, " + doctor.getDoctorName()
-						+ " not registered . Please try again";
+				response = "Sorry, " + doctor.getDoctorName() + " not registered . Please try again";
 			}
 		} else {
-			response = "Sorry, " + doctor.getDoctorName()
-					+ " already registered";
+			response = "Sorry, " + doctor.getDoctorName() + " already registered";
 		}
 
 		return response;
@@ -57,13 +54,11 @@ public class DoctorDaoImpl implements DoctorDao {
 		String response = null;
 		List<Object> args = new ArrayList<>();
 		args.add(doctorId);
-		int row = jdbcTemplate.update(QueryConstants.DELETE_DOCTOR,
-				args.toArray());
+		int row = jdbcTemplate.update(QueryConstants.DELETE_DOCTOR, args.toArray());
 		if (row == 1) {
 			response = "Doctor ID " + doctorId + " deleted successfully";
 		} else {
-			response = "Sorry, Doctor ID " + doctorId
-					+ " not exists in record. Please check again";
+			response = "Sorry, Doctor ID " + doctorId + " not exists in record. Please check again";
 		}
 
 		return response;
@@ -76,8 +71,7 @@ public class DoctorDaoImpl implements DoctorDao {
 		List<String> args = new ArrayList<>();
 		args.add(doctor.getDoctorNumber());
 		args.add(doctor.getDoctorAdhaarNumber());
-		List<Doctor> response = jdbcTemplate.query(
-				QueryConstants.IS_DOCTOR_EXIST, new DoctorExtractor(),
+		List<Doctor> response = jdbcTemplate.query(QueryConstants.IS_DOCTOR_EXIST, new DoctorExtractor(),
 				args.toArray());
 		if (!StringUtils.isEmpty(response) && response.size() > 0) {
 			isExist = true;
@@ -88,11 +82,12 @@ public class DoctorDaoImpl implements DoctorDao {
 	@Override
 	public List<Doctor> getDoctorById(Integer id) {
 
-		Object args[] = { id };
-		List<Doctor> response = jdbcTemplate.query(
-				QueryConstants.GET_DOCTOR_BY_ID, args, new DoctorExtractor());
-		if (!StringUtils.isEmpty(response) && response.size() > 0) {
-			return response;
+		if (!StringUtils.isEmpty(id)) {
+			Object args[] = { id };
+			List<Doctor> response = jdbcTemplate.query(QueryConstants.GET_DOCTOR_BY_ID, args, new DoctorExtractor());
+			if (!StringUtils.isEmpty(response) && response.size() > 0) {
+				return response;
+			}
 		}
 		return null;
 	}
@@ -100,12 +95,13 @@ public class DoctorDaoImpl implements DoctorDao {
 	@Override
 	public List<Doctor> getDoctorByAdharNumber(String adharNumber) {
 
-		Object args[] = { adharNumber };
-		List<Doctor> response = jdbcTemplate.query(
-				QueryConstants.GET_DOCTOR_BY_ADHAR_NUMBER,
-				new DoctorExtractor(), args);
-		if (!StringUtils.isEmpty(response) && response.size() > 0) {
-			return response;
+		if (!StringUtils.isEmpty(adharNumber)) {
+			Object args[] = { adharNumber };
+			List<Doctor> response = jdbcTemplate.query(QueryConstants.GET_DOCTOR_BY_ADHAR_NUMBER, new DoctorExtractor(),
+					args);
+			if (!StringUtils.isEmpty(response) && response.size() > 0) {
+				return response;
+			}
 		}
 		return null;
 	}
@@ -113,12 +109,13 @@ public class DoctorDaoImpl implements DoctorDao {
 	@Override
 	public List<Doctor> getDoctorByMobileNumber(String mobileNumber) {
 
-		Object args[] = { mobileNumber };
-		List<Doctor> response = jdbcTemplate.query(
-				QueryConstants.GET_DOCTOR_BY_MOBILE_NUMBER,
-				new DoctorExtractor(), args);
-		if (!StringUtils.isEmpty(response) && response.size() > 0) {
-			return response;
+		if (!StringUtils.isEmpty(mobileNumber)) {
+			Object args[] = { mobileNumber };
+			List<Doctor> response = jdbcTemplate.query(QueryConstants.GET_DOCTOR_BY_MOBILE_NUMBER,
+					new DoctorExtractor(), args);
+			if (!StringUtils.isEmpty(response) && response.size() > 0) {
+				return response;
+			}
 		}
 		return null;
 	}
@@ -126,11 +123,12 @@ public class DoctorDaoImpl implements DoctorDao {
 	@Override
 	public List<Doctor> getDoctorByName(String name) {
 
-		Object args[] = { "%" + name + "%" };
-		List<Doctor> response = jdbcTemplate.query(
-				QueryConstants.GET_DOCTOR_BY_NAME, new DoctorExtractor(), args);
-		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
-			return response;
+		if (!StringUtils.isEmpty(name)) {
+			Object args[] = { "%" + name + "%" };
+			List<Doctor> response = jdbcTemplate.query(QueryConstants.GET_DOCTOR_BY_NAME, new DoctorExtractor(), args);
+			if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
+				return response;
+			}
 		}
 		return null;
 	}
@@ -138,12 +136,13 @@ public class DoctorDaoImpl implements DoctorDao {
 	@Override
 	public List<Doctor> getDoctorByExpertisted(String expertisted) {
 
-		Object args[] = { expertisted };
-		List<Doctor> response = jdbcTemplate.query(
-				QueryConstants.GET_DOCTOR_BY_EXPERTISTED,
-				new DoctorExtractor(), args);
-		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
-			return response;
+		if (!StringUtils.isEmpty(expertisted)) {
+			Object args[] = { expertisted };
+			List<Doctor> response = jdbcTemplate.query(QueryConstants.GET_DOCTOR_BY_EXPERTISTED, new DoctorExtractor(),
+					args);
+			if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
+				return response;
+			}
 		}
 		return null;
 	}
@@ -152,9 +151,8 @@ public class DoctorDaoImpl implements DoctorDao {
 	public List<Doctor> getDoctorByConsultingFee(String consultingFee) {
 
 		Object args[] = { consultingFee };
-		List<Doctor> response = jdbcTemplate.query(
-				QueryConstants.GET_DOCTOR_BY_CONSULTING_FEE,
-				new DoctorExtractor(), args);
+		List<Doctor> response = jdbcTemplate.query(QueryConstants.GET_DOCTOR_BY_CONSULTING_FEE, new DoctorExtractor(),
+				args);
 		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
 			return response;
 		}
@@ -169,7 +167,8 @@ public class DoctorDaoImpl implements DoctorDao {
 		StringBuilder query = new StringBuilder(" UPDATE doctor_detail SET ");
 		if (!StringUtils.isEmpty(doctor)) {
 			if (isDoctorExists(doctor)) {
-				boolean isDoctorName = false, isHomeAddress = false, isHighestDegree = false, isExpertized = false, isGovtServant = false;
+				boolean isDoctorName = false, isHomeAddress = false, isHighestDegree = false, isExpertized = false,
+						isGovtServant = false;
 				boolean IsOneTimeFees = false, isDayFreeInConsultingFee = false, isShopAddress = false;
 				if (null != doctor.getDoctorName()) {
 					query.append(" doctor_name = ? ");
@@ -207,8 +206,7 @@ public class DoctorDaoImpl implements DoctorDao {
 					isExpertized = true;
 				}
 				if (null != doctor.getDoctorGovtServent()) {
-					if (isHomeAddress || isDoctorName || isHighestDegree
-							|| isExpertized) {
+					if (isHomeAddress || isDoctorName || isHighestDegree || isExpertized) {
 						query.append(", is_doctor_govt_servant = ? ");
 						args.add(doctor.getDoctorGovtServent());
 					} else {
@@ -218,8 +216,7 @@ public class DoctorDaoImpl implements DoctorDao {
 					isGovtServant = true;
 				}
 				if (null != doctor.getDoctorOneTimeConsultingFee()) {
-					if (isHomeAddress || isDoctorName || isHighestDegree
-							|| isExpertized || isGovtServant) {
+					if (isHomeAddress || isDoctorName || isHighestDegree || isExpertized || isGovtServant) {
 						query.append(", onetime_consulting_fee = ? ");
 						args.add(doctor.getDoctorOneTimeConsultingFee());
 					} else {
@@ -229,22 +226,19 @@ public class DoctorDaoImpl implements DoctorDao {
 					IsOneTimeFees = true;
 				}
 				if (null != doctor.getDoctorDaystoCheckFreeInConsultingFee()) {
-					if (isHomeAddress || isDoctorName || isHighestDegree
-							|| isExpertized || isGovtServant || IsOneTimeFees) {
+					if (isHomeAddress || isDoctorName || isHighestDegree || isExpertized || isGovtServant
+							|| IsOneTimeFees) {
 						query.append(", doctor_days_to_check_free_in_consulting_fee = ? ");
-						args.add(doctor
-								.getDoctorDaystoCheckFreeInConsultingFee());
+						args.add(doctor.getDoctorDaystoCheckFreeInConsultingFee());
 					} else {
 						query.append(" doctor_days_to_check_free_in_consulting_fee = ? ");
-						args.add(doctor
-								.getDoctorDaystoCheckFreeInConsultingFee());
+						args.add(doctor.getDoctorDaystoCheckFreeInConsultingFee());
 					}
 					isDayFreeInConsultingFee = true;
 				}
 				if (null != doctor.getDoctorShopAddress()) {
-					if (isHomeAddress || isDoctorName || isHighestDegree
-							|| isExpertized || isGovtServant || IsOneTimeFees
-							|| isDayFreeInConsultingFee) {
+					if (isHomeAddress || isDoctorName || isHighestDegree || isExpertized || isGovtServant
+							|| IsOneTimeFees || isDayFreeInConsultingFee) {
 						query.append(", doctor_shop_address = ? ");
 						args.add(doctor.getDoctorShopAddress());
 					} else {
@@ -253,8 +247,7 @@ public class DoctorDaoImpl implements DoctorDao {
 					}
 					isShopAddress = true;
 				}
-				if (isDoctorName || isHomeAddress || isHighestDegree
-						|| isExpertized || isGovtServant || IsOneTimeFees
+				if (isDoctorName || isHomeAddress || isHighestDegree || isExpertized || isGovtServant || IsOneTimeFees
 						|| isDayFreeInConsultingFee || isShopAddress) {
 					if (null != doctor.getDoctorNumber()) {
 						query.append(" WHERE doctor_number = ? ");
@@ -270,8 +263,7 @@ public class DoctorDaoImpl implements DoctorDao {
 					}
 				}
 				if (StringUtils.isEmpty(response)) {
-					int update = jdbcTemplate.update(query.toString(),
-							args.toArray());
+					int update = jdbcTemplate.update(query.toString(), args.toArray());
 					if (update > 0) {
 						response = "Doctor successfully Updated...!!!";
 					} else {
@@ -285,6 +277,47 @@ public class DoctorDaoImpl implements DoctorDao {
 			response = "Doctor details are Empty, provide some details to update....!!!";
 		}
 
+		return response;
+	}
+
+	@Override
+	public String deleteDoctor(Doctor doctor) {
+
+		String response = null;
+		int delete;
+		if (!StringUtils.isEmpty(doctor)) {
+			if (!StringUtils.isEmpty(doctor.getDoctorAdhaarNumber())
+					&& !getDoctorByAdharNumber(doctor.getDoctorAdhaarNumber()).isEmpty()) {
+				Object args[] = { doctor.getDoctorAdhaarNumber() };
+				delete = jdbcTemplate.update("DELETE FROM doctor_detail WHERE doctor_adhaar_number = ? ", args);
+				if (delete > 0) {
+					response = "Doctor with Adhar Number " + doctor.getDoctorAdhaarNumber() + " successfully Deleted";
+				} else {
+					response = "Please try again later";
+				}
+			} else if (!StringUtils.isEmpty(doctor.getDoctorId()) && !getDoctorById(doctor.getDoctorId()).isEmpty()) {
+				Object args[] = { doctor.getDoctorId() };
+				delete = jdbcTemplate.update("DELETE FROM doctor_detail WHERE doctor_id = ? ", args);
+				if (delete > 0) {
+					response = "Doctor with Doctor ID " + doctor.getDoctorId() + " successfully Deleted";
+				} else {
+					response = "Please try again later";
+				}
+			} else if (!StringUtils.isEmpty(doctor.getDoctorNumber())
+					&& !getDoctorByMobileNumber(doctor.getDoctorNumber()).isEmpty()) {
+				Object args[] = { doctor.getDoctorNumber() };
+				delete = jdbcTemplate.update("DELETE FROM doctor_detail WHERE doctor_number = ? ", args);
+				if (delete > 0) {
+					response = "Doctor with Mobile Number " + doctor.getDoctorNumber() + " successfully Deleted";
+				} else {
+					response = "Please try again later";
+				}
+			} else {
+				response = "Please provide either Doctor Id, Doctor Adhar Number or Doctor Mobile Number.";
+			}
+		} else {
+			response = "Please provide details to delete Doctor";
+		}
 		return response;
 	}
 

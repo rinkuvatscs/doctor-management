@@ -11,7 +11,7 @@ public interface QueryConstants {
 
 	String DELETE_DOCTOR = "delete from doctor_detail WHERE doctor_id = ?";
 
-	String GET_DOCTOR_BY_ID = " SELECT * FROM doctor_detail WHERE doctorId = ? ";
+	String GET_DOCTOR_BY_ID = " SELECT * FROM doctor_detail WHERE doctor_id = ? ";
 
 	String GET_DOCTOR_BY_ADHAR_NUMBER = " SELECT * FROM doctor_detail WHERE doctor_adhaar_number = ? ";
 
