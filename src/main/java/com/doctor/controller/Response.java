@@ -1,13 +1,13 @@
 package com.doctor.controller;
 
-public class DoctorResponse {
+public class Response {
 
 	private String message ;
 
-	public DoctorResponse(){
+	public Response(){
 	}
 	
-	public DoctorResponse(String message){
+	public Response(String message){
 		this.message = message ;
 	}
 	

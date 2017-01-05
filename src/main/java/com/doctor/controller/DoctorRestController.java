@@ -1,5 +1,7 @@
 package com.doctor.controller;
 
+import io.swagger.annotations.Api;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.doctor.dao.DoctorDao;
 import com.doctor.types.pojo.Doctor;
 
-import io.swagger.annotations.Api;
-
 @RestController
 @RequestMapping("/doctor-management")
 @Api(basePath = "/doctor-management", value = "doctormanagement", description = "Operations with Landlords", produces = "application/json")
@@ -28,43 +28,42 @@ public class DoctorRestController {
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/adddoctor", method = RequestMethod.POST)
 	@ResponseBody
-	public DoctorResponse addDoctor(@RequestBody Doctor doctor) {
+	public Response addDoctor(@RequestBody Doctor doctor) {
 
-		return new DoctorResponse(doctorDao.addDoctor(doctor));
+		return new Response(doctorDao.addDoctor(doctor));
 	}
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/deletedoctorById/{doctorId}")
 	@ResponseBody
-	public DoctorResponse deleteDoctorById(@PathVariable Integer doctorId) {
-		if (!StringUtils.isEmpty(doctorId)){
+	public Response deleteDoctorById(@PathVariable Integer doctorId) {
+		if (!StringUtils.isEmpty(doctorId)) {
 			Doctor doctor = new Doctor();
 			doctor.setDoctorId(doctorId);
-			return new DoctorResponse(doctorDao.deleteDoctor(doctor));
-		}
-		else
-			return new DoctorResponse();
+			return new Response(doctorDao.deleteDoctor(doctor));
+		} else
+			return new Response();
 	}
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/deletedoctorByAdharNumber/{doctorAdharNumber}")
 	@ResponseBody
-	public DoctorResponse deleteDoctorByAdharNumber(@PathVariable String adharNumber) {
+	public Response deleteDoctorByAdharNumber(@PathVariable String adharNumber) {
 		if (!StringUtils.isEmpty(adharNumber)) {
 			Doctor doctor = new Doctor();
 			doctor.setDoctorAdhaarNumber(adharNumber);
-			return new DoctorResponse(doctorDao.deleteDoctor(doctor));
+			return new Response(doctorDao.deleteDoctor(doctor));
 		} else
-			return new DoctorResponse();
+			return new Response();
 	}
-	
+
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/deletedoctorByMobileNumber/{doctorMobileNumber}")
 	@ResponseBody
-	public DoctorResponse deleteDoctorByMobileNumber(@PathVariable String mobileNumber) {
+	public Response deleteDoctorByMobileNumber(@PathVariable String mobileNumber) {
 		if (!StringUtils.isEmpty(mobileNumber)) {
 			Doctor doctor = new Doctor();
 			doctor.setDoctorNumber(mobileNumber);
-			return new DoctorResponse(doctorDao.deleteDoctor(doctor));
+			return new Response(doctorDao.deleteDoctor(doctor));
 		} else
-			return new DoctorResponse();
+			return new Response();
 	}
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyid/{doctorId}")
@@ -89,7 +88,8 @@ public class DoctorRestController {
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbymobilenumber/{mobileNumber}")
 	@ResponseBody
-	public List<Doctor> getDoctorByMobileNumber(@PathVariable String mobileNumber) {
+	public List<Doctor> getDoctorByMobileNumber(
+			@PathVariable String mobileNumber) {
 
 		List<Doctor> doctors = new ArrayList<Doctor>();
 		if (!StringUtils.isEmpty(mobileNumber))
@@ -120,7 +120,8 @@ public class DoctorRestController {
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyconsultingfee/{consultingfee}")
 	@ResponseBody
-	public List<Doctor> getDoctorByConsultingFee(@PathVariable String consultingfee) {
+	public List<Doctor> getDoctorByConsultingFee(
+			@PathVariable String consultingfee) {
 
 		List<Doctor> doctors = new ArrayList<Doctor>();
 		if (!StringUtils.isEmpty(consultingfee))
@@ -130,9 +131,9 @@ public class DoctorRestController {
 
 	@RequestMapping(value = "/updatedoctor", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public DoctorResponse updateDoctor(@RequestBody Doctor doctor) {
+	public Response updateDoctor(@RequestBody Doctor doctor) {
 
-		return new DoctorResponse(doctorDao.updateDoctor(doctor));
+		return new Response(doctorDao.updateDoctor(doctor));
 	}
 
 	@RequestMapping("/")

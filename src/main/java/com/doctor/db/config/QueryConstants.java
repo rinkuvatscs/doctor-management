@@ -23,4 +23,8 @@ public interface QueryConstants {
 
 	String GET_DOCTOR_BY_CONSULTING_FEE = " SELECT * FROM doctor_detail WHERE onetime_consulting_fee = ? ";
 
+	// -----------------------------------------------------------------------------------------------------------
+
+	// TODO Need to add customerAdd query
+	String ADD_CUSTOMER = "";
 }
