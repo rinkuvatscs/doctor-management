@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
 import com.doctor.dao.CustomerDao;
 import com.doctor.types.pojo.Customer;
 
+@Component
 public class CustomerDaoImpl implements CustomerDao {
 
 	@Autowired

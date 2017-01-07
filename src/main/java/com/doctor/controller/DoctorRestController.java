@@ -26,7 +26,7 @@ public class DoctorRestController {
 	@Autowired
 	private DoctorDao doctorDao;
 
-	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/adddoctor", method = RequestMethod.POST)
+	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/adddoctor", method = RequestMethod.POST)
 	@ResponseBody
 	public Response addDoctor(@RequestBody Doctor doctor) {
 
