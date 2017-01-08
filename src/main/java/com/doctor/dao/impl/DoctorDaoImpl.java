@@ -313,7 +313,7 @@ public class DoctorDaoImpl implements DoctorDao {
 					response = "Please try again later";
 				}
 			} else {
-				response = "Please provide either Doctor Id, Doctor Adhar Number or Doctor Mobile Number.";
+				response = "Please provide valid Doctor Id or Doctor Adhar Number or Doctor Mobile Number.";
 			}
 		} else {
 			response = "Please provide details to delete Doctor";
