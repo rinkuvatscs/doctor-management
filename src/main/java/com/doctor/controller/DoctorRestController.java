@@ -46,10 +46,10 @@ public class DoctorRestController {
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/deletedoctorByAdharNumber/{doctorAdharNumber}")
 	@ResponseBody
-	public Response deleteDoctorByAdharNumber(@PathVariable String adharNumber) {
-		if (!StringUtils.isEmpty(adharNumber)) {
+	public Response deleteDoctorByAdharNumber(@PathVariable String doctorAdharNumber) {
+		if (!StringUtils.isEmpty(doctorAdharNumber)) {
 			Doctor doctor = new Doctor();
-			doctor.setDoctorAdhaarNumber(adharNumber);
+			doctor.setDoctorAdhaarNumber(doctorAdharNumber);
 			return new Response(doctorDao.deleteDoctor(doctor));
 		} else
 			return new Response();
@@ -57,10 +57,10 @@ public class DoctorRestController {
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/deletedoctorByMobileNumber/{doctorMobileNumber}")
 	@ResponseBody
-	public Response deleteDoctorByMobileNumber(@PathVariable String mobileNumber) {
-		if (!StringUtils.isEmpty(mobileNumber)) {
+	public Response deleteDoctorByMobileNumber(@PathVariable String doctorMobileNumber) {
+		if (!StringUtils.isEmpty(doctorMobileNumber)) {
 			Doctor doctor = new Doctor();
-			doctor.setDoctorNumber(mobileNumber);
+			doctor.setDoctorNumber(doctorMobileNumber);
 			return new Response(doctorDao.deleteDoctor(doctor));
 		} else
 			return new Response();
