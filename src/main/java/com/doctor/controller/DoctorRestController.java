@@ -55,7 +55,7 @@ public class DoctorRestController {
 			return new Response();
 	}
 	
-	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/deletedoctor", method = RequestMethod.DELETE)
+	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/deletedoctor", method = RequestMethod.POST)
 	@ResponseBody
 	public Response deleteDoctor(@RequestBody Doctor doctor) {
 
