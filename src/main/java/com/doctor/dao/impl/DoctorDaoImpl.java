@@ -63,7 +63,6 @@ public class DoctorDaoImpl implements DoctorDao {
 
 		return response;
 	}
-
 	@Override
 	public boolean isDoctorExists(Doctor doctor) {
 
@@ -80,44 +79,44 @@ public class DoctorDaoImpl implements DoctorDao {
 	}
 
 	@Override
-	public List<Doctor> getDoctorById(Integer id) {
+	public Doctor getDoctorById(Integer id) {
 
 		if (!StringUtils.isEmpty(id)) {
 			Object args[] = { id };
 			List<Doctor> response = jdbcTemplate.query(QueryConstants.GET_DOCTOR_BY_ID, args, new DoctorExtractor());
 			if (!StringUtils.isEmpty(response) && response.size() > 0) {
-				return response;
+				return response.get(0);
 			}
 		}
-		return null;
+		return new Doctor();
 	}
 
 	@Override
-	public List<Doctor> getDoctorByAdharNumber(String adharNumber) {
+	public Doctor getDoctorByAdharNumber(String adharNumber) {
 
 		if (!StringUtils.isEmpty(adharNumber)) {
 			Object args[] = { adharNumber };
 			List<Doctor> response = jdbcTemplate.query(QueryConstants.GET_DOCTOR_BY_ADHAR_NUMBER, new DoctorExtractor(),
 					args);
 			if (!StringUtils.isEmpty(response) && response.size() > 0) {
-				return response;
+				return response.get(0);
 			}
 		}
-		return null;
+		return new Doctor();
 	}
 
 	@Override
-	public List<Doctor> getDoctorByMobileNumber(String mobileNumber) {
+	public Doctor getDoctorByMobileNumber(String mobileNumber) {
 
 		if (!StringUtils.isEmpty(mobileNumber)) {
 			Object args[] = { mobileNumber };
 			List<Doctor> response = jdbcTemplate.query(QueryConstants.GET_DOCTOR_BY_MOBILE_NUMBER,
 					new DoctorExtractor(), args);
 			if (!StringUtils.isEmpty(response) && response.size() > 0) {
-				return response;
+				return response.get(0);
 			}
 		}
-		return null;
+		return new Doctor();
 	}
 
 	@Override
@@ -130,7 +129,7 @@ public class DoctorDaoImpl implements DoctorDao {
 				return response;
 			}
 		}
-		return null;
+		return new ArrayList<Doctor>();
 	}
 
 	@Override
@@ -144,7 +143,7 @@ public class DoctorDaoImpl implements DoctorDao {
 				return response;
 			}
 		}
-		return null;
+		return new ArrayList<Doctor>();
 	}
 
 	@Override
@@ -156,7 +155,7 @@ public class DoctorDaoImpl implements DoctorDao {
 		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
 			return response;
 		}
-		return null;
+		return new ArrayList<Doctor>();
 	}
 
 	@Override
@@ -287,7 +286,7 @@ public class DoctorDaoImpl implements DoctorDao {
 		int delete;
 		if (!StringUtils.isEmpty(doctor)) {
 			if (!StringUtils.isEmpty(doctor.getDoctorAdhaarNumber())
-					&& !getDoctorByAdharNumber(doctor.getDoctorAdhaarNumber()).isEmpty()) {
+					&& getDoctorByAdharNumber(doctor.getDoctorAdhaarNumber())!=null) {
 				Object args[] = { doctor.getDoctorAdhaarNumber() };
 				delete = jdbcTemplate.update("DELETE FROM doctor_detail WHERE doctor_adhaar_number = ? ", args);
 				if (delete > 0) {
@@ -295,7 +294,7 @@ public class DoctorDaoImpl implements DoctorDao {
 				} else {
 					response = "Please try again later";
 				}
-			} else if (!StringUtils.isEmpty(doctor.getDoctorId()) && !getDoctorById(doctor.getDoctorId()).isEmpty()) {
+			} else if (!StringUtils.isEmpty(doctor.getDoctorId()) && getDoctorById(doctor.getDoctorId())!=null) {
 				Object args[] = { doctor.getDoctorId() };
 				delete = jdbcTemplate.update("DELETE FROM doctor_detail WHERE doctor_id = ? ", args);
 				if (delete > 0) {
@@ -304,7 +303,7 @@ public class DoctorDaoImpl implements DoctorDao {
 					response = "Please try again later";
 				}
 			} else if (!StringUtils.isEmpty(doctor.getDoctorNumber())
-					&& !getDoctorByMobileNumber(doctor.getDoctorNumber()).isEmpty()) {
+					&& getDoctorByMobileNumber(doctor.getDoctorNumber())!=null) {
 				Object args[] = { doctor.getDoctorNumber() };
 				delete = jdbcTemplate.update("DELETE FROM doctor_detail WHERE doctor_number = ? ", args);
 				if (delete > 0) {
