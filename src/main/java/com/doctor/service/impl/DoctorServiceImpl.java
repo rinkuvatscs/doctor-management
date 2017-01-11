@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.doctor.dao.DoctorDao;
 import com.doctor.service.DoctorService;
-import com.doctor.types.pojo.Doctor;
+import com.doctor.types.entity.Doctor;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {

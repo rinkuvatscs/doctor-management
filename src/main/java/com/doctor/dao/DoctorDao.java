@@ -2,7 +2,7 @@ package com.doctor.dao;
 
 import java.util.List;
 
-import com.doctor.types.pojo.Doctor;
+import com.doctor.types.entity.Doctor;
 
 public interface DoctorDao {
 

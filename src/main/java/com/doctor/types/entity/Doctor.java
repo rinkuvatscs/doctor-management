@@ -1,4 +1,4 @@
-package com.doctor.types.pojo;
+package com.doctor.types.entity;
 
 public class Doctor {
 
