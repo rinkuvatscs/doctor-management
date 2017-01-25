@@ -1,4 +1,4 @@
-package com.doctor.controller;
+package com.doctor.response;
 
 public class Response {
 
