@@ -16,7 +16,7 @@ apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
 apply plugin: 'maven'
 jar {
-	baseName = 'com.doctor'
+	baseName = 'doctor-management'
 	version = '0.0.1-SNAPSHOT'
 }
 sourceCompatibility = 1.8
