@@ -99,7 +99,7 @@ public class DoctorController {
 					"Doctor Mobile Number should not be blank");
 	}
 
-	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyid/{doctorId}")
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyid/{doctorId}")
 	@ResponseBody
 	public Doctor getDoctorById(@PathVariable Integer doctorId) {
 
@@ -110,7 +110,7 @@ public class DoctorController {
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyadharNumber/{adharNumber}")
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyadharNumber/{adharNumber}")
 	@ResponseBody
 	public Doctor getDoctorByAdharNumber(@PathVariable String adharNumber) {
 		if (!StringUtils.isEmpty(adharNumber)) {
@@ -122,7 +122,7 @@ public class DoctorController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbymobilenumber/{mobileNumber}")
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbymobilenumber/{mobileNumber}")
 	@ResponseBody
 	public Doctor getDoctorByMobileNumber(@PathVariable String mobileNumber) {
 
@@ -135,7 +135,7 @@ public class DoctorController {
 	}
 
 	// Location need to be added within this operation.
-	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyname/{name}")
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyname/{name}")
 	@ResponseBody
 	public List<Doctor> getDoctorByName(@PathVariable String name) {
 
@@ -146,7 +146,7 @@ public class DoctorController {
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyexpertisted/{expertisted}")
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyexpertisted/{expertisted}")
 	@ResponseBody
 	public List<Doctor> getDoctorByExpertisted(@PathVariable String expertisted) {
 
@@ -158,7 +158,7 @@ public class DoctorController {
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyconsultingfee/{consultingfee}")
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyconsultingfee/{consultingfee}")
 	@ResponseBody
 	public List<Doctor> getDoctorByConsultingFee(
 			@PathVariable String consultingfee) {
