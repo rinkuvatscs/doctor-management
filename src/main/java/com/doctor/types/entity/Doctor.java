@@ -2,19 +2,17 @@ package com.doctor.types.entity;
 
 public class Doctor {
 
-	// doctor_id,doctor_name,doctor_number,doctor_home_address,doctor_adhar_number,doctor_highestdegree,
-	// doctor_expertizeed,is_doctor_govt_servent,doctor_one_time_consulting_fee,doctor_days_to_check_free_in_consuting_fee,doctor_shop_address
 	private Integer doctorId;
-	private String doctorName;
-	private String doctorNumber;
-	private String doctorHomeAddress;
-	private String doctorAdhaarNumber;
-	private String doctorHighestDegree;
-	private String doctorExpertized;
-	private Boolean doctorGovtServent;
-	private String doctorOneTimeConsultingFee;
-	private Integer doctorDaystoCheckFreeInConsultingFee;
-	private String doctorShopAddress;
+	private String name;
+	private String mobile;
+	private String homeAddress;
+	private String aadhaarNumber;
+	private String highestDegree;
+	private String expertized;
+	private Boolean isGovernmentServent;
+	private String oneTimeFee;
+	private Integer daysCheckFree;
+	private String clinicAddress;
 
 	public Integer getDoctorId() {
 		return doctorId;
@@ -24,85 +22,95 @@ public class Doctor {
 		this.doctorId = doctorId;
 	}
 
-	public String getDoctorNumber() {
-		return doctorNumber;
+	public String getName() {
+		return name;
 	}
 
-	public void setDoctorNumber(String doctorNumber) {
-		this.doctorNumber = doctorNumber;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getDoctorName() {
-		return doctorName;
+	public String getMobile() {
+		return mobile;
 	}
 
-	public void setDoctorName(String doctorName) {
-		this.doctorName = doctorName;
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
-	public String getDoctorHomeAddress() {
-		return doctorHomeAddress;
+	public String getHomeAddress() {
+		return homeAddress;
 	}
 
-	public void setDoctorHomeAddress(String doctorHomeAddress) {
-		this.doctorHomeAddress = doctorHomeAddress;
+	public void setHomeAddress(String homeAddress) {
+		this.homeAddress = homeAddress;
 	}
 
-	public String getDoctorAdhaarNumber() {
-		return doctorAdhaarNumber;
+	public String getAadhaarNumber() {
+		return aadhaarNumber;
 	}
 
-	public void setDoctorAdhaarNumber(String doctorAdhaarNumber) {
-		this.doctorAdhaarNumber = doctorAdhaarNumber;
+	public void setAadhaarNumber(String aadhaarNumber) {
+		this.aadhaarNumber = aadhaarNumber;
 	}
 
-	public String getDoctorHighestDegree() {
-		return doctorHighestDegree;
+	public String getHighestDegree() {
+		return highestDegree;
 	}
 
-	public void setDoctorHighestDegree(String doctorHighestDegree) {
-		this.doctorHighestDegree = doctorHighestDegree;
+	public void setHighestDegree(String highestDegree) {
+		this.highestDegree = highestDegree;
 	}
 
-	public String getDoctorExpertized() {
-		return doctorExpertized;
+	public String getExpertized() {
+		return expertized;
 	}
 
-	public void setDoctorExpertized(String doctorExpertized) {
-		this.doctorExpertized = doctorExpertized;
+	public void setExpertized(String expertized) {
+		this.expertized = expertized;
 	}
 
-	public Boolean getDoctorGovtServent() {
-		return doctorGovtServent;
+	public Boolean getIsGovernmentServent() {
+		return isGovernmentServent;
 	}
 
-	public void setDoctorGovtServent(Boolean doctorGovtServent) {
-		this.doctorGovtServent = doctorGovtServent;
+	public void setIsGovernmentServent(Boolean isGovernmentServent) {
+		this.isGovernmentServent = isGovernmentServent;
 	}
 
-	public String getDoctorOneTimeConsultingFee() {
-		return doctorOneTimeConsultingFee;
+	public String getOneTimeFee() {
+		return oneTimeFee;
 	}
 
-	public void setDoctorOneTimeConsultingFee(String doctorOneTimeConsultingFee) {
-		this.doctorOneTimeConsultingFee = doctorOneTimeConsultingFee;
+	public void setOneTimeFee(String oneTimeFee) {
+		this.oneTimeFee = oneTimeFee;
 	}
 
-	public Integer getDoctorDaystoCheckFreeInConsultingFee() {
-		return doctorDaystoCheckFreeInConsultingFee;
+	public Integer getDaysCheckFree() {
+		return daysCheckFree;
 	}
 
-	public void setDoctorDaystoCheckFreeInConsultingFee(
-			Integer doctorDaystoCheckFreeInConsultingFee) {
-		this.doctorDaystoCheckFreeInConsultingFee = doctorDaystoCheckFreeInConsultingFee;
+	public void setDaysCheckFree(Integer daysCheckFree) {
+		this.daysCheckFree = daysCheckFree;
 	}
 
-	public String getDoctorShopAddress() {
-		return doctorShopAddress;
+	public String getClinicAddress() {
+		return clinicAddress;
 	}
 
-	public void setDoctorShopAddress(String doctorShopAddress) {
-		this.doctorShopAddress = doctorShopAddress;
+	public void setClinicAddress(String clinicAddress) {
+		this.clinicAddress = clinicAddress;
+	}
+
+	@Override
+	public String toString() {
+		return "Doctor [doctorId=" + doctorId + ", name=" + name + ", mobile="
+				+ mobile + ", homeAddress=" + homeAddress + ", aadhaarNumber="
+				+ aadhaarNumber + ", highestDegree=" + highestDegree
+				+ ", expertized=" + expertized + ", isGovernmentServent="
+				+ isGovernmentServent + ", oneTimeFee=" + oneTimeFee
+				+ ", daysCheckFree=" + daysCheckFree + ", clinicAddress="
+				+ clinicAddress + "]";
 	}
 
 }

@@ -1,6 +1,10 @@
 package com.doctor.controller;
 
-import java.util.ArrayList;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +24,15 @@ import com.doctor.response.Response;
 import com.doctor.service.DoctorService;
 import com.doctor.types.entity.Doctor;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-
 @RestController
-@RequestMapping("/doctor-management")
-@Api(basePath = "/doctor-management", value = "doctormanagement", description = "Operations with Landlords", produces = "application/json")
+@RequestMapping("/doctor")
+@Api(basePath = "/doctor", value = "doctor", description = "Operations with Landlords", produces = "application/json")
 public class DoctorController {
 
 	@Autowired
 	private DoctorService doctorService;
 
-	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/adddoctor", method = RequestMethod.POST)
+	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "add new doctor", notes = "add new doctor")
 	@ApiResponses(value = {
@@ -42,8 +41,8 @@ public class DoctorController {
 	public Response addDoctor(@RequestBody Doctor doctor) {
 
 		if (!StringUtils.isEmpty(doctor)
-				&& !StringUtils.isEmpty(doctor.getDoctorAdhaarNumber())
-				&& !StringUtils.isEmpty(doctor.getDoctorNumber())) {
+				&& !StringUtils.isEmpty(doctor.getAadhaarNumber())
+				&& !StringUtils.isEmpty(doctor.getMobile())) {
 			return new Response(doctorService.addDoctor(doctor));
 		} else {
 			throw new BadRequestException(
@@ -72,7 +71,7 @@ public class DoctorController {
 			@PathVariable String doctorAdharNumber) {
 		if (!StringUtils.isEmpty(doctorAdharNumber)) {
 			Doctor doctor = new Doctor();
-			doctor.setDoctorAdhaarNumber(doctorAdharNumber);
+			doctor.setAadhaarNumber(doctorAdharNumber);
 			return new Response(doctorService.deleteDoctor(doctor));
 		} else
 			throw new BadRequestException(
@@ -92,7 +91,7 @@ public class DoctorController {
 			@PathVariable String doctorMobileNumber) {
 		if (!StringUtils.isEmpty(doctorMobileNumber)) {
 			Doctor doctor = new Doctor();
-			doctor.setDoctorNumber(doctorMobileNumber);
+			doctor.setMobile(doctorMobileNumber);
 			return new Response(doctorService.deleteDoctor(doctor));
 		} else
 			throw new BadRequestException(
