@@ -26,27 +26,27 @@ public class DoctorDaoImpl implements DoctorDao {
 		if (!isDoctorExists(doctor)) {
 
 			List<Object> args = new ArrayList<>();
-			args.add(doctor.getDoctorName());
-			args.add(doctor.getDoctorNumber());
-			args.add(doctor.getDoctorHomeAddress());
-			args.add(doctor.getDoctorAdhaarNumber());
-			args.add(doctor.getDoctorHighestDegree());
-			args.add(doctor.getDoctorExpertized());
-			args.add(doctor.getDoctorGovtServent());
-			args.add(doctor.getDoctorOneTimeConsultingFee());
-			args.add(doctor.getDoctorDaystoCheckFreeInConsultingFee());
-			args.add(doctor.getDoctorShopAddress());
+			args.add(doctor.getName());
+			args.add(doctor.getMobile());
+			args.add(doctor.getHomeAddress());
+			args.add(doctor.getAadhaarNumber());
+			args.add(doctor.getHighestDegree());
+			args.add(doctor.getExpertized());
+			args.add(doctor.getIsGovernmentServent());
+			args.add(doctor.getOneTimeFee());
+			args.add(doctor.getDaysCheckFree());
+			args.add(doctor.getClinicAddress());
 
 			int row = jdbcTemplate.update(QueryConstants.ADD_DOCTOR,
 					args.toArray());
 			if (row == 1) {
-				response = doctor.getDoctorName() + " registered successfully";
+				response = doctor.getName() + " registered successfully";
 			} else {
-				response = "Sorry, " + doctor.getDoctorName()
+				response = "Sorry, " + doctor.getName()
 						+ " not registered . Please try again";
 			}
 		} else {
-			response = "Sorry, " + doctor.getDoctorName()
+			response = "Sorry, " + doctor.getName()
 					+ " already registered";
 		}
 
@@ -184,52 +184,53 @@ public class DoctorDaoImpl implements DoctorDao {
 			if (isDoctorExists(doctor)) {
 				boolean isDoctorName = false, isHomeAddress = false, isHighestDegree = false, isExpertized = false, isGovtServant = false;
 				boolean IsOneTimeFees = false, isDayFreeInConsultingFee = false, isShopAddress = false;
-				if (null != doctor.getDoctorName()) {
+				if (null != doctor.getName()) {
 					query.append(" doctor_name = ? ");
-					args.add(doctor.getDoctorName());
+					args.add(doctor.getName());
 					isDoctorName = true;
 				}
-				if (null != doctor.getDoctorHomeAddress()) {
+				if (null != doctor.getHomeAddress()) {
 					if (isDoctorName) {
 						query.append(" , doctor_homeaddress = ? ");
-						args.add(doctor.getDoctorHomeAddress());
+						args.add(doctor.getHomeAddress());
 					} else {
 						query.append(" doctor_homeaddress = ? ");
-						args.add(doctor.getDoctorHomeAddress());
+						args.add(doctor.getHomeAddress());
 					}
 					isHomeAddress = true;
 				}
-				if (null != doctor.getDoctorHighestDegree()) {
+				if (null != doctor.getHighestDegree()) {
 					if (isHomeAddress || isDoctorName) {
 						query.append(", doctor_highestdegree = ? ");
-						args.add(doctor.getDoctorHighestDegree());
+						args.add(doctor.getHighestDegree());
 					} else {
 						query.append(" doctor_highestdegree = ? ");
-						args.add(doctor.getDoctorHighestDegree());
+						args.add(doctor.getHighestDegree());
 					}
 					isHighestDegree = true;
 				}
-				if (null != doctor.getDoctorExpertized()) {
+				if (null != doctor.getExpertized()) {
 					if (isHomeAddress || isDoctorName || isHighestDegree) {
 						query.append(", doctor_expertized = ? ");
-						args.add(doctor.getDoctorExpertized());
+						args.add(doctor.getExpertized());
 					} else {
 						query.append(" doctor_expertized = ? ");
-						args.add(doctor.getDoctorExpertized());
+						args.add(doctor.getExpertized());
 					}
 					isExpertized = true;
 				}
-				if (null != doctor.getDoctorGovtServent()) {
+				if (null != doctor.getIsGovernmentServent()) {
 					if (isHomeAddress || isDoctorName || isHighestDegree
 							|| isExpertized) {
 						query.append(", is_doctor_govt_servant = ? ");
-						args.add(doctor.getDoctorGovtServent());
+						args.add(doctor.getIsGovernmentServent());
 					} else {
 						query.append(" is_doctor_govt_servant = ? ");
-						args.add(doctor.getDoctorGovtServent());
+						args.add(doctor.getIsGovernmentServent());
 					}
 					isGovtServant = true;
 				}
+				//TODO will work 
 				if (null != doctor.getDoctorOneTimeConsultingFee()) {
 					if (isHomeAddress || isDoctorName || isHighestDegree
 							|| isExpertized || isGovtServant) {
