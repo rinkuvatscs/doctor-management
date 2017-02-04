@@ -18,6 +18,8 @@ public interface DoctorService {
 
 	public List<Doctor> getDoctorByName(String name);
 
+	public Doctor getDoctorByEmail(String email);
+
 	public List<Doctor> getDoctorByExpertisted(String expertisted);
 
 	public List<Doctor> getDoctorByConsultingFee(String consultingFee);

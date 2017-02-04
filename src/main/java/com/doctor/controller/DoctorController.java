@@ -121,6 +121,18 @@ public class DoctorController {
 
 	}
 
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbyemail/{email:.+}")
+	@ResponseBody
+	public Doctor getDoctorByEmail(@PathVariable String email) {
+		if (!StringUtils.isEmpty(email)) {
+			return doctorService.getDoctorByEmail(email);
+		} else {
+			throw new BadRequestException(
+					"Email should not be blank");
+		}
+
+	}
+
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getdoctorbymobilenumber/{mobileNumber}")
 	@ResponseBody
 	public Doctor getDoctorByMobileNumber(@PathVariable String mobileNumber) {

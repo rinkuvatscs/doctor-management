@@ -13,6 +13,34 @@ public class Doctor {
 	private String oneTimeFee;
 	private Integer daysCheckFree;
 	private String clinicAddress;
+	private String email;
+	private String gender ;
+	private int age;
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
 
 	public Integer getDoctorId() {
 		return doctorId;

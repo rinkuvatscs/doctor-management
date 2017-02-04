@@ -1,6 +1,5 @@
 package com.doctor.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,12 @@ public class DoctorServiceImpl implements DoctorService {
 	@Override
 	public Doctor getDoctorById(Integer id) {
 		return doctorDao.getDoctorById(id);
+
+	}
+
+	@Override
+	public Doctor getDoctorByEmail(String email) {
+		return doctorDao.getDoctorByEmail(email);
 
 	}
 
