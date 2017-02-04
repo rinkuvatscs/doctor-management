@@ -14,6 +14,8 @@ public interface DoctorDao {
 	
 	public Doctor getDoctorById(Integer id);
 	
+	public Doctor getDoctorByEmail(String email);
+	
 	public Doctor getDoctorByAdharNumber(String adharNumber);
 	
 	public Doctor getDoctorByMobileNumber(String mobileNumber);

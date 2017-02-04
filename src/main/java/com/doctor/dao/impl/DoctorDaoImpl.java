@@ -36,7 +36,9 @@ public class DoctorDaoImpl implements DoctorDao {
 			args.add(doctor.getOneTimeFee());
 			args.add(doctor.getDaysCheckFree());
 			args.add(doctor.getClinicAddress());
-
+			args.add(doctor.getEmail());
+			args.add(doctor.getAge());
+			args.add(doctor.getGender());
 			int row = jdbcTemplate.update(QueryConstants.ADD_DOCTOR,
 					args.toArray());
 			if (row == 1) {
@@ -46,8 +48,7 @@ public class DoctorDaoImpl implements DoctorDao {
 						+ " not registered . Please try again";
 			}
 		} else {
-			response = "Sorry, " + doctor.getName()
-					+ " already registered";
+			response = "Sorry, " + doctor.getName() + " already registered";
 		}
 
 		return response;
@@ -75,8 +76,8 @@ public class DoctorDaoImpl implements DoctorDao {
 
 		boolean isExist = false;
 		List<String> args = new ArrayList<>();
-		args.add(doctor.getDoctorNumber());
-		args.add(doctor.getDoctorAdhaarNumber());
+		args.add(doctor.getMobile());
+		args.add(doctor.getAadhaarNumber());
 		List<Doctor> response = jdbcTemplate.query(
 				QueryConstants.IS_DOCTOR_EXIST, new DoctorExtractor(),
 				args.toArray());
@@ -93,6 +94,21 @@ public class DoctorDaoImpl implements DoctorDao {
 			Object args[] = { id };
 			List<Doctor> response = jdbcTemplate.query(
 					QueryConstants.GET_DOCTOR_BY_ID, args,
+					new DoctorExtractor());
+			if (!StringUtils.isEmpty(response) && response.size() > 0) {
+				return response.get(0);
+			}
+		}
+		return new Doctor();
+	}
+
+	@Override
+	public Doctor getDoctorByEmail(String email) {
+
+		if (!StringUtils.isEmpty(email)) {
+			Object args[] = { email };
+			List<Doctor> response = jdbcTemplate.query(
+					QueryConstants.GET_DOCTOR_BY_EMAIL, args,
 					new DoctorExtractor());
 			if (!StringUtils.isEmpty(response) && response.size() > 0) {
 				return response.get(0);
@@ -230,52 +246,50 @@ public class DoctorDaoImpl implements DoctorDao {
 					}
 					isGovtServant = true;
 				}
-				//TODO will work 
-				if (null != doctor.getDoctorOneTimeConsultingFee()) {
+				// TODO will work
+				if (null != doctor.getOneTimeFee()) {
 					if (isHomeAddress || isDoctorName || isHighestDegree
 							|| isExpertized || isGovtServant) {
 						query.append(", onetime_consulting_fee = ? ");
-						args.add(doctor.getDoctorOneTimeConsultingFee());
+						args.add(doctor.getOneTimeFee());
 					} else {
 						query.append(" onetime_consulting_fee = ? ");
-						args.add(doctor.getDoctorOneTimeConsultingFee());
+						args.add(doctor.getOneTimeFee());
 					}
 					IsOneTimeFees = true;
 				}
-				if (null != doctor.getDoctorDaystoCheckFreeInConsultingFee()) {
+				if (null != doctor.getDaysCheckFree()) {
 					if (isHomeAddress || isDoctorName || isHighestDegree
 							|| isExpertized || isGovtServant || IsOneTimeFees) {
 						query.append(", doctor_days_to_check_free_in_consulting_fee = ? ");
-						args.add(doctor
-								.getDoctorDaystoCheckFreeInConsultingFee());
+						args.add(doctor.getDaysCheckFree());
 					} else {
 						query.append(" doctor_days_to_check_free_in_consulting_fee = ? ");
-						args.add(doctor
-								.getDoctorDaystoCheckFreeInConsultingFee());
+						args.add(doctor.getDaysCheckFree());
 					}
 					isDayFreeInConsultingFee = true;
 				}
-				if (null != doctor.getDoctorShopAddress()) {
+				if (null != doctor.getClinicAddress()) {
 					if (isHomeAddress || isDoctorName || isHighestDegree
 							|| isExpertized || isGovtServant || IsOneTimeFees
 							|| isDayFreeInConsultingFee) {
 						query.append(", doctor_shop_address = ? ");
-						args.add(doctor.getDoctorShopAddress());
+						args.add(doctor.getClinicAddress());
 					} else {
 						query.append(" doctor_shop_address = ? ");
-						args.add(doctor.getDoctorShopAddress());
+						args.add(doctor.getClinicAddress());
 					}
 					isShopAddress = true;
 				}
 				if (isDoctorName || isHomeAddress || isHighestDegree
 						|| isExpertized || isGovtServant || IsOneTimeFees
 						|| isDayFreeInConsultingFee || isShopAddress) {
-					if (null != doctor.getDoctorNumber()) {
+					if (null != doctor.getMobile()) {
 						query.append(" WHERE doctor_number = ? ");
-						args.add(doctor.getDoctorNumber());
-					} else if (null != doctor.getDoctorAdhaarNumber()) {
+						args.add(doctor.getMobile());
+					} else if (null != doctor.getAadhaarNumber()) {
 						query.append(" WHERE doctor_adhaar_number = ? ");
-						args.add(doctor.getDoctorAdhaarNumber());
+						args.add(doctor.getAadhaarNumber());
 					} else if (null != doctor.getDoctorId()) {
 						query.append(" WHERE doctor_id = ? ");
 						args.add(doctor.getDoctorId());
@@ -319,29 +333,28 @@ public class DoctorDaoImpl implements DoctorDao {
 				} else {
 					response = "Please try again later";
 				}
-			} else if (!StringUtils.isEmpty(doctor.getDoctorAdhaarNumber())
-					&& getDoctorByAdharNumber(doctor.getDoctorAdhaarNumber()) != null) {
-				Object args[] = { doctor.getDoctorAdhaarNumber() };
+			} else if (!StringUtils.isEmpty(doctor.getAadhaarNumber())
+					&& getDoctorByAdharNumber(doctor.getAadhaarNumber()) != null) {
+				Object args[] = { doctor.getAadhaarNumber() };
 				delete = jdbcTemplate
 						.update("DELETE FROM doctor_detail WHERE doctor_adhaar_number = ? ",
 								args);
 				if (delete > 0) {
 					response = "Doctor with Aadhar Number "
-							+ doctor.getDoctorAdhaarNumber()
+							+ doctor.getAadhaarNumber()
 							+ " successfully Deleted";
 				} else {
 					response = "Please try again later";
 				}
-			} else if (!StringUtils.isEmpty(doctor.getDoctorNumber())
-					&& getDoctorByMobileNumber(doctor.getDoctorNumber()) != null) {
-				Object args[] = { doctor.getDoctorNumber() };
+			} else if (!StringUtils.isEmpty(doctor.getMobile())
+					&& getDoctorByMobileNumber(doctor.getMobile()) != null) {
+				Object args[] = { doctor.getMobile() };
 				delete = jdbcTemplate.update(
 						"DELETE FROM doctor_detail WHERE doctor_number = ? ",
 						args);
 				if (delete > 0) {
 					response = "Doctor with Mobile Number "
-							+ doctor.getDoctorNumber()
-							+ " successfully Deleted";
+							+ doctor.getMobile() + " successfully Deleted";
 				} else {
 					response = "Please try again later";
 				}
