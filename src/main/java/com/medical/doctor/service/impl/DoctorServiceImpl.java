@@ -1,13 +1,13 @@
-package com.doctor.service.impl;
+package com.medical.doctor.service.impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.doctor.dao.DoctorDao;
-import com.doctor.service.DoctorService;
-import com.doctor.types.entity.Doctor;
+import com.medical.doctor.dao.DoctorDao;
+import com.medical.doctor.entity.Doctor;
+import com.medical.doctor.service.DoctorService;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {

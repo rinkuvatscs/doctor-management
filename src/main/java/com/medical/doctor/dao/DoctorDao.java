@@ -1,8 +1,8 @@
-package com.doctor.dao;
+package com.medical.doctor.dao;
 
 import java.util.List;
 
-import com.doctor.types.entity.Doctor;
+import com.medical.doctor.entity.Doctor;
 
 public interface DoctorDao {
 

@@ -1,4 +1,4 @@
-package com.doctor.exceptionhandler;
+package com.medical.doctor.exceptionhandler;
 
 public class BadRequestException extends RuntimeException{
 

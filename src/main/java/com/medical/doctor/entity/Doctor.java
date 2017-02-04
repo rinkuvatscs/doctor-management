@@ -1,4 +1,4 @@
-package com.doctor.types.entity;
+package com.medical.doctor.entity;
 
 public class Doctor {
 

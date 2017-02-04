@@ -1,4 +1,4 @@
-package com.doctor.response;
+package com.medical.doctor.response;
 
 public class Response {
 
