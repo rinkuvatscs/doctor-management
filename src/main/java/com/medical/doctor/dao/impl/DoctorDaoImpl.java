@@ -1,4 +1,4 @@
-package com.doctor.dao.impl;
+package com.medical.doctor.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +8,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import com.doctor.dao.DoctorDao;
-import com.doctor.db.config.QueryConstants;
-import com.doctor.exceptionhandler.BadRequestException;
-import com.doctor.extractor.DoctorExtractor;
-import com.doctor.types.entity.Doctor;
+import com.medical.doctor.constants.QueryConstants;
+import com.medical.doctor.dao.DoctorDao;
+import com.medical.doctor.entity.Doctor;
+import com.medical.doctor.exceptionhandler.BadRequestException;
+import com.medical.doctor.extractor.DoctorExtractor;
 
 @Component
 public class DoctorDaoImpl implements DoctorDao {
@@ -78,6 +78,7 @@ public class DoctorDaoImpl implements DoctorDao {
 		List<String> args = new ArrayList<>();
 		args.add(doctor.getMobile());
 		args.add(doctor.getAadhaarNumber());
+		args.add(doctor.getEmail());
 		List<Doctor> response = jdbcTemplate.query(
 				QueryConstants.IS_DOCTOR_EXIST, new DoctorExtractor(),
 				args.toArray());
@@ -166,7 +167,7 @@ public class DoctorDaoImpl implements DoctorDao {
 	public List<Doctor> getDoctorByExpertisted(String expertisted) {
 
 		if (!StringUtils.isEmpty(expertisted)) {
-			Object args[] = { expertisted };
+			Object args[] = { "%" + expertisted + "%" };
 			List<Doctor> response = jdbcTemplate.query(
 					QueryConstants.GET_DOCTOR_BY_EXPERTISTED,
 					new DoctorExtractor(), args);

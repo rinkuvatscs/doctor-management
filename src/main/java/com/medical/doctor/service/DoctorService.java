@@ -1,8 +1,8 @@
-package com.doctor.service;
+package com.medical.doctor.service;
 
 import java.util.List;
 
-import com.doctor.types.entity.Doctor;
+import com.medical.doctor.entity.Doctor;
 
 public interface DoctorService {
 

@@ -1,4 +1,4 @@
-package com.doctor.db.config;
+package com.medical.doctor.constants;
 
 public interface QueryConstants {
 
@@ -7,7 +7,7 @@ public interface QueryConstants {
 			+ "doctor_days_to_check_free_in_consulting_fee,doctor_shop_address,email,age,gender) values"
 			+ "(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-	String IS_DOCTOR_EXIST = "SELECT * FROM doctor_detail WHERE doctor_number = ? OR doctor_adhaar_number = ? ";
+	String IS_DOCTOR_EXIST = "SELECT * FROM doctor_detail WHERE doctor_number = ? OR doctor_adhaar_number = ? or email = ?";
 
 	String DELETE_DOCTOR = "delete from doctor_detail WHERE doctor_id = ?";
 
@@ -18,15 +18,10 @@ public interface QueryConstants {
 	String GET_DOCTOR_BY_MOBILE_NUMBER = " SELECT * FROM doctor_detail WHERE doctor_number = ? ";
 
 	String GET_DOCTOR_BY_NAME = " SELECT * FROM doctor_detail WHERE doctor_name LIKE ? ";
-	
+
 	String GET_DOCTOR_BY_EMAIL = " SELECT * FROM doctor_detail WHERE email = ? ";
 
-	String GET_DOCTOR_BY_EXPERTISTED = " SELECT * FROM doctor_detail WHERE doctor_expertized = ? ";
+	String GET_DOCTOR_BY_EXPERTISTED = " SELECT * FROM doctor_detail WHERE doctor_expertized like ? ";
 
 	String GET_DOCTOR_BY_CONSULTING_FEE = " SELECT * FROM doctor_detail WHERE onetime_consulting_fee = ? ";
-
-	// -----------------------------------------------------------------------------------------------------------
-
-	// TODO Need to add customerAdd query
-	String ADD_CUSTOMER = "";
 }

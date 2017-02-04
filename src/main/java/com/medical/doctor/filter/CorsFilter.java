@@ -1,4 +1,4 @@
-package com.doctor.filter;
+package com.medical.doctor.filter;
 
 import java.io.IOException;
 

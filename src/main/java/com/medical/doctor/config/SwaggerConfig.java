@@ -1,4 +1,4 @@
-package com.doctor.swagger.config;
+package com.medical.doctor.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
