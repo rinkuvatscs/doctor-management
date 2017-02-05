@@ -371,4 +371,44 @@ public class DoctorDaoImpl implements DoctorDao {
 		return response;
 	}
 
+	@Override
+	public List<Doctor> getDoctors(Doctor doctor) {
+
+		boolean isName = false, isGovServant = false;
+		List<Object> args = new ArrayList<>();
+		StringBuffer query = new StringBuffer(QueryConstants.GET_DOCTORS);
+
+		if (!StringUtils.isEmpty(doctor)) {
+
+			if (!StringUtils.isEmpty(doctor.getName())) {
+				query.append("where doctor_name like ?");
+				args.add("%" + doctor.getName() + "%");
+				isName = true;
+			}
+
+			if (!StringUtils.isEmpty(doctor.getIsGovernmentServent())) {
+
+				if (isName) {
+					query.append("and is_doctor_govt_servant = ?");
+				} else {
+					query.append("where is_doctor_govt_servant = ?");
+
+				}
+				args.add(doctor.getIsGovernmentServent());
+				isGovServant = true;
+			}
+
+			// TODO
+			if (isGovServant) {
+
+			}
+
+		} else {
+			throw new BadRequestException(
+					"PLease provide proper detail for Doctor");
+		}
+
+		return null;
+	}
+
 }
