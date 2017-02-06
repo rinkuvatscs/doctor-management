@@ -7,7 +7,8 @@ public interface QueryConstants {
 			+ "doctor_days_to_check_free_in_consulting_fee,doctor_shop_address,email,age,gender) values"
 			+ "(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-	String IS_DOCTOR_EXIST = "SELECT * FROM doctor_detail WHERE doctor_number = ? OR doctor_adhaar_number = ? or email = ?";
+	String IS_DOCTOR_EXIST = "SELECT * FROM doctor_detail WHERE ";
+	// doctor_number = ? OR doctor_adhaar_number = ? or email = ?";
 
 	String DELETE_DOCTOR = "delete from doctor_detail WHERE doctor_id = ?";
 

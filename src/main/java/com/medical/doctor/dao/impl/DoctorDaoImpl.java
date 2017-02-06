@@ -75,13 +75,52 @@ public class DoctorDaoImpl implements DoctorDao {
 	public boolean isDoctorExists(Doctor doctor) {
 
 		boolean isExist = false;
-		List<String> args = new ArrayList<>();
-		args.add(doctor.getMobile());
-		args.add(doctor.getAadhaarNumber());
-		args.add(doctor.getEmail());
-		List<Doctor> response = jdbcTemplate.query(
-				QueryConstants.IS_DOCTOR_EXIST, new DoctorExtractor(),
-				args.toArray());
+		boolean isMobile = false, isAadhaar = false, isEmail = false, isDoctorId = false;
+
+		List<Object> args = new ArrayList<>();
+		StringBuffer query = new StringBuffer(QueryConstants.IS_DOCTOR_EXIST);
+
+		if (!StringUtils.isEmpty(doctor.getMobile())) {
+			query.append(" doctor_number = ?");
+			args.add(doctor.getMobile());
+			isMobile = true;
+		}
+		if (!StringUtils.isEmpty(doctor.getAadhaarNumber())) {
+			if (isMobile) {
+				query.append("or doctor_adhaar_number = ?");
+			} else {
+				query.append(" doctor_adhaar_number = ?");
+			}
+			args.add(doctor.getAadhaarNumber());
+			isAadhaar = true;
+		}
+
+		if (!StringUtils.isEmpty(doctor.getEmail())) {
+			if (isMobile || isAadhaar) {
+				query.append("or email = ?");
+			} else {
+				query.append(" email = ?");
+			}
+			args.add(doctor.getEmail());
+			isEmail = true;
+		}
+
+		if (!StringUtils.isEmpty(doctor.getDoctorId())) {
+			if (isMobile || isAadhaar || isEmail) {
+				query.append("or doctor_id = ?");
+			} else {
+				query.append(" doctor_id = ?");
+			}
+			args.add(doctor.getDoctorId());
+			isDoctorId = true;
+		}
+
+		if (!isMobile && !isEmail && !isDoctorId && !isAadhaar) {
+			throw new BadRequestException(
+					"PLease provide enough detail for Doctor");
+		}
+		List<Doctor> response = jdbcTemplate.query(query.toString(),
+				new DoctorExtractor(), args.toArray());
 		if (!StringUtils.isEmpty(response) && response.size() > 0) {
 			isExist = true;
 		}
@@ -196,11 +235,11 @@ public class DoctorDaoImpl implements DoctorDao {
 
 		String response = null;
 		List<Object> args = new ArrayList<>();
-		StringBuilder query = new StringBuilder(" UPDATE doctor_detail SET ");
+		StringBuilder query = new StringBuilder("UPDATE doctor_detail SET ");
 		if (!StringUtils.isEmpty(doctor)) {
 			if (isDoctorExists(doctor)) {
 				boolean isDoctorName = false, isHomeAddress = false, isHighestDegree = false, isExpertized = false, isGovtServant = false;
-				boolean IsOneTimeFees = false, isDayFreeInConsultingFee = false, isShopAddress = false;
+				boolean IsOneTimeFees = false, isDayFreeInConsultingFee = false, isShopAddress = false, isMobile = false, isAadhaar = false, isAge = false, isEmail = false;
 				if (null != doctor.getName()) {
 					query.append(" doctor_name = ? ");
 					args.add(doctor.getName());
@@ -275,37 +314,90 @@ public class DoctorDaoImpl implements DoctorDao {
 							|| isExpertized || isGovtServant || IsOneTimeFees
 							|| isDayFreeInConsultingFee) {
 						query.append(", doctor_shop_address = ? ");
-						args.add(doctor.getClinicAddress());
 					} else {
 						query.append(" doctor_shop_address = ? ");
-						args.add(doctor.getClinicAddress());
+
 					}
+					args.add(doctor.getClinicAddress());
 					isShopAddress = true;
 				}
-				if (isDoctorName || isHomeAddress || isHighestDegree
-						|| isExpertized || isGovtServant || IsOneTimeFees
-						|| isDayFreeInConsultingFee || isShopAddress) {
-					if (null != doctor.getMobile()) {
-						query.append(" WHERE doctor_number = ? ");
-						args.add(doctor.getMobile());
-					} else if (null != doctor.getAadhaarNumber()) {
-						query.append(" WHERE doctor_adhaar_number = ? ");
-						args.add(doctor.getAadhaarNumber());
-					} else if (null != doctor.getDoctorId()) {
-						query.append(" WHERE doctor_id = ? ");
-						args.add(doctor.getDoctorId());
+
+				if (null != doctor.getMobile()) {
+					if (isHomeAddress || isDoctorName || isHighestDegree
+							|| isExpertized || isGovtServant || IsOneTimeFees
+							|| isDayFreeInConsultingFee || isShopAddress) {
+						query.append(", doctor_number = ? ");
+
 					} else {
-						response = "Please Enter data to Update....!!!";
+						query.append(" doctor_number = ? ");
 					}
+					args.add(doctor.getMobile());
+					isMobile = true;
 				}
-				if (StringUtils.isEmpty(response)) {
-					int update = jdbcTemplate.update(query.toString(),
-							args.toArray());
-					if (update > 0) {
-						response = "Doctor successfully Updated...!!!";
+
+				if (null != doctor.getAadhaarNumber()) {
+					if (isHomeAddress || isDoctorName || isHighestDegree
+							|| isExpertized || isGovtServant || IsOneTimeFees
+							|| isDayFreeInConsultingFee || isShopAddress
+							|| isMobile) {
+						query.append(", doctor_adhaar_number = ? ");
+
 					} else {
-						response = "There is some problem, please try again later...!!!";
+						query.append(" doctor_adhaar_number = ? ");
 					}
+					args.add(doctor.getAadhaarNumber());
+					isAadhaar = true;
+				}
+
+				if (doctor.getAge() != 0) {
+					if (isHomeAddress || isDoctorName || isHighestDegree
+							|| isExpertized || isGovtServant || IsOneTimeFees
+							|| isDayFreeInConsultingFee || isShopAddress
+							|| isMobile || isAadhaar) {
+						query.append(", age = ? ");
+
+					} else {
+						query.append(" age = ? ");
+					}
+					args.add(doctor.getAge());
+				}
+
+				if (null != doctor.getEmail()) {
+					if (isHomeAddress || isDoctorName || isHighestDegree
+							|| isExpertized || isGovtServant || IsOneTimeFees
+							|| isDayFreeInConsultingFee || isShopAddress
+							|| isMobile || isAadhaar || isAge) {
+						query.append(", email = ? ");
+
+					} else {
+						query.append(" email = ? ");
+					}
+					args.add(doctor.getEmail());
+					isEmail = true;
+				}
+
+				if (null != doctor.getGender()) {
+					if (isHomeAddress || isDoctorName || isHighestDegree
+							|| isExpertized || isGovtServant || IsOneTimeFees
+							|| isDayFreeInConsultingFee || isShopAddress
+							|| isMobile || isAadhaar || isAge || isEmail) {
+						query.append(", gender = ? ");
+
+					} else {
+						query.append(" gender = ? ");
+					}
+					args.add(doctor.getGender());
+				}
+
+				query.append(" WHERE doctor_id = ? ");
+				args.add(doctor.getDoctorId());
+
+				int update = jdbcTemplate.update(query.toString(),
+						args.toArray());
+				if (update > 0) {
+					response = "Doctor successfully Updated...!!!";
+				} else {
+					response = "There is some problem, please try again later...!!!";
 				}
 			} else {
 				response = "Doctor does not exist...!!!";
