@@ -2,6 +2,7 @@ package com.medical.doctor.request;
 
 public class DoctorRequest {
 
+	private Integer doctorId;
 	private String name;
 	private String mobile;
 	private String homeAddress;
@@ -13,8 +14,16 @@ public class DoctorRequest {
 	private Integer daysCheckFree;
 	private String clinicAddress;
 	private String email;
-	private String gender ;
+	private String gender;
 	private int age;
+
+	public Integer getDoctorId() {
+		return doctorId;
+	}
+
+	public void setDoctorId(Integer doctorId) {
+		this.doctorId = doctorId;
+	}
 
 	public String getEmail() {
 		return email;
@@ -122,13 +131,12 @@ public class DoctorRequest {
 
 	@Override
 	public String toString() {
-		return "Doctor [name=" + name + ", mobile="
-				+ mobile + ", homeAddress=" + homeAddress + ", aadhaarNumber="
-				+ aadhaarNumber + ", highestDegree=" + highestDegree
-				+ ", expertized=" + expertized + ", isGovernmentServent="
-				+ isGovernmentServent + ", oneTimeFee=" + oneTimeFee
-				+ ", daysCheckFree=" + daysCheckFree + ", clinicAddress="
-				+ clinicAddress + "]";
+		return "Doctor [name=" + name + ", mobile=" + mobile + ", homeAddress="
+				+ homeAddress + ", aadhaarNumber=" + aadhaarNumber
+				+ ", highestDegree=" + highestDegree + ", expertized="
+				+ expertized + ", isGovernmentServent=" + isGovernmentServent
+				+ ", oneTimeFee=" + oneTimeFee + ", daysCheckFree="
+				+ daysCheckFree + ", clinicAddress=" + clinicAddress + "]";
 	}
 
 }
