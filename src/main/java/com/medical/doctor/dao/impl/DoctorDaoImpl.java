@@ -81,15 +81,15 @@ public class DoctorDaoImpl implements DoctorDao {
 		StringBuffer query = new StringBuffer(QueryConstants.IS_DOCTOR_EXIST);
 
 		if (!StringUtils.isEmpty(doctor.getMobile())) {
-			query.append(" doctor_number = ?");
+			query.append(" doctor_number = ? ");
 			args.add(doctor.getMobile());
 			isMobile = true;
 		}
 		if (!StringUtils.isEmpty(doctor.getAadhaarNumber())) {
 			if (isMobile) {
-				query.append("or doctor_adhaar_number = ?");
+				query.append(" or doctor_adhaar_number = ? ");
 			} else {
-				query.append(" doctor_adhaar_number = ?");
+				query.append(" doctor_adhaar_number = ? ");
 			}
 			args.add(doctor.getAadhaarNumber());
 			isAadhaar = true;
@@ -97,9 +97,9 @@ public class DoctorDaoImpl implements DoctorDao {
 
 		if (!StringUtils.isEmpty(doctor.getEmail())) {
 			if (isMobile || isAadhaar) {
-				query.append("or email = ?");
+				query.append(" or email = ? ");
 			} else {
-				query.append(" email = ?");
+				query.append(" email = ? ");
 			}
 			args.add(doctor.getEmail());
 			isEmail = true;
@@ -107,9 +107,9 @@ public class DoctorDaoImpl implements DoctorDao {
 
 		if (!StringUtils.isEmpty(doctor.getDoctorId())) {
 			if (isMobile || isAadhaar || isEmail) {
-				query.append("or doctor_id = ?");
+				query.append(" or doctor_id = ? ");
 			} else {
-				query.append(" doctor_id = ?");
+				query.append(" doctor_id = ? ");
 			}
 			args.add(doctor.getDoctorId());
 			isDoctorId = true;
@@ -117,7 +117,7 @@ public class DoctorDaoImpl implements DoctorDao {
 
 		if (!isMobile && !isEmail && !isDoctorId && !isAadhaar) {
 			throw new BadRequestException(
-					"PLease provide enough detail for Doctor");
+					"Please provide enough detail for Doctor");
 		}
 		List<Doctor> response = jdbcTemplate.query(query.toString(),
 				new DoctorExtractor(), args.toArray());
