@@ -26,5 +26,5 @@ public interface QueryConstants {
 
 	String GET_DOCTOR_BY_CONSULTING_FEE = " SELECT * FROM doctor_detail WHERE onetime_consulting_fee = ? ";
 
-	String GET_DOCTORS = "select * from doctor_details ";
+	String GET_DOCTORS = "SELECT * FROM doctor_detail  ";
 }

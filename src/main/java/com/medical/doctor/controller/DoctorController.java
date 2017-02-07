@@ -25,6 +25,7 @@ import com.medical.doctor.entity.Doctor;
 import com.medical.doctor.exceptionhandler.BadRequestException;
 import com.medical.doctor.mappers.DoctorMapper;
 import com.medical.doctor.request.DoctorRequest;
+import com.medical.doctor.request.SearchDoctorRequest;
 import com.medical.doctor.response.DoctorResponse;
 import com.medical.doctor.response.Response;
 import com.medical.doctor.service.DoctorService;
@@ -111,6 +112,23 @@ public class DoctorController {
 		} else
 			throw new BadRequestException(
 					"Doctor Mobile Number should not be blank");
+	}
+
+	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/all")
+	@ResponseBody
+	public List<DoctorResponse> getDoctorByAll(
+			@RequestBody SearchDoctorRequest  searchDoctorRequest) {
+
+		Doctor doctor = new Doctor();
+		try {
+			BeanUtils.copyProperties(searchDoctorRequest, doctor);
+		} catch (BeansException beansException) {
+			throw new BadRequestException(
+					"Doctor Do not have enough information", beansException);
+		}
+
+		return doctorMapper.mapDoctors(doctorService.getDoctors(doctor));
+
 	}
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{id}/id")
