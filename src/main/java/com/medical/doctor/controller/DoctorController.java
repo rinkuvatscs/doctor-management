@@ -117,7 +117,7 @@ public class DoctorController {
 	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/all")
 	@ResponseBody
 	public List<DoctorResponse> getDoctorByAll(
-			@RequestBody SearchDoctorRequest  searchDoctorRequest) {
+			@RequestBody SearchDoctorRequest searchDoctorRequest) {
 
 		Doctor doctor = new Doctor();
 		try {

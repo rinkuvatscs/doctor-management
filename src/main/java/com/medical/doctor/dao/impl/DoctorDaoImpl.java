@@ -17,6 +17,9 @@ import com.medical.doctor.extractor.DoctorExtractor;
 @Component
 public class DoctorDaoImpl implements DoctorDao {
 
+	private static final String DEFAULT = "NA";
+
+	private static final Boolean SERVANT_DEFAULT = false;
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
@@ -26,19 +29,27 @@ public class DoctorDaoImpl implements DoctorDao {
 		if (!isDoctorExists(doctor)) {
 
 			List<Object> args = new ArrayList<>();
-			args.add(doctor.getName());
-			args.add(doctor.getMobile());
-			args.add(doctor.getHomeAddress());
-			args.add(doctor.getAadhaarNumber());
-			args.add(doctor.getHighestDegree());
-			args.add(doctor.getExpertized());
-			args.add(doctor.getIsGovernmentServent());
-			args.add(doctor.getOneTimeFee());
-			args.add(doctor.getDaysCheckFree());
-			args.add(doctor.getClinicAddress());
-			args.add(doctor.getEmail());
+			args.add(doctor.getName() == null ? DEFAULT : doctor.getName());
+			args.add(doctor.getMobile() == null ? DEFAULT : doctor.getMobile());
+			args.add(doctor.getHomeAddress() == null ? DEFAULT : doctor
+					.getHomeAddress());
+			args.add(doctor.getAadhaarNumber() == null ? DEFAULT : doctor
+					.getAadhaarNumber());
+			args.add(doctor.getHighestDegree() == null ? DEFAULT : doctor
+					.getHighestDegree());
+			args.add(doctor.getExpertized() == null ? DEFAULT : doctor
+					.getExpertized());
+			args.add(doctor.getIsGovernmentServent() == null ? SERVANT_DEFAULT
+					: doctor.getIsGovernmentServent());
+			args.add(doctor.getOneTimeFee() == null ? DEFAULT : doctor
+					.getOneTimeFee());
+			args.add(doctor.getDaysCheckFree() == null ? 0 : doctor
+					.getDaysCheckFree());
+			args.add(doctor.getClinicAddress() == null ? DEFAULT : doctor
+					.getClinicAddress());
+			args.add(doctor.getEmail() == null ? DEFAULT : doctor.getEmail());
 			args.add(doctor.getAge());
-			args.add(doctor.getGender());
+			args.add(doctor.getGender() == null ? "M" : doctor.getGender());
 			int row = jdbcTemplate.update(QueryConstants.ADD_DOCTOR,
 					args.toArray());
 			if (row == 1) {
@@ -483,6 +494,54 @@ public class DoctorDaoImpl implements DoctorDao {
 	@Override
 	public List<Doctor> getDoctors(Doctor doctor) {
 		List<Doctor> response = null;
+
+		if (!StringUtils.isEmpty(doctor.getAadhaarNumber())) {
+
+			response = new ArrayList<Doctor>();
+			Doctor doctorWithAadhaar = getDoctorByAdharNumber(doctor
+					.getAadhaarNumber());
+			if (!StringUtils.isEmpty(doctorWithAadhaar.getDoctorId())) {
+				response.add(doctorWithAadhaar);
+			}
+
+			return response;
+		}
+
+		if (!StringUtils.isEmpty(doctor.getMobile())) {
+
+			response = new ArrayList<Doctor>();
+			Doctor doctorWithMoblie = getDoctorByMobileNumber(doctor
+					.getMobile());
+			if (!StringUtils.isEmpty(doctorWithMoblie.getDoctorId())) {
+				response.add(doctorWithMoblie);
+			}
+
+			return response;
+		}
+
+		if (!StringUtils.isEmpty(doctor.getDoctorId())
+				&& doctor.getDoctorId() > 0) {
+
+			response = new ArrayList<Doctor>();
+			Doctor doctorWithId = getDoctorById(doctor.getDoctorId());
+			if (!StringUtils.isEmpty(doctorWithId.getDoctorId())) {
+				response.add(doctorWithId);
+			}
+
+			return response;
+		}
+
+		if (!StringUtils.isEmpty(doctor.getEmail())) {
+
+			response = new ArrayList<Doctor>();
+			Doctor doctorWithEmail = getDoctorByEmail(doctor.getEmail());
+			if (!StringUtils.isEmpty(doctorWithEmail.getDoctorId())) {
+				response.add(doctorWithEmail);
+			}
+
+			return response;
+		}
+
 		boolean isName = false, isGovServant = false, isHomeAddress = false, isExpertized = false;
 		List<Object> args = new ArrayList<>();
 		StringBuffer query = new StringBuffer(QueryConstants.GET_DOCTORS);
@@ -491,7 +550,7 @@ public class DoctorDaoImpl implements DoctorDao {
 
 			if (!StringUtils.isEmpty(doctor.getName())) {
 				query.append("WHERE doctor_name like ?");
-				args.add("%"+ doctor.getName() + "%");
+				args.add("%" + doctor.getName() + "%");
 				isName = true;
 			}
 
@@ -549,12 +608,11 @@ public class DoctorDaoImpl implements DoctorDao {
 				} else {
 					query.append(" WHERE doctor_shop_address like ? ");
 				}
-				args.add("%" +doctor.getClinicAddress()+"%");
+				args.add("%" + doctor.getClinicAddress() + "%");
 			}
 
 			response = jdbcTemplate.query(query.toString(),
 					new DoctorExtractor(), args.toArray());
-			
 
 		} else {
 			throw new BadRequestException(
