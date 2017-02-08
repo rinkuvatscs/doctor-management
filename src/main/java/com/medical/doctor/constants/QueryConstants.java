@@ -25,4 +25,6 @@ public interface QueryConstants {
 	String GET_DOCTOR_BY_EXPERTISTED = " SELECT * FROM doctor_detail WHERE doctor_expertized like ? ";
 
 	String GET_DOCTOR_BY_CONSULTING_FEE = " SELECT * FROM doctor_detail WHERE onetime_consulting_fee = ? ";
+
+	String GET_DOCTORS = "SELECT * FROM doctor_detail  ";
 }

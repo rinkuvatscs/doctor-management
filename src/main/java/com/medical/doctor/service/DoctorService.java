@@ -23,6 +23,8 @@ public interface DoctorService {
 	public List<Doctor> getDoctorByExpertisted(String expertisted);
 
 	public List<Doctor> getDoctorByConsultingFee(String consultingFee);
+	
+	List<Doctor> getDoctors(Doctor doctor);
 
 	public String updateDoctor(Doctor doctor);
 

@@ -73,4 +73,9 @@ public class DoctorServiceImpl implements DoctorService {
 		return doctorDao.deleteDoctor(doctor);
 	}
 
+	@Override
+	public List<Doctor> getDoctors(Doctor doctor) {
+		return doctorDao.getDoctors(doctor);
+	}
+
 }
