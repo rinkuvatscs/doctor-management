@@ -274,10 +274,10 @@ public class DoctorController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             value = "/add/{expertise}/expertisation")
     @ResponseBody
-    public Map<Integer, String> addExpertisation(@PathVariable String expertise) {
+	public Integer addExpertisation(@PathVariable String expertise) {
 
         if (!StringUtils.isEmpty(expertise)) {
-            return doctorService.getAllExpertized();
+            return doctorService.addExpertisation(expertise);
         } else {
             throw new BadRequestException("Expertisation can not be blank");
         }

@@ -29,10 +29,11 @@ public interface QueryConstants {
 	
 	//String GET_EXPERTIZED = "select * from expertized where approved ='Y' ";
 	
-	String GET_ALL_EXPERTIZED = "select * from expertise";
+	String GET_ALL_EXPERTIZED = "SELECT * FROM expertise";
 	
-	String GET_EXPERTIZED = "select * from expertise where lower(expertise) = lower(?)";
+	String GET_EXPERTIZED = "SELECT * FROM expertise WHERE expertise=?";
 	
-	String ADD_EXPERTIZED = "insert into expertise values(expertise) values(?)";
+	
+	String ADD_EXPERTIZED = "insert into expertise(expertise,approved) values(?,'P')";
 	
 }
