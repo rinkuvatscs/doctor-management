@@ -8,8 +8,7 @@ public interface QueryConstants {
 			+ "(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 	String IS_DOCTOR_EXIST = "SELECT * FROM doctor_detail WHERE ";
-	// doctor_number = ? OR doctor_adhaar_number = ? or email = ?";
-
+	
 	String DELETE_DOCTOR = "delete from doctor_detail WHERE doctor_id = ?";
 
 	String GET_DOCTOR_BY_ID = " SELECT * FROM doctor_detail WHERE doctor_id = ? ";
@@ -27,4 +26,13 @@ public interface QueryConstants {
 	String GET_DOCTOR_BY_CONSULTING_FEE = " SELECT * FROM doctor_detail WHERE onetime_consulting_fee = ? ";
 
 	String GET_DOCTORS = "SELECT * FROM doctor_detail  ";
+	
+	//String GET_EXPERTIZED = "select * from expertized where approved ='Y' ";
+	
+	String GET_ALL_EXPERTIZED = "select * from expertise";
+	
+	String GET_EXPERTIZED = "select * from expertise where lower(expertise) = lower(?)";
+	
+	String ADD_EXPERTIZED = "insert into expertise values(expertise) values(?)";
+	
 }
