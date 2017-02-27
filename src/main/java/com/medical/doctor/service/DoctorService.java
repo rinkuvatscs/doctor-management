@@ -36,4 +36,6 @@ public interface DoctorService {
     public Integer addExpertisation(String expertise);
 
     public boolean isExpertiseExists(String expertise);
+    
+    public List<Doctor> getRecentDoctors(Integer days) ;
 }

@@ -42,7 +42,7 @@ public class DoctorDaoImpl implements DoctorDao {
 			args.add(doctor.getHighestDegree() == null ? DEFAULT : doctor
 					.getHighestDegree());
 			args.add(doctor.getExpertized() == null ? DEFAULT : doctor
-					.getExpertized());
+					.getExpertized().toLowerCase());
 			args.add(doctor.getIsGovernmentServent() == null ? SERVANT_DEFAULT
 					: doctor.getIsGovernmentServent());
 			args.add(doctor.getOneTimeFee() == null ? DEFAULT : doctor
@@ -305,10 +305,10 @@ public class DoctorDaoImpl implements DoctorDao {
 			if (null != doctor.getExpertized()) {
 				if (isHomeAddress || isDoctorName || isHighestDegree) {
 					query.append(", doctor_expertized = ? ");
-					args.add(doctor.getExpertized());
+					args.add(doctor.getExpertized().toLowerCase());
 				} else {
 					query.append(" doctor_expertized = ? ");
-					args.add(doctor.getExpertized());
+					args.add(doctor.getExpertized().toLowerCase());
 				}
 				isExpertized = true;
 			}
@@ -644,7 +644,8 @@ public class DoctorDaoImpl implements DoctorDao {
 		if (!isExpertiseExists(expertise)) {
 			List<String> args = new ArrayList<String>();
 			args.add(expertise.toLowerCase());
-			return jdbcTemplate.update(QueryConstants.ADD_EXPERTIZED, args.toArray());
+			return jdbcTemplate.update(QueryConstants.ADD_EXPERTIZED,
+					args.toArray());
 		} else {
 			return -1;
 		}
@@ -656,11 +657,23 @@ public class DoctorDaoImpl implements DoctorDao {
 		List<String> args = new ArrayList<>();
 		args.add(expertise.toLowerCase());
 		Map<Integer, String> response = jdbcTemplate.query(
-				QueryConstants.GET_EXPERTIZED, new ExpertizedExtractor(), args.toArray());
+				QueryConstants.GET_EXPERTIZED, new ExpertizedExtractor(),
+				args.toArray());
 		if (!response.isEmpty()) {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public List<Doctor> getRecentDoctors(Integer days) {
+		List<String> args = new ArrayList<>();
+		args.add(String.valueOf(days));
+		StringBuffer query = new StringBuffer(QueryConstants.GET_DOCTORS);
+		query.append(" WHERE SYSDATE() - registered_date<= ? ");
+
+		return jdbcTemplate.query(query.toString(), new DoctorExtractor(),
+				args.toArray());
 	}
 
 }
