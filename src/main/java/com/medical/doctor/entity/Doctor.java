@@ -1,5 +1,7 @@
 package com.medical.doctor.entity;
 
+import java.util.Date;
+
 public class Doctor {
 
 	private Integer doctorId;
@@ -15,7 +17,8 @@ public class Doctor {
 	private String clinicAddress;
 	private String email;
 	private String gender ;
-	private int age;
+	private Date DOB;
+
 
 	public String getEmail() {
 		return email;
@@ -32,15 +35,6 @@ public class Doctor {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
-	}
-
 
 	public Integer getDoctorId() {
 		return doctorId;
@@ -129,6 +123,14 @@ public class Doctor {
 	public void setClinicAddress(String clinicAddress) {
 		this.clinicAddress = clinicAddress;
 	}
+	
+	public Date getDOB() {
+		return DOB;
+	}
+
+	public void setDOB(Date dOB) {
+		this.DOB = dOB;
+	}
 
 	@Override
 	public String toString() {
@@ -140,5 +142,7 @@ public class Doctor {
 				+ ", daysCheckFree=" + daysCheckFree + ", clinicAddress="
 				+ clinicAddress + "]";
 	}
+
+	
 
 }

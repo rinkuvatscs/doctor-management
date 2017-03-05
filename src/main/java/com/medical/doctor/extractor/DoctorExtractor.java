@@ -30,22 +30,22 @@ public class DoctorExtractor implements ResultSetExtractor<List<Doctor>> {
 
 		while (rs.next()) {
 			doctor = new Doctor();
-			doctor.setAadhaarNumber(rs.getString("doctor_adhaar_number"));
+			doctor.setAadhaarNumber(rs.getString("AdhaarNo"));
 			doctor.setDaysCheckFree(rs
-					.getInt("doctor_days_to_check_free_in_consulting_fee"));
+					.getInt("FreeDayConsulting"));
 			doctor.setExpertized(rs.getString("doctor_expertized"));
 			doctor.setIsGovernmentServent(rs
 					.getBoolean("is_doctor_govt_servant"));
 			doctor.setHighestDegree(rs.getString("doctor_highestdegree"));
 			doctor.setHomeAddress(rs.getString("doctor_homeaddress"));
-			doctor.setDoctorId(rs.getInt("doctor_id"));
-			doctor.setName(rs.getString("doctor_name"));
-			doctor.setMobile(rs.getString("doctor_number"));
-			doctor.setOneTimeFee(rs.getString("onetime_consulting_fee"));
+			doctor.setDoctorId(rs.getInt("DID"));
+			doctor.setName(rs.getString("Name"));
+			doctor.setMobile(rs.getString("MobileNo"));
+			doctor.setOneTimeFee(rs.getString("ConsultingFees"));
 			doctor.setClinicAddress(rs.getString("doctor_shop_address"));
-			doctor.setEmail(rs.getString("email"));
-			doctor.setAge(rs.getInt("age"));
-			doctor.setGender(rs.getString("gender"));
+			doctor.setEmail(rs.getString("Email"));
+//			doctor.setAge(rs.getInt("age"));
+			doctor.setGender(rs.getString("Gender"));
 			doctorList.add(doctor);
 		}
 		return doctorList;
