@@ -122,4 +122,14 @@ public class DoctorServiceImpl implements DoctorService {
 		return doctorDao.getRecentDoctors(days);
 	}
 
+	@Override
+	public String approveExpertise(Integer expertise) {
+		return doctorDao.approveExpertise(expertise);
+	}
+
+	@Override
+	public Map<Integer, String> getUnApprovedExpertise() {
+		return doctorDao.getUnApprovedExpertise();
+	}
+
 }

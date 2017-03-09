@@ -38,4 +38,9 @@ public interface DoctorService {
     public boolean isExpertiseExists(String expertise);
     
     public List<Doctor> getRecentDoctors(Integer days) ;
+    
+    public String approveExpertise(Integer expertise);
+    
+    public Map<Integer, String> getUnApprovedExpertise() ;
+    
 }

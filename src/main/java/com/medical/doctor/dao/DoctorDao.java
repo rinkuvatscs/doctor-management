@@ -37,6 +37,10 @@ public interface DoctorDao {
 
     public Integer addExpertisation(String expertise);
     
+    public String approveExpertise(Integer expertise);
+    
+    public Map<Integer, String> getUnApprovedExpertise() ;
+    
     public boolean isExpertiseExists(String expertise);
     
     public List<Doctor> getRecentDoctors(Integer days);

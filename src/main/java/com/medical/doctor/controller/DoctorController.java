@@ -280,5 +280,25 @@ public class DoctorController {
 			throw new BadRequestException("Doctor ID should not be blank");
 		}
 	}
+	
+	
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/all/unapproved/expertisation")
+	@ResponseBody
+	public Map<Integer, String> getAllUnApprovedExpertisations() {
+
+		return doctorService.getUnApprovedExpertise();
+	}
+
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/add/{expertise}/expertisation")
+	@ResponseBody
+	public String addExpertisation(@PathVariable Integer expertise) {
+
+		if (!StringUtils.isEmpty(expertise)) {
+			return doctorService.approveExpertise(expertise);
+		} else {
+			throw new BadRequestException("Expertisation can not be blank");
+		}
+	}
+
 
 }

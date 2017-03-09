@@ -28,11 +28,15 @@ public interface QueryConstants {
 	
 	//String GET_EXPERTIZED = "select * from expertized where approved ='Y' ";
 	
-	String GET_ALL_EXPERTIZED = "SELECT * FROM Expertise";
+	String GET_ALL_EXPERTIZED = "SELECT * FROM expertise";
 	
-	String GET_EXPERTIZED = "SELECT * FROM Expertise WHERE Expertise=?";
+	String GET_EXPERTIZED = "SELECT * FROM expertise WHERE expertise=?";
 	
+	String ADD_EXPERTIZED = "insert into expertise(expertise) values(?)";
 	
-	String ADD_EXPERTIZED = "insert into Expertise(Expertise,Approved) values(?,'true')";
+	String GET_UNAPPROVED_EXPERTISE = "SELECT * FROM expertise WHERE approved = 0";
+	
+	String APPROVE_EXPERTISE = "update expertise SET approved  = 1" ;
+	
 	
 }

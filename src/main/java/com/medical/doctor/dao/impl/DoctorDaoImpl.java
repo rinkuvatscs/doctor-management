@@ -648,4 +648,20 @@ public class DoctorDaoImpl implements DoctorDao {
 				args.toArray());
 	}
 
+	@Override
+	public String approveExpertise(Integer expertise) {
+		int update = jdbcTemplate.update(QueryConstants.APPROVE_EXPERTISE);
+		if (update > 0) {
+			return expertise + " approved successfully";
+		} else {
+			return expertise + " not approved";
+		}
+	}
+
+	@Override
+	public Map<Integer, String> getUnApprovedExpertise() {
+		return jdbcTemplate.query(QueryConstants.GET_UNAPPROVED_EXPERTISE,
+				new ExpertizedExtractor());
+	}
+
 }
