@@ -15,6 +15,7 @@ import com.medical.doctor.entity.Doctor;
 import com.medical.doctor.exceptionhandler.BadRequestException;
 import com.medical.doctor.extractor.DoctorExtractor;
 import com.medical.doctor.extractor.ExpertizedExtractor;
+import com.medical.doctor.factory.LoginFactory;
 
 @Component
 public class DoctorDaoImpl implements DoctorDao {
@@ -24,6 +25,9 @@ public class DoctorDaoImpl implements DoctorDao {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	LoginFactory loginFactory ;
 
 	@Override
 	public String addDoctor(Doctor doctor) {
@@ -403,6 +407,13 @@ public class DoctorDaoImpl implements DoctorDao {
 
 			int update = jdbcTemplate.update(query.toString(), args.toArray());
 			if (update > 0) {
+				//TODO need to Address details into addres table 
+				//TODO need to Login details into Login Table
+				//TODO Login table details calling functions i am adding with dummy impletations using factory pattern
+				// that will be decided by LoginFactory class which class needs to call .
+				
+				loginFactory.getLoginService().addLoginDetails(doctor);
+				
 				response = "Doctor successfully Updated...!!!";
 			} else {
 				response = "There is some problem, please try again later...!!!";
