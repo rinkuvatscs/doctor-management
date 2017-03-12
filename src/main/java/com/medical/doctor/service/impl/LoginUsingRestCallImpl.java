@@ -12,6 +12,7 @@ public class LoginUsingRestCallImpl implements LoginService{
 	@Override
 	public int addLoginDetails(Doctor doctor) {
 		// TODO Auto-generated method stub
+		System.out.println("Temp"); 
 		return 0;
 	}
 
