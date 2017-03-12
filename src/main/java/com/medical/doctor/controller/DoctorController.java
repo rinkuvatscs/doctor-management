@@ -289,7 +289,7 @@ public class DoctorController {
 		return doctorService.getUnApprovedExpertise();
 	}
 
-	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/add/{expertise}/expertisation")
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/approve/{expertise}/expertisation")
 	@ResponseBody
 	public String addExpertisation(@PathVariable Integer expertise) {
 
