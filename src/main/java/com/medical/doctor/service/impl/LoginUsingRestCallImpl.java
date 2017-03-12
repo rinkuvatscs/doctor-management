@@ -7,11 +7,12 @@ import com.medical.doctor.enums.LoginEnum;
 import com.medical.doctor.service.LoginService;
 
 @Service
-public class LoginUsingRestCall implements LoginService{
+public class LoginUsingRestCallImpl implements LoginService{
 
 	@Override
 	public int addLoginDetails(Doctor doctor) {
 		// TODO Auto-generated method stub
+		System.out.println("Temp"); 
 		return 0;
 	}
 
