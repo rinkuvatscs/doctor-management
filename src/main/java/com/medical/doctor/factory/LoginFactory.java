@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import com.medical.doctor.enums.LoginEnum;
 import com.medical.doctor.service.LoginService;
-import com.medical.doctor.service.impl.LoginUsingRestCallImpl;
 
 @Component
 public class LoginFactory {
