@@ -10,11 +10,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import com.medical.doctor.constants.LoginQueryConstants;
-import com.medical.doctor.constants.QueryConstants;
 import com.medical.doctor.dao.LoginDao;
 import com.medical.doctor.entity.Login;
 import com.medical.doctor.extractor.LoginExtractor;
-import com.medical.doctor.request.LoginRequest;
 
 @Repository
 public class LoginDaoImpl implements LoginDao {
@@ -26,32 +24,32 @@ public class LoginDaoImpl implements LoginDao {
 			Pattern.CASE_INSENSITIVE);
 
 	@Override
-	public String validateLogin(LoginRequest loginRequest) {
+	public String validateLogin(Login login) {
 		StringBuffer query = new StringBuffer(LoginQueryConstants.IS_EXIST);
 		List<String> args = new ArrayList<>();
 
-		if (!StringUtils.isEmpty(loginRequest.getUsername())) {
-			if (isValidEmail(loginRequest.getUsername())) {
+		if (!StringUtils.isEmpty(login.getUsername())) {
+			if (isValidEmail(login.getUsername())) {
 				query.append(" where email = ? ");
-			} else if (isValidMobile(loginRequest.getUsername())) {
+			} else if (isValidMobile(login.getUsername())) {
 				query.append(" where mobile = ? ");
 			} else {
 				return "please provide valid username";
 			}
-			args.add(loginRequest.getUsername());
+			args.add(login.getUsername());
 		}
-		if (!StringUtils.isEmpty(loginRequest.getPassword())) {
+		if (!StringUtils.isEmpty(login.getPassword())) {
 			query.append(" and password = ? ");
-			args.add(loginRequest.getPassword());
+			args.add(login.getPassword());
 		}
-		if (!StringUtils.isEmpty(loginRequest.getType())) {
+		if (!StringUtils.isEmpty(login.getType())) {
 			query.append(" and type = ? ");
-			args.add(loginRequest.getType());
+			args.add(login.getType());
 		}
 
 		List<Login> response = jdbcTemplate.query(query.toString(), new LoginExtractor(), args.toArray());
 
-		if (!StringUtils.isEmpty(response) && response.size() > 0) {
+		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
 			return "success";
 		}
 		return "failure";
@@ -59,29 +57,29 @@ public class LoginDaoImpl implements LoginDao {
 	}
 
 	@Override
-	public String signUp(LoginRequest loginRequest) {
+	public String signUp(Login login) {
 
 		List<Object> args = new ArrayList<>();
-		if(!StringUtils.isEmpty(loginRequest) && !isExist(loginRequest)){
+		if(!StringUtils.isEmpty(login) && !isExist(login)){
 
 		}
 		return null;
 	}
 
-	private boolean isExist(LoginRequest loginRequest) {
+	private boolean isExist(Login login) {
 
 		boolean response = false;
 		String args[] = new String[1];
-		if (!StringUtils.isEmpty(loginRequest) && !StringUtils.isEmpty(loginRequest.getUsername())) {
+		if (!StringUtils.isEmpty(login) && !StringUtils.isEmpty(login.getUsername())) {
 			StringBuffer query = new StringBuffer(LoginQueryConstants.IS_EXIST);
-			if (isValidEmail(loginRequest.getUsername())) {
+			if (isValidEmail(login.getUsername())) {
 				query.append(" where email = ? ");
-			} else if (isValidMobile(loginRequest.getUsername())) {
+			} else if (isValidMobile(login.getUsername())) {
 				query.append(" where mobile = ? ");
 			} else {
 				return response;
 			}
-			args[0] = loginRequest.getUsername();
+			args[0] = login.getUsername();
 			List<Login> responseExist = jdbcTemplate.query(query.toString(), new LoginExtractor(), args);
 			if (!StringUtils.isEmpty(responseExist) && responseExist.size() > 0) {
 				response = true;
