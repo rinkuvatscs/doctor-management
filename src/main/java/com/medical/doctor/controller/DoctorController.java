@@ -36,6 +36,7 @@ import com.medical.doctor.service.DoctorService;
 @Api(basePath = "/doctor", value = "doctor", description = "Operations with Landlords", produces = "application/json")
 public class DoctorController {
 
+	private static final String DOCTOR_BADREQEST_MESSAGE = "Doctor Do not have enough information" ;
 	@Autowired
 	private DoctorService doctorService;
 
@@ -56,7 +57,7 @@ public class DoctorController {
 			BeanUtils.copyProperties(doctorRequest, doctor);
 		} catch (BeansException beansException) {
 			throw new BadRequestException(
-					"Doctor Do not have enough information", beansException);
+					DOCTOR_BADREQEST_MESSAGE, beansException);
 		}
 
 		if (!StringUtils.isEmpty(doctor)
@@ -128,7 +129,7 @@ public class DoctorController {
 			BeanUtils.copyProperties(searchDoctorRequest, doctor);
 		} catch (BeansException beansException) {
 			throw new BadRequestException(
-					"Doctor Do not have enough information", beansException);
+					DOCTOR_BADREQEST_MESSAGE, beansException);
 		}
 
 		return doctorMapper.mapDoctors(doctorService.getDoctors(doctor));
@@ -139,9 +140,9 @@ public class DoctorController {
 	@ResponseBody
 	public DoctorResponse getDoctorById(@PathVariable Integer id) {
 
-		if (!StringUtils.isEmpty(id) && id.intValue() > 0) {
+		if (!StringUtils.isEmpty(id) && id > 0) {
 			return doctorMapper.mapDoctor(doctorService.getDoctorById(id
-					.intValue()));
+					));
 		} else {
 			throw new BadRequestException("Doctor ID should not be blank");
 		}
@@ -240,7 +241,7 @@ public class DoctorController {
 			BeanUtils.copyProperties(doctorRequest, doctor);
 		} catch (BeansException beansException) {
 			throw new BadRequestException(
-					"Doctor Do not have enough information", beansException);
+					DOCTOR_BADREQEST_MESSAGE, beansException);
 		}
 		return new Response(doctorService.updateDoctor(doctor));
 	}
@@ -269,19 +270,28 @@ public class DoctorController {
 		}
 	}
 
+	/**
+	 * getRecentDoctors will provide recently joined doctors
+	 * 
+	 * 
+	 * Days already taken in Integer because this will come from UI end not will
+	 * be provided by any user always will come in correct format
+	 * 
+	 * @param days
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{days}/recentdoctors")
 	@ResponseBody
 	public List<DoctorResponse> getRecentDoctors(@PathVariable Integer days) {
 
-		if (!StringUtils.isEmpty(days) && days.intValue() > 0) {
-			return doctorMapper.mapDoctors(doctorService.getRecentDoctors(days
-					.intValue()));
+		if (!StringUtils.isEmpty(days) && days > 0) {
+			return doctorMapper
+					.mapDoctors(doctorService.getRecentDoctors(days));
 		} else {
 			throw new BadRequestException("Doctor ID should not be blank");
 		}
 	}
-	
-	
+
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/all/unapproved/expertisation")
 	@ResponseBody
 	public Map<Integer, String> getAllUnApprovedExpertisations() {
@@ -299,6 +309,5 @@ public class DoctorController {
 			throw new BadRequestException("Expertisation can not be blank");
 		}
 	}
-
 
 }
