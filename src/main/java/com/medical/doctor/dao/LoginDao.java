@@ -1,11 +1,11 @@
 package com.medical.doctor.dao;
 
-import com.medical.doctor.request.LoginRequest;
+import com.medical.doctor.entity.Login;
 
 public interface LoginDao {
 
-	String validateLogin(LoginRequest loginRequest);
+	String validateLogin(Login login);
 
-	String signUp(LoginRequest loginRequest);
+	String signUp(Login login);
 
 }
