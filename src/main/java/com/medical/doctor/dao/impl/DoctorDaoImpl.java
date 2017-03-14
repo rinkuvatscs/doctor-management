@@ -650,10 +650,10 @@ public class DoctorDaoImpl implements DoctorDao {
 
 	@Override
 	public List<Doctor> getRecentDoctors(Integer days) {
-		List<String> args = new ArrayList<>();
-		args.add(String.valueOf(days));
+		List<Integer> args = new ArrayList<>();
+		args.add(days);
 		StringBuffer query = new StringBuffer(QueryConstants.GET_DOCTORS);
-		query.append(" WHERE SYSDATE() - registered_date<= ? ");
+		query.append(" WHERE DATEDIFF(SYSDATE() , createdDate) <= ? ");
 
 		return jdbcTemplate.query(query.toString(), new DoctorExtractor(),
 				args.toArray());
