@@ -1,8 +1,8 @@
 package com.medical.doctor.service;
 
 import com.medical.doctor.entity.Doctor;
+import com.medical.doctor.entity.Login;
 import com.medical.doctor.enums.LoginEnum;
-import com.medical.doctor.request.LoginRequest;
 
 public interface LoginService {
 
@@ -10,7 +10,7 @@ public interface LoginService {
 	
 	public LoginEnum getLoginEnum() ;
 
-	public String validateLogin(LoginRequest loginRequest);
+	public String validateLogin(Login login);
 	
-	public String signUp(LoginRequest loginRequest);
+	public String signUp(Login login);
 }

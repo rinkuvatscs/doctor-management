@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.medical.doctor.dao.LoginDao;
 import com.medical.doctor.entity.Doctor;
+import com.medical.doctor.entity.Login;
 import com.medical.doctor.enums.LoginEnum;
 import com.medical.doctor.request.LoginRequest;
 import com.medical.doctor.service.LoginService;
@@ -23,8 +24,8 @@ public class LoginUsingDatabaseImpl implements LoginService {
 	}
 	
 	@Override
-	public String validateLogin(LoginRequest loginRequest) {
-		return loginDao.validateLogin(loginRequest);
+	public String validateLogin(Login login) {
+		return loginDao.validateLogin(login);
 	}
 
 	@Override
@@ -33,7 +34,7 @@ public class LoginUsingDatabaseImpl implements LoginService {
 	}
 
 	@Override
-	public String signUp(LoginRequest loginRequest) {
+	public String signUp(Login login) {
 		// TODO Auto-generated method stub
 		return null;
 	}
