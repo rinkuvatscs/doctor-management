@@ -36,6 +36,7 @@ import com.medical.doctor.service.DoctorService;
 @Api(basePath = "/doctor", value = "doctor", description = "Operations with Landlords", produces = "application/json")
 public class DoctorController {
 
+	private static final String DOCTOR_BADREQEST_MESSAGE = "Doctor Do not have enough information" ;
 	@Autowired
 	private DoctorService doctorService;
 
@@ -56,7 +57,7 @@ public class DoctorController {
 			BeanUtils.copyProperties(doctorRequest, doctor);
 		} catch (BeansException beansException) {
 			throw new BadRequestException(
-					"Doctor Do not have enough information", beansException);
+					DOCTOR_BADREQEST_MESSAGE, beansException);
 		}
 
 		if (!StringUtils.isEmpty(doctor)
@@ -128,7 +129,7 @@ public class DoctorController {
 			BeanUtils.copyProperties(searchDoctorRequest, doctor);
 		} catch (BeansException beansException) {
 			throw new BadRequestException(
-					"Doctor Do not have enough information", beansException);
+					DOCTOR_BADREQEST_MESSAGE, beansException);
 		}
 
 		return doctorMapper.mapDoctors(doctorService.getDoctors(doctor));
@@ -139,9 +140,9 @@ public class DoctorController {
 	@ResponseBody
 	public DoctorResponse getDoctorById(@PathVariable Integer id) {
 
-		if (!StringUtils.isEmpty(id) && id.intValue() > 0) {
+		if (!StringUtils.isEmpty(id) && id > 0) {
 			return doctorMapper.mapDoctor(doctorService.getDoctorById(id
-					.intValue()));
+					));
 		} else {
 			throw new BadRequestException("Doctor ID should not be blank");
 		}
@@ -240,7 +241,7 @@ public class DoctorController {
 			BeanUtils.copyProperties(doctorRequest, doctor);
 		} catch (BeansException beansException) {
 			throw new BadRequestException(
-					"Doctor Do not have enough information", beansException);
+					DOCTOR_BADREQEST_MESSAGE, beansException);
 		}
 		return new Response(doctorService.updateDoctor(doctor));
 	}

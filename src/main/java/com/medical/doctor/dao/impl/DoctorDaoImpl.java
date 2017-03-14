@@ -32,7 +32,7 @@ public class DoctorDaoImpl implements DoctorDao {
 	@Override
 	public String addDoctor(Doctor doctor) {
 
-		String response = null;
+		String response ;
 		if (!isDoctorExists(doctor)) {
 
 			List<Object> args = new ArrayList<>();
@@ -59,7 +59,7 @@ public class DoctorDaoImpl implements DoctorDao {
 	@Override
 	public String deleteDoctor(Integer doctorId) {
 
-		String response = null;
+		String response ;
 		List<Object> args = new ArrayList<>();
 		args.add(doctorId);
 		int row = jdbcTemplate.update(QueryConstants.DELETE_DOCTOR,
@@ -78,7 +78,10 @@ public class DoctorDaoImpl implements DoctorDao {
 	public boolean isDoctorExists(Doctor doctor) {
 
 		boolean isExist = false;
-		boolean isMobile = false, isAadhaar = false, isEmail = false, isDoctorId = false;
+		boolean isMobile = false;
+		boolean isAadhaar = false;
+		boolean isEmail = false;
+		boolean isDoctorId = false;
 
 		List<Object> args = new ArrayList<>();
 		StringBuffer query = new StringBuffer(QueryConstants.IS_DOCTOR_EXIST);
@@ -124,7 +127,7 @@ public class DoctorDaoImpl implements DoctorDao {
 		}
 		List<Doctor> response = jdbcTemplate.query(query.toString(),
 				new DoctorExtractor(), args.toArray());
-		if (!StringUtils.isEmpty(response) && response.size() > 0) {
+		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
 			isExist = true;
 		}
 		return isExist;
@@ -138,7 +141,7 @@ public class DoctorDaoImpl implements DoctorDao {
 			List<Doctor> response = jdbcTemplate.query(
 					QueryConstants.GET_DOCTOR_BY_ID, args,
 					new DoctorExtractor());
-			if (!StringUtils.isEmpty(response) && response.size() > 0) {
+			if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
 				return response.get(0);
 			}
 		}
@@ -153,7 +156,7 @@ public class DoctorDaoImpl implements DoctorDao {
 			List<Doctor> response = jdbcTemplate.query(
 					QueryConstants.GET_DOCTOR_BY_EMAIL, args,
 					new DoctorExtractor());
-			if (!StringUtils.isEmpty(response) && response.size() > 0) {
+			if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
 				return response.get(0);
 			}
 		}
@@ -168,7 +171,7 @@ public class DoctorDaoImpl implements DoctorDao {
 			List<Doctor> response = jdbcTemplate.query(
 					QueryConstants.GET_DOCTOR_BY_ADHAR_NUMBER,
 					new DoctorExtractor(), args);
-			if (!StringUtils.isEmpty(response) && response.size() > 0) {
+			if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
 				return response.get(0);
 			}
 		}
@@ -183,7 +186,7 @@ public class DoctorDaoImpl implements DoctorDao {
 			List<Doctor> response = jdbcTemplate.query(
 					QueryConstants.GET_DOCTOR_BY_MOBILE_NUMBER,
 					new DoctorExtractor(), args);
-			if (!StringUtils.isEmpty(response) && response.size() > 0) {
+			if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
 				return response.get(0);
 			}
 		}
@@ -202,7 +205,7 @@ public class DoctorDaoImpl implements DoctorDao {
 				return response;
 			}
 		}
-		return new ArrayList<Doctor>();
+		return new ArrayList<>();
 	}
 
 	@Override
@@ -217,7 +220,7 @@ public class DoctorDaoImpl implements DoctorDao {
 				return response;
 			}
 		}
-		return new ArrayList<Doctor>();
+		return new ArrayList<>();
 	}
 
 	@Override
@@ -230,7 +233,7 @@ public class DoctorDaoImpl implements DoctorDao {
 		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
 			return response;
 		}
-		return new ArrayList<Doctor>();
+		return new ArrayList<>();
 	}
 
 	@Override
@@ -482,11 +485,11 @@ public class DoctorDaoImpl implements DoctorDao {
 	@Override
 	public List<Doctor> getDoctors(Doctor doctor) {
 
-		List<Doctor> response = null;
+		List<Doctor> response ;
 
 		if (!StringUtils.isEmpty(doctor.getAadhaarNumber())) {
 
-			response = new ArrayList<Doctor>();
+			response = new ArrayList<>();
 			Doctor doctorWithAadhaar = getDoctorByAdharNumber(doctor
 					.getAadhaarNumber());
 			if (!StringUtils.isEmpty(doctorWithAadhaar.getDoctorId())) {
@@ -498,7 +501,7 @@ public class DoctorDaoImpl implements DoctorDao {
 
 		if (!StringUtils.isEmpty(doctor.getMobile())) {
 
-			response = new ArrayList<Doctor>();
+			response = new ArrayList<>();
 			Doctor doctorWithMoblie = getDoctorByMobileNumber(doctor
 					.getMobile());
 			if (!StringUtils.isEmpty(doctorWithMoblie.getDoctorId())) {
@@ -511,7 +514,7 @@ public class DoctorDaoImpl implements DoctorDao {
 		if (!StringUtils.isEmpty(doctor.getDoctorId())
 				&& doctor.getDoctorId() > 0) {
 
-			response = new ArrayList<Doctor>();
+			response = new ArrayList<>();
 			Doctor doctorWithId = getDoctorById(doctor.getDoctorId());
 			if (!StringUtils.isEmpty(doctorWithId.getDoctorId())) {
 				response.add(doctorWithId);
@@ -522,7 +525,7 @@ public class DoctorDaoImpl implements DoctorDao {
 
 		if (!StringUtils.isEmpty(doctor.getEmail())) {
 
-			response = new ArrayList<Doctor>();
+			response = new ArrayList<>();
 			Doctor doctorWithEmail = getDoctorByEmail(doctor.getEmail());
 			if (!StringUtils.isEmpty(doctorWithEmail.getDoctorId())) {
 				response.add(doctorWithEmail);
@@ -531,9 +534,13 @@ public class DoctorDaoImpl implements DoctorDao {
 			return response;
 		}
 
-		boolean isName = false, isGovServant = false, isHomeAddress = false, isExpertized = false;
+		boolean isName = false;
+		boolean isGovServant = false;
+		boolean isHomeAddress = false; 
+		boolean isExpertized = false;
+		
 		List<Object> args = new ArrayList<>();
-		StringBuffer query = new StringBuffer(QueryConstants.GET_DOCTORS);
+		StringBuilder query = new StringBuilder(QueryConstants.GET_DOCTORS);
 
 		if (!StringUtils.isEmpty(doctor)) {
 
@@ -609,7 +616,7 @@ public class DoctorDaoImpl implements DoctorDao {
 		}
 
 		if (null == response) {
-			return new ArrayList<Doctor>();
+			return new ArrayList<>();
 		}
 		return response;
 	}
@@ -625,7 +632,7 @@ public class DoctorDaoImpl implements DoctorDao {
 	public Integer addExpertisation(String expertise) {
 
 		if (!isExpertiseExists(expertise)) {
-			List<String> args = new ArrayList<String>();
+			List<String> args = new ArrayList<>();
 			args.add(expertise.toLowerCase());
 			return jdbcTemplate.update(QueryConstants.ADD_EXPERTIZED,
 					args.toArray());
@@ -652,7 +659,7 @@ public class DoctorDaoImpl implements DoctorDao {
 	public List<Doctor> getRecentDoctors(Integer days) {
 		List<Integer> args = new ArrayList<>();
 		args.add(days);
-		StringBuffer query = new StringBuffer(QueryConstants.GET_DOCTORS);
+		StringBuilder query = new StringBuilder(QueryConstants.GET_DOCTORS);
 		query.append(" WHERE DATEDIFF(SYSDATE() , createdDate) <= ? ");
 
 		return jdbcTemplate.query(query.toString(), new DoctorExtractor(),
