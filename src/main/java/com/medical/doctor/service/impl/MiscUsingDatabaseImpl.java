@@ -37,7 +37,7 @@ public class MiscUsingDatabaseImpl implements MiscService {
 	private String port;
 	@Value("${mail.smtp.port.number}")
 	private String portNumber;
-	@Value("${username}")
+	@Value("${mail.username}")
 	private String username;
 	@Value("${password}")
 	private String password;
