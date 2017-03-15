@@ -1,5 +1,6 @@
 package com.medical.doctor.service.impl;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -10,10 +11,15 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.medical.doctor.dao.AdvertiseDoctorDao;
+import com.medical.doctor.dao.ContactDao;
+import com.medical.doctor.entity.AdvertiseDoctor;
+import com.medical.doctor.entity.Contact;
 import com.medical.doctor.entity.Email;
 import com.medical.doctor.enums.MiscEnum;
 import com.medical.doctor.service.MiscService;
@@ -44,6 +50,13 @@ public class MiscUsingDatabaseImpl implements MiscService {
 
 	// final String username = "aviralmittal@srydada.96.lt";
 	// final String password = "aviral";
+	
+	@Autowired
+	private ContactDao contactDao;
+	
+	@Autowired
+	private AdvertiseDoctorDao advertiseDoctorDao;
+	
 
 	@Override
 	public String sendMail(Email email) {
@@ -122,6 +135,35 @@ public class MiscUsingDatabaseImpl implements MiscService {
 	@Override
 	public MiscEnum getMiscEnum() {
 		return MiscEnum.DIRECT_DATABASE;
+	}
+
+	@Override
+	public String addContact(Contact responseContact) {
+		String response = null;
+		if (!StringUtils.isEmpty(responseContact)) {
+			response = contactDao.addContact(responseContact);
+		}
+		return response;
+	}
+
+	@Override
+	public Contact getContact() {
+		return contactDao.getContact();
+	}
+
+	@Override
+	public String updateContact(Contact contact) {
+		return contactDao.updateContact(contact);
+	}
+
+	@Override
+	public List<Contact> getAll() {
+		return contactDao.getAll();
+	}
+
+	@Override
+	public List<AdvertiseDoctor> getDoctorByDate(AdvertiseDoctor advertiseDoctor) {
+		return advertiseDoctorDao.getDoctorByDate(advertiseDoctor);
 	}
 	
 }
