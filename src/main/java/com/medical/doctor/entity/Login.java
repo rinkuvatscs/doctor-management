@@ -2,7 +2,7 @@ package com.medical.doctor.entity;
 
 import java.sql.Date;
 
-public class Login {
+public class Login extends DoctorSignUp{
 
 	private int id;
 	private String username;

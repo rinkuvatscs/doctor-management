@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.medical.doctor.dao.DoctorDao;
 import com.medical.doctor.entity.Doctor;
+import com.medical.doctor.entity.DoctorSignUp;
 import com.medical.doctor.service.DoctorService;
 import com.medical.doctor.util.ExpertiseParser;
 
@@ -130,6 +131,12 @@ public class DoctorServiceImpl implements DoctorService {
 	@Override
 	public Map<Integer, String> getUnApprovedExpertise() {
 		return doctorDao.getUnApprovedExpertise();
+	}
+
+	@Override
+	public List<Doctor> doctorSignUp(Doctor doctor) {
+		
+		return doctorDao.doctorSignUp(doctor);
 	}
 
 }

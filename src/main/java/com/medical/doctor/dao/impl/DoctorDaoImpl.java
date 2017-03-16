@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import com.medical.doctor.constants.QueryConstants;
 import com.medical.doctor.dao.DoctorDao;
 import com.medical.doctor.entity.Doctor;
+import com.medical.doctor.entity.DoctorSignUp;
 import com.medical.doctor.exceptionhandler.BadRequestException;
 import com.medical.doctor.extractor.DoctorExtractor;
 import com.medical.doctor.extractor.ExpertizedExtractor;
@@ -673,6 +674,12 @@ public class DoctorDaoImpl implements DoctorDao {
 	public Map<Integer, String> getUnApprovedExpertise() {
 		return jdbcTemplate.query(QueryConstants.GET_UNAPPROVED_EXPERTISE,
 				new ExpertizedExtractor());
+	}
+
+	@Override
+	public List<Doctor> doctorSignUp(Doctor doctor) {
+		 jdbcTemplate.update("call DoctorSignUp(?, ?, ?, ?, ?)", "mahima", "abc@email.com", "8802987685", "558877996633", "12345");
+		 return null;
 	}
 
 }

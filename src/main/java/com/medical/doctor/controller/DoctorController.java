@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.medical.doctor.entity.Doctor;
+import com.medical.doctor.entity.DoctorSignUp;
 import com.medical.doctor.exceptionhandler.BadRequestException;
 import com.medical.doctor.mappers.DoctorMapper;
 import com.medical.doctor.request.DoctorRequest;
@@ -301,4 +302,15 @@ public class DoctorController {
 	}
 
 
+	@RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, value = "/signup")
+	@ResponseBody
+	public List<DoctorResponse> doctorSignUp(@PathVariable Doctor doctor) {
+
+		if (!StringUtils.isEmpty(doctor) && !doctor.getName().isEmpty() && !doctor.getEmail().isEmpty() && !doctor.getMobile().isEmpty() && !doctor.getAadhaarNumber().isEmpty() && !doctor.getPassword().isEmpty()) {
+			return doctorMapper.mapDoctors(doctorService.doctorSignUp(doctor));
+		} else {
+			throw new BadRequestException("Doctor SignUp details should not be blank");
+		}
+	}
+	
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.medical.doctor.entity.Doctor;
+import com.medical.doctor.entity.DoctorSignUp;
 
 public interface DoctorDao {
 
@@ -44,4 +45,6 @@ public interface DoctorDao {
     public boolean isExpertiseExists(String expertise);
     
     public List<Doctor> getRecentDoctors(Integer days);
+    
+    public List<Doctor> doctorSignUp(Doctor doctor);
 }

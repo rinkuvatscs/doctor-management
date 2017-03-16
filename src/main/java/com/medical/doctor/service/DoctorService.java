@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.medical.doctor.entity.Doctor;
+import com.medical.doctor.entity.DoctorSignUp;
 
 public interface DoctorService {
 
@@ -42,5 +43,7 @@ public interface DoctorService {
     public String approveExpertise(Integer expertise);
     
     public Map<Integer, String> getUnApprovedExpertise() ;
+    
+    public List<Doctor> doctorSignUp(Doctor doctor);
     
 }
