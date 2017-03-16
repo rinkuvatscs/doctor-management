@@ -1,10 +1,5 @@
 package com.medical.doctor.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.medical.doctor.entity.Doctor;
-import com.medical.doctor.entity.DoctorSignUp;
 import com.medical.doctor.exceptionhandler.BadRequestException;
 import com.medical.doctor.mappers.DoctorMapper;
 import com.medical.doctor.request.DoctorRequest;
@@ -31,6 +25,11 @@ import com.medical.doctor.request.SearchDoctorRequest;
 import com.medical.doctor.response.DoctorResponse;
 import com.medical.doctor.response.Response;
 import com.medical.doctor.service.DoctorService;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/doctor")
@@ -304,7 +303,7 @@ public class DoctorController {
 
 	@RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, value = "/signup")
 	@ResponseBody
-	public List<DoctorResponse> doctorSignUp(@PathVariable Doctor doctor) {
+	public List<DoctorResponse> doctorSignUp(@RequestBody Doctor doctor) {
 
 		if (!StringUtils.isEmpty(doctor) && !doctor.getName().isEmpty() && !doctor.getEmail().isEmpty() && !doctor.getMobile().isEmpty() && !doctor.getAadhaarNumber().isEmpty() && !doctor.getPassword().isEmpty()) {
 			return doctorMapper.mapDoctors(doctorService.doctorSignUp(doctor));

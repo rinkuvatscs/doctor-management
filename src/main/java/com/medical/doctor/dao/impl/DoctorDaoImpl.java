@@ -1,11 +1,15 @@
 package com.medical.doctor.dao.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -675,9 +679,33 @@ public class DoctorDaoImpl implements DoctorDao {
 		return jdbcTemplate.query(QueryConstants.GET_UNAPPROVED_EXPERTISE,
 				new ExpertizedExtractor());
 	}
+	
+	/*
+	 * CREATE DEFINER=`u754709029_user`@`localhost` PROCEDURE `DoctorSignUp`(
+IN Name VARCHAR(45), IN Mobile bigint(11), IN Aadhaar bigint(13), IN Email VARCHAR(30), IN Password VARCHAR(100),
+OUT DID bigint)
+BEGIN
+                INSERT INTO `doctor` (name, mobile, adhaar, email) values (Name,Mobile,Aadhaar,Email);
+                SET DID = LAST_INSERT_ID();
+                INSERT INTO `login` (mobile,password,adhaar,email,type,typeId,createdDate) values (Mobile,Password,Aadhaar,Email,'d',DID,CURRENT_DATE());
+END
+	 * */
 
 	@Override
 	public List<Doctor> doctorSignUp(Doctor doctor) {
+		
+		SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate);
+		simpleJdbcCall.withProcedureName("DoctorSignUp");
+		Map<String, Object> inParamMap = new HashMap<String, Object>();
+		inParamMap.put("Name", doctor.getName());
+		inParamMap.put("Mobile", doctor.getMobile());
+		inParamMap.put("Aadhaar", doctor.getAadhaarNumber());
+		inParamMap.put("Email", doctor.getEmail());
+		inParamMap.put("Password", doctor.getPassword());
+		
+		SqlParameterSource in = new MapSqlParameterSource(inParamMap);
+		Map<String, Object> response = simpleJdbcCall.execute(in);
+		
 		 jdbcTemplate.update("call DoctorSignUp(?, ?, ?, ?, ?)", "mahima", "abc@email.com", "8802987685", "558877996633", "12345");
 		 return null;
 	}
