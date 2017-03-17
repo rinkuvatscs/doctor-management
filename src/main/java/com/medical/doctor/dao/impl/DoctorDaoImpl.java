@@ -757,4 +757,13 @@ END
 		return false;
 	}
 
+	@Override
+	public Boolean checkEmail(String email) {
+		Object[] args ={email};
+		List<Doctor> response = jdbcTemplate.query(" SELECT * FROM doctor WHERE email = ? ", new DoctorExtractor(), args);
+		if(!response.isEmpty()){
+			return true;
+		}
+		return false;
+	}
 }

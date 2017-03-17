@@ -134,7 +134,7 @@ public class DoctorServiceImpl implements DoctorService {
 	}
 
 	@Override
-	public List<Doctor> doctorSignUp(Doctor doctor) {
+	public Integer doctorSignUp(Doctor doctor) {
 		
 		return doctorDao.doctorSignUp(doctor);
 	}
@@ -148,6 +148,11 @@ public class DoctorServiceImpl implements DoctorService {
 	@Override
 	public Boolean checkAdhaar(String adhaar) {
 		return doctorDao.checkAdhaar(adhaar);
+	}
+
+	@Override
+	public Boolean checkEmail(String email) {
+		return doctorDao.checkEmail(email);
 	}
 
 }

@@ -303,10 +303,10 @@ public class DoctorController {
 
 	@RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, value = "/signup")
 	@ResponseBody
-	public List<DoctorResponse> doctorSignUp(@RequestBody Doctor doctor) {
+	public Integer doctorSignUp(@RequestBody Doctor doctor) {
 
 		if (!StringUtils.isEmpty(doctor) && !doctor.getName().isEmpty() && !doctor.getEmail().isEmpty() && !doctor.getMobile().isEmpty() && !doctor.getAadhaarNumber().isEmpty() && !doctor.getPassword().isEmpty()) {
-			return doctorMapper.mapDoctors(doctorService.doctorSignUp(doctor));
+			return doctorService.doctorSignUp(doctor);
 		} else {
 			throw new BadRequestException("Doctor SignUp details should not be blank");
 		}
@@ -321,5 +321,11 @@ public class DoctorController {
 	public Boolean checkAdhaar(@PathVariable String adhaar) {
 		System.out.println(adhaar);
 		return doctorService.checkMobile(adhaar);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/checkEmail/{email}")
+	public Boolean checkEmail(@PathVariable String email) {
+		System.out.println(email);
+		return doctorService.checkMobile(email);
 	}
 }

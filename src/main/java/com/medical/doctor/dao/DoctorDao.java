@@ -51,4 +51,6 @@ public interface DoctorDao {
     public Boolean checkMobile(String mobile);
     
     public Boolean checkAdhaar(String adhaar);
+    
+    public Boolean checkEmail(String email);
 }
