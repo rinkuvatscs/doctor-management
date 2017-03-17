@@ -7,9 +7,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.jdbc.object.GenericStoredProcedure;
+import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -21,9 +25,10 @@ import com.medical.doctor.exceptionhandler.BadRequestException;
 import com.medical.doctor.extractor.DoctorExtractor;
 import com.medical.doctor.extractor.ExpertizedExtractor;
 import com.medical.doctor.factory.LoginFactory;
+import com.sun.xml.internal.ws.wsdl.writer.document.Types;
 
 @Component
-public class DoctorDaoImpl implements DoctorDao {
+public class DoctorDaoImpl implements DoctorDao{
 
 	private static final String DEFAULT = "NA";
 
@@ -692,22 +697,64 @@ END
 	 * */
 
 	@Override
-	public List<Doctor> doctorSignUp(Doctor doctor) {
-		
-		SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate);
-		simpleJdbcCall.withProcedureName("DoctorSignUp");
-		Map<String, Object> inParamMap = new HashMap<String, Object>();
-		inParamMap.put("Name", doctor.getName());
-		inParamMap.put("Mobile", doctor.getMobile());
-		inParamMap.put("Aadhaar", doctor.getAadhaarNumber());
-		inParamMap.put("Email", doctor.getEmail());
-		inParamMap.put("Password", doctor.getPassword());
-		
-		SqlParameterSource in = new MapSqlParameterSource(inParamMap);
-		Map<String, Object> response = simpleJdbcCall.execute(in);
-		
-		 jdbcTemplate.update("call DoctorSignUp(?, ?, ?, ?, ?)", "mahima", "abc@email.com", "8802987685", "558877996633", "12345");
-		 return null;
+	public Integer doctorSignUp(Doctor doctor) {
+
+		String response = null;
+		String query = "insert into doctor (name, mobile, adhaar, email, createdDate) values (?,?,?,?, NOW())";
+		String query1 = "Select * from doctor where mobile = ? ";
+		String query2 = "insert into login (mobile,password,adhaar,email,type,typeId,createdDate) values (?,?,?,?,?,?, NOW() ";
+		List<Doctor> res = null;
+
+		List<Object> args = new ArrayList<Object>();
+		args.add(doctor.getName());
+		args.add(doctor.getMobile());
+		args.add(doctor.getAadhaarNumber());
+		args.add(doctor.getEmail());
+		int doctorResponse = jdbcTemplate.update(query, args.toArray());
+		if (doctorResponse > 0) {
+			args = new ArrayList<Object>();
+			args.add(doctor.getMobile());
+			res = jdbcTemplate.query(query1, new DoctorExtractor(),
+					args.toArray());
+			if (!StringUtils.isEmpty(res) && !res.isEmpty()) {
+
+				args = new ArrayList<Object>();
+				args.add(doctor.getMobile());
+				args.add(doctor.getPassword());
+				args.add(doctor.getAadhaarNumber());
+				args.add(doctor.getEmail());
+				args.add("d");
+				args.add(res.get(0).getDoctorId());
+				int resp = jdbcTemplate.update(query2, args.toArray());
+				if (resp > 0) {
+					response = " Successfully added...";
+				}
+			}
+		}
+		if (!StringUtils.isEmpty(res) && !res.isEmpty()) {
+			return res.get(0).getDoctorId();
+		}
+		return 0;
+	}
+
+	@Override
+	public Boolean checkMobile(String mobile) {
+		Object[] args = {mobile};
+		List<Doctor> response = jdbcTemplate.query(" SELECT * FROM doctor WHERE mobile = ? ", new DoctorExtractor(), args);
+		if(!response.isEmpty()){
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public Boolean checkAdhaar(String adhaar) {
+		Object[] args ={adhaar};
+		List<Doctor> response = jdbcTemplate.query(" SELECT * FROM doctor WHERE adhaar = ? ", new DoctorExtractor(), args);
+		if(!response.isEmpty()){
+			return true;
+		}
+		return false;
 	}
 
 }

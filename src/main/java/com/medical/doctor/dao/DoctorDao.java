@@ -46,5 +46,9 @@ public interface DoctorDao {
     
     public List<Doctor> getRecentDoctors(Integer days);
     
-    public List<Doctor> doctorSignUp(Doctor doctor);
+    public Integer doctorSignUp(Doctor doctor);
+    
+    public Boolean checkMobile(String mobile);
+    
+    public Boolean checkAdhaar(String adhaar);
 }

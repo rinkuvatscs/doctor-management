@@ -312,4 +312,14 @@ public class DoctorController {
 		}
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/checkMobile/{mobile}")
+	public Boolean checkMobile(@PathVariable String mobile) {
+		return doctorService.checkMobile(mobile);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/checkAdhaar/{adhaar}")
+	public Boolean checkAdhaar(@PathVariable String adhaar) {
+		System.out.println(adhaar);
+		return doctorService.checkMobile(adhaar);
+	}
 }

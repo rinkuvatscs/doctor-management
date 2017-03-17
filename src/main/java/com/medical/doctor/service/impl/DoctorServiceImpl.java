@@ -139,4 +139,15 @@ public class DoctorServiceImpl implements DoctorService {
 		return doctorDao.doctorSignUp(doctor);
 	}
 
+	@Override
+	public Boolean checkMobile(String mobile) {
+		return doctorDao.checkMobile(mobile);
+		
+	}
+
+	@Override
+	public Boolean checkAdhaar(String adhaar) {
+		return doctorDao.checkAdhaar(adhaar);
+	}
+
 }

@@ -46,4 +46,8 @@ public interface DoctorService {
     
     public List<Doctor> doctorSignUp(Doctor doctor);
     
+    public Boolean checkMobile(String mobile);
+    
+    public Boolean checkAdhaar(String adhaar);
+    
 }
