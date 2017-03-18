@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.medical.doctor.dao.DoctorDao;
 import com.medical.doctor.entity.Doctor;
-import com.medical.doctor.entity.DoctorSignUp;
 import com.medical.doctor.service.DoctorService;
 import com.medical.doctor.util.ExpertiseParser;
 
