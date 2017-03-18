@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import com.medical.doctor.patient.constants.PatientLoginQueryConstants;
 import com.medical.doctor.patient.constants.PatientQueryConstants;
 import com.medical.doctor.patient.dao.PatientDao;
 import com.medical.doctor.patient.entity.Patient;
@@ -42,7 +43,7 @@ public class PatientDaoImpl implements PatientDao {
 				args.add(patient.getEmail());
 				args.add("p");
 				args.add(patientList.get(0).getpId());
-				int response = jdbcTemplate.update(PatientQueryConstants.INSERT_LOGIN, args.toArray());
+				int response = jdbcTemplate.update(PatientLoginQueryConstants.INSERT_LOGIN, args.toArray());
 				if (response > 0) {
 					return patientList.get(0).getpId();
 				}
