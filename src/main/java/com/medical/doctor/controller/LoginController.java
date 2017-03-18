@@ -29,7 +29,7 @@ import com.medical.doctor.response.LoginResponse;
 public class LoginController {
 
 	@Autowired
-	private LoginFactory LoginFactory;
+	private LoginFactory loginFactory;
 
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/signup", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
@@ -46,13 +46,12 @@ public class LoginController {
 					"Login Do not have enough information", beansException);
 		}
 		if(!StringUtils.isEmpty(login) && !StringUtils.isEmpty(login.getUsername()) && !StringUtils.isEmpty(login.getPassword())){
-			return new LoginResponse(LoginFactory.getLoginService().validateLogin(login));	
+			return new LoginResponse(loginFactory.getLoginService().validateLogin(login));	
 		}else{
 			throw new BadRequestException(
 					"Login Username and Password should not be blank");
 		}
 		
-//		return new ResponseEntity<LoginResponse>(loginResponse, HttpStatus.OK);
 	}
 	
 	/*@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/", method = RequestMethod.POST)

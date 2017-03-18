@@ -38,5 +38,9 @@ public interface QueryConstants {
 	
 	String APPROVE_EXPERTISE = "update expertise SET approved  = 1" ;
 	
+	String INSERT_DOCTOR = "insert into doctor (name, mobile, adhaar, email, createdDate) values (?,?,?,?, NOW())";
+	
+	String GET_DOCTOR_BY_MOBILE = "Select * from doctor where mobile = ? ";
+	
 	
 }

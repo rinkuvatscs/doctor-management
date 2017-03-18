@@ -44,7 +44,7 @@ public interface DoctorService {
     
     public Map<Integer, String> getUnApprovedExpertise() ;
     
-    public List<Doctor> doctorSignUp(Doctor doctor);
+    public Integer doctorSignUp(Doctor doctor);
     
     public Boolean checkMobile(String mobile);
     

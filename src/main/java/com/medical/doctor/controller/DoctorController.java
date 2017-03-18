@@ -303,10 +303,11 @@ public class DoctorController {
 
 	@RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, value = "/signup")
 	@ResponseBody
-	public List<DoctorResponse> doctorSignUp(@RequestBody Doctor doctor) {
+	public Integer doctorSignUp(@RequestBody Doctor doctor) {
 
 		if (!StringUtils.isEmpty(doctor) && !doctor.getName().isEmpty() && !doctor.getEmail().isEmpty() && !doctor.getMobile().isEmpty() && !doctor.getAadhaarNumber().isEmpty() && !doctor.getPassword().isEmpty()) {
-			return doctorMapper.mapDoctors(doctorService.doctorSignUp(doctor));
+//			return doctorMapper.mapDoctors(doctorService.doctorSignUp(doctor));
+			return doctorService.doctorSignUp(doctor);
 		} else {
 			throw new BadRequestException("Doctor SignUp details should not be blank");
 		}
