@@ -13,6 +13,15 @@ public class Patient extends PatientSignUp {
 	private String allergies;
 	private Date DOB;
 	private String password;
+	private String homeAddress;
+
+	public String getHomeAddress() {
+		return homeAddress;
+	}
+
+	public void setHomeAddress(String homeAddress) {
+		this.homeAddress = homeAddress;
+	}
 
 	public Integer getpId() {
 		return pId;
@@ -90,7 +99,7 @@ public class Patient extends PatientSignUp {
 	public String toString() {
 		return "Patient [pId=" + pId + ", name=" + name + ", mobile=" + mobile + ", adhaar=" + adhaar + ", email="
 				+ email + ", gender=" + gender + ", allergies=" + allergies + ", DOB=" + DOB + ", password=" + password
-				+ "]";
+				+ ", homeAddress=" + homeAddress + "]";
 	}
 
 }
