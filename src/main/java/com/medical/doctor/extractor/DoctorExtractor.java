@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 
 import com.medical.doctor.entity.Doctor;
@@ -24,18 +23,15 @@ public class DoctorExtractor implements ResultSetExtractor<List<Doctor>> {
 	List<Doctor> doctorList = new ArrayList<>();
 
 	@Override
-	public List<Doctor> extractData(ResultSet rs) throws SQLException,
-			DataAccessException {
+	public List<Doctor> extractData(ResultSet rs) throws SQLException {
 		Doctor doctor;
 
 		while (rs.next()) {
 			doctor = new Doctor();
 			doctor.setAadhaarNumber(rs.getString("adhaar"));
-			doctor.setDaysCheckFree(rs
-					.getInt("freeDay"));
+			doctor.setDaysCheckFree(rs.getInt("freeDay"));
 			doctor.setExpertized(rs.getString("expertise"));
-			doctor.setIsGovernmentServent(rs
-					.getBoolean("gov"));
+			doctor.setIsGovernmentServent(rs.getBoolean("gov"));
 			doctor.setHighestDegree(rs.getString("highestDegree"));
 			doctor.setHomeAddress(rs.getString("homeAddress"));
 			doctor.setDoctorId(rs.getInt("dId"));
@@ -44,7 +40,6 @@ public class DoctorExtractor implements ResultSetExtractor<List<Doctor>> {
 			doctor.setOneTimeFee(rs.getString("fee"));
 			doctor.setClinicAddress(rs.getString("clinic"));
 			doctor.setEmail(rs.getString("email"));
-//			doctor.setAge(rs.getInt("age"));
 			doctor.setGender(rs.getString("gender"));
 			doctorList.add(doctor);
 		}

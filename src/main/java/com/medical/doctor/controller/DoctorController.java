@@ -36,6 +36,7 @@ import com.medical.doctor.service.DoctorService;
 @Api(basePath = "/doctor", value = "doctor", description = "Operations with Landlords", produces = "application/json")
 public class DoctorController {
 
+	private static final String DOCTOR_BADREQEST_MESSAGE = "Doctor Do not have enough information";
 	@Autowired
 	private DoctorService doctorService;
 
@@ -45,29 +46,35 @@ public class DoctorController {
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "add new doctor", notes = "add new doctor")
-	@ApiResponses(value = { @ApiResponse(code = 400, message = "Fields are with validation errors"),
+	@ApiResponses(value = {
+			@ApiResponse(code = 400, message = "Fields are with validation errors"),
 			@ApiResponse(code = 201, message = "") })
-	public Response addDoctor(@RequestBody com.medical.doctor.request.DoctorRequest doctorRequest) {
+	public Response addDoctor(
+			@RequestBody com.medical.doctor.request.DoctorRequest doctorRequest) {
 
 		Doctor doctor = new Doctor();
 		try {
 			BeanUtils.copyProperties(doctorRequest, doctor);
 		} catch (BeansException beansException) {
-			throw new BadRequestException("Doctor Do not have enough information", beansException);
+			throw new BadRequestException(DOCTOR_BADREQEST_MESSAGE,
+					beansException);
 		}
 
-		if (!StringUtils.isEmpty(doctor) && !StringUtils.isEmpty(doctor.getAadhaarNumber())
+		if (!StringUtils.isEmpty(doctor)
+				&& !StringUtils.isEmpty(doctor.getAadhaarNumber())
 				&& !StringUtils.isEmpty(doctor.getMobile())) {
 			return new Response(doctorService.addDoctor(doctor));
 		} else {
-			throw new BadRequestException("Doctor Aaddhar Number and Mobile Number should not be blank");
+			throw new BadRequestException(
+					"Doctor Aaddhar Number and Mobile Number should not be blank");
 		}
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/delete/{id}/id")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "delete doctor", notes = "delete doctor")
-	@ApiResponses(value = { @ApiResponse(code = 400, message = "Fields are with validation errors"),
+	@ApiResponses(value = {
+			@ApiResponse(code = 400, message = "Fields are with validation errors"),
 			@ApiResponse(code = 201, message = "") })
 	public Response deleteDoctorById(@PathVariable Integer id) {
 
@@ -88,7 +95,8 @@ public class DoctorController {
 			doctor.setAadhaarNumber(aadhaar);
 			return new Response(doctorService.deleteDoctor(doctor));
 		} else
-			throw new BadRequestException("Doctor Aaddhar Number should not be blank");
+			throw new BadRequestException(
+					"Doctor Aaddhar Number should not be blank");
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/delete")
@@ -107,20 +115,22 @@ public class DoctorController {
 			doctor.setMobile(mobile);
 			return new Response(doctorService.deleteDoctor(doctor));
 		} else
-			throw new BadRequestException("Doctor Mobile Number should not be blank");
+			throw new BadRequestException(
+					"Doctor Mobile Number should not be blank");
 	}
 
 	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/all")
 	@ResponseBody
-	public List<DoctorResponse> getDoctorByAll(@RequestBody SearchDoctorRequest searchDoctorRequest) {
+	public List<DoctorResponse> getDoctorByAll(
+			@RequestBody SearchDoctorRequest searchDoctorRequest) {
 
 		Doctor doctor = new Doctor();
 		try {
 			BeanUtils.copyProperties(searchDoctorRequest, doctor);
 		} catch (BeansException beansException) {
-			throw new BadRequestException("Doctor Do not have enough information", beansException);
+			throw new BadRequestException(DOCTOR_BADREQEST_MESSAGE,
+					beansException);
 		}
-
 		return doctorMapper.mapDoctors(doctorService.getDoctors(doctor));
 
 	}
@@ -128,9 +138,8 @@ public class DoctorController {
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{id}/id")
 	@ResponseBody
 	public DoctorResponse getDoctorById(@PathVariable Integer id) {
-
-		if (!StringUtils.isEmpty(id) && id.intValue() > 0) {
-			return doctorMapper.mapDoctor(doctorService.getDoctorById(id.intValue()));
+		if (!StringUtils.isEmpty(id) && id > 0) {
+			return doctorMapper.mapDoctor(doctorService.getDoctorById(id));
 		} else {
 			throw new BadRequestException("Doctor ID should not be blank");
 		}
@@ -141,9 +150,11 @@ public class DoctorController {
 	public DoctorResponse getDoctorByAdharNumber(@PathVariable String aadhaar) {
 
 		if (!StringUtils.isEmpty(aadhaar)) {
-			return doctorMapper.mapDoctor(doctorService.getDoctorByAdharNumber(aadhaar));
+			return doctorMapper.mapDoctor(doctorService
+					.getDoctorByAdharNumber(aadhaar));
 		} else {
-			throw new BadRequestException("Doctor AAdhar Number should not be blank");
+			throw new BadRequestException(
+					"Doctor AAdhar Number should not be blank");
 		}
 
 	}
@@ -153,7 +164,8 @@ public class DoctorController {
 	public DoctorResponse getDoctorByEmail(@PathVariable String email) {
 
 		if (!StringUtils.isEmpty(email)) {
-			return doctorMapper.mapDoctor(doctorService.getDoctorByEmail(email));
+			return doctorMapper
+					.mapDoctor(doctorService.getDoctorByEmail(email));
 		} else {
 			throw new BadRequestException("Email should not be blank");
 		}
@@ -165,9 +177,11 @@ public class DoctorController {
 	public DoctorResponse getDoctorByMobileNumber(@PathVariable String mobile) {
 
 		if (!StringUtils.isEmpty(mobile)) {
-			return doctorMapper.mapDoctor(doctorService.getDoctorByMobileNumber(mobile));
+			return doctorMapper.mapDoctor(doctorService
+					.getDoctorByMobileNumber(mobile));
 		} else {
-			throw new BadRequestException("Doctor Mobile Number should not be blank");
+			throw new BadRequestException(
+					"Doctor Mobile Number should not be blank");
 		}
 	}
 
@@ -185,30 +199,37 @@ public class DoctorController {
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{expertisted}/expertisted")
 	@ResponseBody
-	public List<DoctorResponse> getDoctorByExpertisted(@PathVariable String expertisted) {
+	public List<DoctorResponse> getDoctorByExpertisted(
+			@PathVariable String expertisted) {
 
 		if (!StringUtils.isEmpty(expertisted)) {
-			return doctorMapper.mapDoctors(doctorService.getDoctorByExpertisted(expertisted));
+			return doctorMapper.mapDoctors(doctorService
+					.getDoctorByExpertisted(expertisted));
 		} else {
-			throw new BadRequestException("Doctor Expertisted should not be blank");
+			throw new BadRequestException(
+					"Doctor Expertisted should not be blank");
 		}
 	}
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{fee}/fee")
 	@ResponseBody
-	public List<DoctorResponse> getDoctorByConsultingFee(@PathVariable String fee) {
+	public List<DoctorResponse> getDoctorByConsultingFee(
+			@PathVariable String fee) {
 
 		if (!StringUtils.isEmpty(fee)) {
-			return doctorMapper.mapDoctors(doctorService.getDoctorByConsultingFee(fee));
+			return doctorMapper.mapDoctors(doctorService
+					.getDoctorByConsultingFee(fee));
 		} else {
-			throw new BadRequestException("Doctor ConsultingFee should not be blank");
+			throw new BadRequestException(
+					"Doctor ConsultingFee should not be blank");
 		}
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "update doctor", notes = "update doctor")
-	@ApiResponses(value = { @ApiResponse(code = 400, message = "Fields are with validation errors"),
+	@ApiResponses(value = {
+			@ApiResponse(code = 400, message = "Fields are with validation errors"),
 			@ApiResponse(code = 201, message = "") })
 	public Response updateDoctor(@RequestBody DoctorRequest doctorRequest) {
 
@@ -216,7 +237,8 @@ public class DoctorController {
 		try {
 			BeanUtils.copyProperties(doctorRequest, doctor);
 		} catch (BeansException beansException) {
-			throw new BadRequestException("Doctor Do not have enough information", beansException);
+			throw new BadRequestException(DOCTOR_BADREQEST_MESSAGE,
+					beansException);
 		}
 		return new Response(doctorService.updateDoctor(doctor));
 	}
@@ -245,12 +267,22 @@ public class DoctorController {
 		}
 	}
 
+	/**
+	 * getRecentDoctors will provide recently joined doctors
+	 * 
+	 * 
+	 * Days already taken in Integer because this will come from UI end not will
+	 * be provided by any user always will come in correct format
+	 * 
+	 * @param days
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{days}/recentdoctors")
 	@ResponseBody
 	public List<DoctorResponse> getRecentDoctors(@PathVariable Integer days) {
-
-		if (!StringUtils.isEmpty(days) && days.intValue() > 0) {
-			return doctorMapper.mapDoctors(doctorService.getRecentDoctors(days.intValue()));
+		if (!StringUtils.isEmpty(days) && days > 0) {
+			return doctorMapper
+					.mapDoctors(doctorService.getRecentDoctors(days));
 		} else {
 			throw new BadRequestException("Doctor ID should not be blank");
 		}
@@ -278,14 +310,15 @@ public class DoctorController {
 	@ResponseBody
 	public Integer doctorSignUp(@RequestBody Doctor doctor) {
 
-		if (!StringUtils.isEmpty(doctor) && !doctor.getName().isEmpty() && !doctor.getEmail().isEmpty()
-				&& !doctor.getMobile().isEmpty() && !doctor.getAadhaarNumber().isEmpty()
+		if (!StringUtils.isEmpty(doctor) && !doctor.getName().isEmpty()
+				&& !doctor.getEmail().isEmpty()
+				&& !doctor.getMobile().isEmpty()
+				&& !doctor.getAadhaarNumber().isEmpty()
 				&& !doctor.getPassword().isEmpty()) {
-			// return
-			// doctorMapper.mapDoctors(doctorService.doctorSignUp(doctor));
 			return doctorService.doctorSignUp(doctor);
 		} else {
-			throw new BadRequestException("Doctor SignUp details should not be blank");
+			throw new BadRequestException(
+					"Doctor SignUp details should not be blank");
 		}
 	}
 
