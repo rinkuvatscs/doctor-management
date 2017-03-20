@@ -1,6 +1,8 @@
 package com.medical.doctor.patient.dao;
 
+import java.util.List;
 import com.medical.doctor.patient.entity.Patient;
+import com.medical.doctor.patient.request.PatientRequest;
 
 public interface PatientDao {
 
@@ -11,4 +13,20 @@ public interface PatientDao {
 	public Boolean checkAdhaar(String adhaar);
 
 	public Boolean checkEmail(String email);
+
+	public String addpatient(Patient patient);
+
+	public String deletepatient(Patient patient);
+
+	public Patient getpatientByMobileNumber(String mobileNumber);
+
+	public Patient getpatientByAdharNumber(String adharNumber);
+
+	public Patient getpatientByEmail(String email);
+
+	public List<Patient> getpatientByName(String name);
+
+	public Patient getpatientById(Integer id);
+
+	public String updatepatient(Patient patient);
 }
