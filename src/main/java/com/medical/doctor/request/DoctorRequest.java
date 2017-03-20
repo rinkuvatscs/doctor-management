@@ -1,6 +1,6 @@
 package com.medical.doctor.request;
 
-public class DoctorRequest {
+public class DoctorRequest extends LocationServiceRequest{
 
 	private Integer doctorId;
 	private String name;
