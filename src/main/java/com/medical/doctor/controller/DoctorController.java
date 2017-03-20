@@ -32,11 +32,11 @@ import com.medical.doctor.response.Response;
 import com.medical.doctor.service.DoctorService;
 
 @RestController
-@RequestMapping("/doctor")
+@RequestMapping("/api/doctor")
 @Api(basePath = "/doctor", value = "doctor", description = "Operations with Landlords", produces = "application/json")
 public class DoctorController {
 
-	private static final String DOCTOR_BADREQEST_MESSAGE = "Doctor Do not have enough information" ;
+	private static final String DOCTOR_BADREQEST_MESSAGE = "Doctor Do not have enough information";
 	@Autowired
 	private DoctorService doctorService;
 
@@ -56,8 +56,8 @@ public class DoctorController {
 		try {
 			BeanUtils.copyProperties(doctorRequest, doctor);
 		} catch (BeansException beansException) {
-			throw new BadRequestException(
-					DOCTOR_BADREQEST_MESSAGE, beansException);
+			throw new BadRequestException(DOCTOR_BADREQEST_MESSAGE,
+					beansException);
 		}
 
 		if (!StringUtils.isEmpty(doctor)
@@ -128,10 +128,9 @@ public class DoctorController {
 		try {
 			BeanUtils.copyProperties(searchDoctorRequest, doctor);
 		} catch (BeansException beansException) {
-			throw new BadRequestException(
-					DOCTOR_BADREQEST_MESSAGE, beansException);
+			throw new BadRequestException(DOCTOR_BADREQEST_MESSAGE,
+					beansException);
 		}
-
 		return doctorMapper.mapDoctors(doctorService.getDoctors(doctor));
 
 	}
@@ -139,10 +138,8 @@ public class DoctorController {
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{id}/id")
 	@ResponseBody
 	public DoctorResponse getDoctorById(@PathVariable Integer id) {
-
 		if (!StringUtils.isEmpty(id) && id > 0) {
-			return doctorMapper.mapDoctor(doctorService.getDoctorById(id
-					));
+			return doctorMapper.mapDoctor(doctorService.getDoctorById(id));
 		} else {
 			throw new BadRequestException("Doctor ID should not be blank");
 		}
@@ -240,8 +237,8 @@ public class DoctorController {
 		try {
 			BeanUtils.copyProperties(doctorRequest, doctor);
 		} catch (BeansException beansException) {
-			throw new BadRequestException(
-					DOCTOR_BADREQEST_MESSAGE, beansException);
+			throw new BadRequestException(DOCTOR_BADREQEST_MESSAGE,
+					beansException);
 		}
 		return new Response(doctorService.updateDoctor(doctor));
 	}
@@ -283,7 +280,6 @@ public class DoctorController {
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{days}/recentdoctors")
 	@ResponseBody
 	public List<DoctorResponse> getRecentDoctors(@PathVariable Integer days) {
-
 		if (!StringUtils.isEmpty(days) && days > 0) {
 			return doctorMapper
 					.mapDoctors(doctorService.getRecentDoctors(days));
@@ -310,4 +306,36 @@ public class DoctorController {
 		}
 	}
 
+	@RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, value = "/signup")
+	@ResponseBody
+	public Integer doctorSignUp(@RequestBody Doctor doctor) {
+
+		if (!StringUtils.isEmpty(doctor) && !doctor.getName().isEmpty()
+				&& !doctor.getEmail().isEmpty()
+				&& !doctor.getMobile().isEmpty()
+				&& !doctor.getAadhaarNumber().isEmpty()
+				&& !doctor.getPassword().isEmpty()) {
+			return doctorService.doctorSignUp(doctor);
+		} else {
+			throw new BadRequestException(
+					"Doctor SignUp details should not be blank");
+		}
+	}
+
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/checkMobile/{mobile}")
+	public Boolean checkMobile(@PathVariable String mobile) {
+		return doctorService.checkMobile(mobile);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/checkAdhaar/{adhaar}")
+	public Boolean checkAdhaar(@PathVariable String adhaar) {
+		System.out.println(adhaar);
+		return doctorService.checkMobile(adhaar);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/checkEmail/{email}")
+	public Boolean checkEmail(@PathVariable String email) {
+		System.out.println(email);
+		return doctorService.checkMobile(email);
+	}
 }

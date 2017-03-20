@@ -16,9 +16,9 @@ public class Doctor {
 	private Integer daysCheckFree;
 	private String clinicAddress;
 	private String email;
-	private String gender ;
+	private String gender;
 	private Date DOB;
-
+	private String password;
 
 	public String getEmail() {
 		return email;
@@ -123,7 +123,7 @@ public class Doctor {
 	public void setClinicAddress(String clinicAddress) {
 		this.clinicAddress = clinicAddress;
 	}
-	
+
 	public Date getDOB() {
 		return DOB;
 	}
@@ -132,17 +132,20 @@ public class Doctor {
 		this.DOB = dOB;
 	}
 
-	@Override
-	public String toString() {
-		return "Doctor [doctorId=" + doctorId + ", name=" + name + ", mobile="
-				+ mobile + ", homeAddress=" + homeAddress + ", aadhaarNumber="
-				+ aadhaarNumber + ", highestDegree=" + highestDegree
-				+ ", expertized=" + expertized + ", isGovernmentServent="
-				+ isGovernmentServent + ", oneTimeFee=" + oneTimeFee
-				+ ", daysCheckFree=" + daysCheckFree + ", clinicAddress="
-				+ clinicAddress + "]";
+	public String getPassword() {
+		return password;
 	}
 
-	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	@Override
+	public String toString() {
+		return "Doctor [doctorId=" + doctorId + ", name=" + name + ", mobile=" + mobile + ", homeAddress=" + homeAddress
+				+ ", aadhaarNumber=" + aadhaarNumber + ", highestDegree=" + highestDegree + ", expertized=" + expertized
+				+ ", isGovernmentServent=" + isGovernmentServent + ", oneTimeFee=" + oneTimeFee + ", daysCheckFree="
+				+ daysCheckFree + ", clinicAddress=" + clinicAddress + "]";
+	}
 
 }

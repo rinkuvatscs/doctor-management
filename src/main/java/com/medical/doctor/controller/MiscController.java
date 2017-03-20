@@ -26,7 +26,7 @@ import com.medical.doctor.factory.MiscFactory;
 import com.medical.doctor.response.Response;
 
 @RestController
-@RequestMapping("/misc")
+@RequestMapping("/api/misc")
 @Api(basePath = "/misc", value = "misc", description = "Operations with Landlords", produces = "application/json")
 public class MiscController {
 
