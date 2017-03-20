@@ -24,7 +24,7 @@ import com.medical.doctor.request.LoginRequest;
 import com.medical.doctor.response.LoginResponse;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/api/login")
 @Api(basePath = "/login", value = "loginmanagement", description = "Operations with Landlords", produces = "application/json")
 public class LoginController {
 

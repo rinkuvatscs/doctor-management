@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping("/patientLogin")
+@RequestMapping("/api/patientLogin")
 @Api(basePath = "/patientLogin", value = "patientLogin", description = "Operations with Landlords", produces = "application/json")
 public class PatientLoginController {
 

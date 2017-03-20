@@ -1,5 +1,10 @@
 package com.medical.doctor.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import java.util.List;
 import java.util.Map;
 
@@ -26,13 +31,8 @@ import com.medical.doctor.response.DoctorResponse;
 import com.medical.doctor.response.Response;
 import com.medical.doctor.service.DoctorService;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-
 @RestController
-@RequestMapping("/doctor")
+@RequestMapping("/api/doctor")
 @Api(basePath = "/doctor", value = "doctor", description = "Operations with Landlords", produces = "application/json")
 public class DoctorController {
 

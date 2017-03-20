@@ -1,8 +1,16 @@
 package com.medical.doctor.patient.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,23 +19,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.util.StringUtils;
-
-import com.medical.doctor.patient.entity.Patient;
 import com.medical.doctor.exceptionhandler.BadRequestException;
-import com.medical.doctor.patient.service.PatientService;
-import com.medical.doctor.patient.request.PatientRequest;
+import com.medical.doctor.patient.entity.Patient;
 import com.medical.doctor.patient.response.PatientResponse;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import com.medical.doctor.patient.service.PatientService;
 
 @RestController
-@RequestMapping("/patient")
+@RequestMapping("/api/patient")
 @Api(basePath = "/patient", value = "patient", description = "Operations with Landlords", produces = "application/json")
 public class PatientController {
 
