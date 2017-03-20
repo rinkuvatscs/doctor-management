@@ -59,7 +59,6 @@ public class LoginDaoImpl implements LoginDao {
 	@Override
 	public String signUp(Login login) {
 
-		List<Object> args = new ArrayList<>();
 		if(!StringUtils.isEmpty(login) && !isExist(login)){
 
 		}
@@ -71,7 +70,7 @@ public class LoginDaoImpl implements LoginDao {
 		boolean response = false;
 		String args[] = new String[1];
 		if (!StringUtils.isEmpty(login) && !StringUtils.isEmpty(login.getUsername())) {
-			StringBuffer query = new StringBuffer(LoginQueryConstants.IS_EXIST);
+			StringBuilder query = new StringBuilder(LoginQueryConstants.IS_EXIST);
 			if (isValidEmail(login.getUsername())) {
 				query.append(" where email = ? ");
 			} else if (isValidMobile(login.getUsername())) {
@@ -81,7 +80,7 @@ public class LoginDaoImpl implements LoginDao {
 			}
 			args[0] = login.getUsername();
 			List<Login> responseExist = jdbcTemplate.query(query.toString(), new LoginExtractor(), args);
-			if (!StringUtils.isEmpty(responseExist) && responseExist.size() > 0) {
+			if (!StringUtils.isEmpty(responseExist) && !responseExist.isEmpty()) {
 				response = true;
 			}
 		}

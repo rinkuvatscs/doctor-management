@@ -2,7 +2,7 @@ package com.medical.doctor.entity;
 
 import java.util.Date;
 
-public class Doctor extends DoctorSignUp {
+public class Doctor {
 
 	private Integer doctorId;
 	private String name;

@@ -121,8 +121,8 @@ public class PatientController {
 
 	@RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, value = "/signUp")
 	public Integer patientSignUp(@RequestBody Patient patient) {
-		if (!StringUtils.isEmpty(patient) && !patient.getName().isEmpty() && patient.getEmail().isEmpty()
-				&& patient.getMobile().isEmpty() && patient.getAdhaar().isEmpty() && patient.getPassword().isEmpty()) {
+		if (!StringUtils.isEmpty(patient) && !StringUtils.isEmpty(patient.getName()) && !StringUtils.isEmpty(patient.getEmail())
+				&& !StringUtils.isEmpty(patient.getMobile()) && !StringUtils.isEmpty(patient.getAdhaar()) && !StringUtils.isEmpty(patient.getPassword())) {
 			return patientService.patientSignUp(patient);
 		} else {
 			throw new BadRequestException("Patient SignUp details should not be blank");

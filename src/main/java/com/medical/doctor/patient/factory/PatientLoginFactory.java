@@ -31,7 +31,7 @@ public class PatientLoginFactory {
 					break;
 				}
 			} else if ("NO".equalsIgnoreCase(isRestCall)) {
-				if (LoginEnum.DIRECT_DATABASE.equals(loginService.getLoginEnum())) {
+				if (PatientLoginEnum.DIRECT_DATABASE.equals(loginService.getLoginEnum())) {
 					service = loginService;
 					break;
 				}
