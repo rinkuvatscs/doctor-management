@@ -53,17 +53,4 @@ public class LoginController {
 		}
 		
 	}
-	
-	/*@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/", method = RequestMethod.POST)
-	@ResponseStatus(HttpStatus.CREATED)
-	@ApiOperation(value = "validate login", notes = "validate login")
-	@ApiResponses(value = { @ApiResponse(code = 400, message = "Fields are with validation errors"),
-			@ApiResponse(code = 201, message = "") })
-	public ResponseEntity<LoginResponse> validateLogin(@RequestBody LoginRequest loginRequest) {
-		LoginResponse loginResponse = new LoginResponse();
-		String response = loginService.validateLogin(loginRequest);
-		loginResponse.setMessage(response);
-		return new ResponseEntity<LoginResponse>(loginResponse, HttpStatus.OK);
-	}*/
-
 }
