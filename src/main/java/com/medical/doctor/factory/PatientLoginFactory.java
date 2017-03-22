@@ -1,4 +1,4 @@
-package com.medical.patient.factory;
+package com.medical.doctor.factory;
 
 import java.util.List;
 
@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.medical.doctor.enums.LoginEnum;
 import com.medical.patient.enums.PatientLoginEnum;
 import com.medical.patient.service.PatientLoginService;
 

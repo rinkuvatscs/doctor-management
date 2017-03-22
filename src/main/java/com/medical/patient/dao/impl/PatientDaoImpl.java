@@ -50,7 +50,7 @@ public class PatientDaoImpl implements PatientDao {
 						.update(PatientLoginQueryConstants.INSERT_LOGIN,
 								args.toArray());
 				if (response > 0) {
-					
+
 					return patientList.get(0).getpId();
 				}
 			}
@@ -329,6 +329,7 @@ public class PatientDaoImpl implements PatientDao {
 			boolean isEmail = false;
 			boolean isGender = false;
 			boolean isAllergies = false;
+			boolean isDOB = false;
 			if (null != patient.getName()) {
 				query.append(" name = ? ");
 				args.add(patient.getName());
@@ -407,12 +408,18 @@ public class PatientDaoImpl implements PatientDao {
 					query.append(" dob = ? ");
 				}
 				args.add(patient.getDOB());
+				isDOB = true;
 			}
-
-			query.append(" WHERE pId = ? ");
-			args.add(patient.getpId());
-
-			int update = jdbcTemplate.update(query.toString(), args.toArray());
+			int update = 0;
+			if(isHomeAddress || isPatientName || isMobile || isAadhaar
+					|| isAge || isEmail || isGender || isAllergies || isDOB){
+				
+				query.append(", updatedDate = NOW() ");
+				query.append(" WHERE pId = ? ");
+				args.add(patient.getpId());
+				update = jdbcTemplate.update(query.toString(), args.toArray());
+			}
+			
 			if (update > 0) {
 
 				int updatePatient = updatePatientLogin(patient);
@@ -424,13 +431,13 @@ public class PatientDaoImpl implements PatientDao {
 				// to call .
 
 				/* loginFactory.getLoginService().addLoginDetails(patient); */
-				if (updatePatient > 0) {
+				if (updatePatient == 1) {
 					response = "patient successfully Updated...!!!";
 				} else {
 					response = "There is some problem in Login, please try again later...!!!";
 				}
 			} else {
-				response = "There is some problem, please try again later...!!!";
+				response = "No fields to update...!!!";
 			}
 		} else {
 			response = "patient details are Empty, provide some details to update....!!!";
@@ -447,6 +454,7 @@ public class PatientDaoImpl implements PatientDao {
 		boolean isPassword = false;
 		boolean isMobile = false;
 		boolean isAadhaar = false;
+		boolean isEmail = false;
 
 		if (null != patient.getPassword()) {
 			query.append(" password = ? ");
@@ -483,11 +491,16 @@ public class PatientDaoImpl implements PatientDao {
 				query.append(" email = ? ");
 			}
 			args.add(patient.getEmail());
+			isEmail = true;
 		}
 
-		query.append(" , updatedDate = NOW() ");
-		query.append(" WHERE typeId = ? ");
-		args.add(patient.getpId());
-		return jdbcTemplate.update(query.toString(), args.toArray());
+		if (isPassword || isMobile || isAadhaar || isEmail) {
+			query.append(" , updatedDate = NOW() ");
+			query.append(" WHERE typeId = ? ");
+			args.add(patient.getpId());
+			return jdbcTemplate.update(query.toString(), args.toArray());
+		}
+
+		return 1;
 	}
 }

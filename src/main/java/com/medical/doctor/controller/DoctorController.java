@@ -197,7 +197,7 @@ public class DoctorController {
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{expertisted}/expertisted")
+	/*@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{expertisted}/expertisted")
 	@ResponseBody
 	public List<DoctorResponse> getDoctorByExpertisted(
 			@PathVariable String expertisted) {
@@ -209,7 +209,7 @@ public class DoctorController {
 			throw new BadRequestException(
 					"Doctor Expertisted should not be blank");
 		}
-	}
+	}*/
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{fee}/fee")
 	@ResponseBody

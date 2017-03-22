@@ -22,7 +22,7 @@ public class PatientLoginExtractor implements ResultSetExtractor<List<PatientLog
 			patientLogin.setMobile(rs.getString("mobile"));
 			patientLogin.setPassword(rs.getString("password"));
 			patientLogin.setType(rs.getString("type"));
-			patientLogin.setId(rs.getInt("pId"));
+			patientLogin.setId(rs.getInt("typeId"));
 			patientLogins.add(patientLogin);
 		}
 

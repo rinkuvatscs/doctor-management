@@ -9,9 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
-import com.medical.doctor.constants.LoginQueryConstants;
-import com.medical.doctor.entity.Login;
-import com.medical.doctor.extractor.LoginExtractor;
 import com.medical.patient.constants.PatientLoginQueryConstants;
 import com.medical.patient.dao.PatientLoginDao;
 import com.medical.patient.entity.PatientLogin;
