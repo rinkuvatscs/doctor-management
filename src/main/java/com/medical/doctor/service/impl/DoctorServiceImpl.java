@@ -2,7 +2,6 @@ package com.medical.doctor.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -99,7 +98,7 @@ public class DoctorServiceImpl implements DoctorService {
 	}
 
 	@Override
-	public Map<Integer, String> getAllExpertized() {
+	public List<String> getAllExpertized() {
 
 		return doctorDao.getAllExpertized();
 	}
@@ -128,7 +127,7 @@ public class DoctorServiceImpl implements DoctorService {
 	}
 
 	@Override
-	public Map<Integer, String> getUnApprovedExpertise() {
+	public List<String> getUnApprovedExpertise() {
 		return doctorDao.getUnApprovedExpertise();
 	}
 

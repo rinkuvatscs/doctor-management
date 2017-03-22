@@ -2,24 +2,25 @@ package com.medical.doctor.extractor;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.jdbc.core.ResultSetExtractor;
 
 public class ExpertizedExtractor implements
-		ResultSetExtractor<Map<Integer, String>> {
+		ResultSetExtractor<List<String>> {
 
 	@Override
-	public Map<Integer, String> extractData(ResultSet rs) throws SQLException {
+	public List<String> extractData(ResultSet rs) throws SQLException {
 
-		Map<Integer, String> expertizedMap = new HashMap<>();
+		List<String> expertizeds = new ArrayList<>();
 		while (rs.next()) {
 
-			expertizedMap.put(rs.getInt("expertiseId"), rs.getString("expertise"));
+			expertizeds.add(rs.getString("expertise")));
 		}
-		System.out.println(expertizedMap.size());
-		return expertizedMap;
+		return expertizeds;
 
 	}
 

@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
@@ -197,19 +196,20 @@ public class DoctorController {
 		}
 	}
 
-	/*@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{expertisted}/expertisted")
-	@ResponseBody
-	public List<DoctorResponse> getDoctorByExpertisted(
-			@PathVariable String expertisted) {
-
-		if (!StringUtils.isEmpty(expertisted)) {
-			return doctorMapper.mapDoctors(doctorService
-					.getDoctorByExpertisted(expertisted));
-		} else {
-			throw new BadRequestException(
-					"Doctor Expertisted should not be blank");
-		}
-	}*/
+	/*
+	 * @RequestMapping(method = RequestMethod.GET, produces =
+	 * MediaType.APPLICATION_JSON_VALUE, value =
+	 * "/get/{expertisted}/expertisted")
+	 * 
+	 * @ResponseBody public List<DoctorResponse> getDoctorByExpertisted(
+	 * 
+	 * @PathVariable String expertisted) {
+	 * 
+	 * if (!StringUtils.isEmpty(expertisted)) { return
+	 * doctorMapper.mapDoctors(doctorService
+	 * .getDoctorByExpertisted(expertisted)); } else { throw new
+	 * BadRequestException( "Doctor Expertisted should not be blank"); } }
+	 */
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{fee}/fee")
 	@ResponseBody
@@ -251,7 +251,7 @@ public class DoctorController {
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/all/expertisation")
 	@ResponseBody
-	public Map<Integer, String> getAllExpertisations() {
+	public List<String> getAllExpertisations() {
 
 		return doctorService.getAllExpertized();
 	}
@@ -290,7 +290,7 @@ public class DoctorController {
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/all/unapproved/expertisation")
 	@ResponseBody
-	public Map<Integer, String> getAllUnApprovedExpertisations() {
+	public List<String> getAllUnApprovedExpertisations() {
 
 		return doctorService.getUnApprovedExpertise();
 	}
