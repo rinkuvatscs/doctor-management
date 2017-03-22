@@ -1,4 +1,4 @@
-package com.medical.doctor.controller;
+package com.medical.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

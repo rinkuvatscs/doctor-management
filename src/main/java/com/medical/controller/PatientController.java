@@ -1,4 +1,4 @@
-package com.medical.doctor.controller;
+package com.medical.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -48,11 +48,11 @@ public class PatientController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{aadhaar}/aadhaar")
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{aadhaar}/aadhaar")
 	@ResponseBody
-	public Patient getPatientByAdharNumber(@PathVariable String aadharNumber) {
-		if (!StringUtils.isEmpty(aadharNumber)) {
-			return patientService.getpatientByAdharNumber(aadharNumber);
+	public Patient getPatientByAdharNumber(@PathVariable String aadhaar) {
+		if (!StringUtils.isEmpty(aadhaar)) {
+			return patientService.getpatientByAdharNumber(aadhaar);
 		} else {
 			throw new BadRequestException("patient Aadhar Number should not be blank");
 		}
@@ -70,7 +70,7 @@ public class PatientController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{id}/id")
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{patientId}/id")
 	@ResponseBody
 	public Patient getPatientByPatientId(@PathVariable String patientId) {
 		if (!StringUtils.isEmpty(patientId)) {
