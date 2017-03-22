@@ -2,7 +2,6 @@ package com.medical.doctor.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -494,7 +493,7 @@ public class DoctorDaoImpl implements DoctorDao {
 
 	@Override
 	public List<Doctor> getDoctors(Doctor doctor) {
-		List<Doctor> response ;
+		List<Doctor> response;
 
 		if (!StringUtils.isEmpty(doctor.getAadhaarNumber())) {
 
@@ -520,7 +519,8 @@ public class DoctorDaoImpl implements DoctorDao {
 			return response;
 		}
 
-		if (!StringUtils.isEmpty(doctor.getDoctorId()) && doctor.getDoctorId() > 0) {
+		if (!StringUtils.isEmpty(doctor.getDoctorId())
+				&& doctor.getDoctorId() > 0) {
 
 			response = new ArrayList<>();
 			Doctor doctorWithId = getDoctorById(doctor.getDoctorId());
@@ -544,7 +544,7 @@ public class DoctorDaoImpl implements DoctorDao {
 
 		boolean isName = false;
 		boolean isGovServant = false;
-		boolean isHomeAddress = false; 
+		boolean isHomeAddress = false;
 		boolean isExpertized = false;
 		List<Object> args = new ArrayList<>();
 		StringBuilder query = new StringBuilder(QueryConstants.GET_DOCTORS);
@@ -605,7 +605,8 @@ public class DoctorDaoImpl implements DoctorDao {
 
 			if (!StringUtils.isEmpty(doctor.getClinicAddress())) {
 
-				if (isName || isGovServant || isHomeAddress || isExpertized || isOneTime) {
+				if (isName || isGovServant || isHomeAddress || isExpertized
+						|| isOneTime) {
 					query.append(" AND ClinicAddress like ? ");
 				} else {
 					query.append(" WHERE ClinicAddress like ? ");
@@ -613,10 +614,12 @@ public class DoctorDaoImpl implements DoctorDao {
 				args.add("%" + doctor.getClinicAddress() + "%");
 			}
 
-			response = jdbcTemplate.query(query.toString(), new DoctorExtractor(), args.toArray());
+			response = jdbcTemplate.query(query.toString(),
+					new DoctorExtractor(), args.toArray());
 
 		} else {
-			throw new BadRequestException("PLease provide proper detail for Doctor");
+			throw new BadRequestException(
+					"PLease provide proper detail for Doctor");
 		}
 
 		if (null == response) {
@@ -626,7 +629,7 @@ public class DoctorDaoImpl implements DoctorDao {
 	}
 
 	@Override
-	public Map<Integer, String> getAllExpertized() {
+	public List<String> getAllExpertized() {
 
 		return jdbcTemplate.query(QueryConstants.GET_ALL_EXPERTIZED,
 				new ExpertizedExtractor());
@@ -650,7 +653,7 @@ public class DoctorDaoImpl implements DoctorDao {
 
 		List<String> args = new ArrayList<>();
 		args.add(expertise.toLowerCase());
-		Map<Integer, String> response = jdbcTemplate.query(
+		List<String> response = jdbcTemplate.query(
 				QueryConstants.GET_EXPERTIZED, new ExpertizedExtractor(),
 				args.toArray());
 		if (!response.isEmpty()) {
@@ -665,7 +668,8 @@ public class DoctorDaoImpl implements DoctorDao {
 		args.add(days);
 		StringBuilder query = new StringBuilder(QueryConstants.GET_DOCTORS);
 		query.append(" WHERE DATEDIFF(SYSDATE() , createdDate) <= ? ");
-		return jdbcTemplate.query(query.toString(), new DoctorExtractor(), args.toArray());
+		return jdbcTemplate.query(query.toString(), new DoctorExtractor(),
+				args.toArray());
 	}
 
 	@Override
@@ -679,7 +683,7 @@ public class DoctorDaoImpl implements DoctorDao {
 	}
 
 	@Override
-	public Map<Integer, String> getUnApprovedExpertise() {
+	public List<String> getUnApprovedExpertise() {
 		return jdbcTemplate.query(QueryConstants.GET_UNAPPROVED_EXPERTISE,
 				new ExpertizedExtractor());
 	}

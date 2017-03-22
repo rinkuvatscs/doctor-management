@@ -1,10 +1,8 @@
 package com.medical.doctor.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import com.medical.doctor.entity.Doctor;
-import com.medical.doctor.entity.DoctorSignUp;
 
 public interface DoctorDao {
 
@@ -34,13 +32,13 @@ public interface DoctorDao {
 
     public String deleteDoctor(Doctor doctor);
 
-    public Map<Integer, String> getAllExpertized();
+    public List<String> getAllExpertized();
 
     public Integer addExpertisation(String expertise);
     
     public String approveExpertise(Integer expertise);
     
-    public Map<Integer, String> getUnApprovedExpertise() ;
+    public List<String> getUnApprovedExpertise() ;
     
     public boolean isExpertiseExists(String expertise);
     
