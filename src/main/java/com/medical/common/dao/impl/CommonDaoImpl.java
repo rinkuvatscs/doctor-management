@@ -21,7 +21,7 @@ public class CommonDaoImpl implements CommonDao {
 	public List<MessageService> getMessageForPatient(int pId) {
 		Object[] args = { pId };
 		List<MessageService> response = JdbcTemplate.query(
-				"SELECT * FROM message WHERE pId = ? && status = FALSE",
+				"SELECT * FROM message WHERE pId = ? && status = false",
 				new CommonExtractor(), args);
 		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
 			return response;
@@ -30,8 +30,8 @@ public class CommonDaoImpl implements CommonDao {
 	}
 
 	@Override
-	public String updateMessageForPatient(MessageService messageService) {
-		String response = null;
+	public String updateMessage(MessageService messageService) {
+		String response;
 		if (!StringUtils.isEmpty(messageService)) {
 			Object[] args = { messageService.getMessageId() };
 			int res = JdbcTemplate.update(
@@ -49,14 +49,40 @@ public class CommonDaoImpl implements CommonDao {
 
 	@Override
 	public String addMessageForPatient(MessageService messageService) {
-		String response = null;
+		String response;
 		Object[] args = { messageService.getMessage(), messageService.getpId() };
 		int res = JdbcTemplate.update(
 				"INSERT INTO message(message, pId) VALUES(?, ?)", args);
 		if (res > 0) {
 			response = "Message Successfully inserted..!!!";
 		} else {
-			response = "Please insert message..!!";
+			response = "Try again later..!!";
+		}
+		return response;
+	}
+
+	@Override
+	public List<MessageService> getMessageForDoctor(int dId) {
+		Object[] args = { dId };
+		List<MessageService> response = JdbcTemplate.query(
+				"SELECT * FROM message WHERE dId = ? && status = false",
+				new CommonExtractor(), args);
+		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
+			return response;
+		}
+		return null;
+	}
+
+	@Override
+	public String addMessageForDoctor(MessageService messageService) {
+		String response;
+		Object[] args = { messageService.getMessage(), messageService.getdId() };
+		int res = JdbcTemplate.update(
+				"INSERT INTO message(message, dId) VALUES(?, ?)", args);
+		if (res > 0) {
+			response = "Message Successfully inserted..!!!";
+		} else {
+			response = "Try again later..!!";
 		}
 		return response;
 	}

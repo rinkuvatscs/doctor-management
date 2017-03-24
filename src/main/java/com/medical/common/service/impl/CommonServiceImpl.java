@@ -21,13 +21,23 @@ public class CommonServiceImpl implements CommonService {
 	}
 
 	@Override
-	public String updateMessageForPatient(MessageService messageService) {
-		return commonDao.updateMessageForPatient(messageService);
+	public String updateMessage(MessageService messageService) {
+		return commonDao.updateMessage(messageService);
 	}
 
 	@Override
 	public String addMessageForPatient(MessageService messageService) {
 		return commonDao.addMessageForPatient(messageService);
+	}
+
+	@Override
+	public List<MessageService> getMessageForDoctor(int dId) {
+		return commonDao.getMessageForDoctor(dId);
+	}
+
+	@Override
+	public String addMessageForDoctor(MessageService messageService) {
+		return commonDao.addMessageForDoctor(messageService);
 	}
 
 }

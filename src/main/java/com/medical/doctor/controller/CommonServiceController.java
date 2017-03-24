@@ -26,7 +26,7 @@ import com.medical.doctor.response.MessageServiceResponse;
 @RestController
 @RequestMapping("/api/common")
 @Api(basePath = "/common", value = "common", description = "Operations with Landlords", produces = "application/json")
-public class CommonController {
+public class CommonServiceController {
 
 	private static final String COMMON_BADREQEST_MESSAGE = "Doctor Do not have enough information";
 
@@ -34,7 +34,7 @@ public class CommonController {
 	private CommonService commonService;
 	@Autowired
 	private CommonServiceMapper commonServiceMapper;
-	
+
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/addmessageforpatient")
 	@ResponseBody
 	public String addMessageForPatient(
@@ -58,7 +58,8 @@ public class CommonController {
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getmessageforpatient/{pId}/pId")
 	@ResponseBody
-	public List<MessageServiceResponse> getMessage(@PathVariable int pId) {
+	public List<MessageServiceResponse> getMessageforPatient(
+			@PathVariable int pId) {
 		if (pId <= 0) {
 			throw new BadRequestException("Please provide valid patient Id");
 		}
@@ -66,21 +67,53 @@ public class CommonController {
 				.getMessageForPatient(pId));
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/updatemessageforpatient")
+	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/updatemessage")
 	@ResponseBody
 	public String updateMessage(
 			@RequestBody MessageServiceRequest messageServiceRequest) {
 		MessageService messages = new MessageService();
 		try {
 			BeanUtils.copyProperties(messageServiceRequest, messages);
-			if (messages.getpId() <= 0) {
-				throw new BadRequestException("Please provide patient Id");
+			if (messages.getpId() <= 0 && messages.getdId() <= 0) {
+				throw new BadRequestException("Please provide valid Id");
 			}
 		} catch (BeansException beansException) {
 			throw new BadRequestException(COMMON_BADREQEST_MESSAGE,
 					beansException);
 		}
-		return commonService.updateMessageForPatient(messages);
+		return commonService.updateMessage(messages);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/addmessagefordoctor")
+	@ResponseBody
+	public String addMessageForDoctor(
+			@RequestBody MessageServiceRequest messageServiceRequest) {
+		MessageService messageService = new MessageService();
+
+		if (StringUtils.isEmpty(messageServiceRequest)
+				&& StringUtils.isEmpty(messageServiceRequest.getMessage())) {
+			throw new BadRequestException("Message can not be null");
+		} else if (messageServiceRequest.getdId() <= 0) {
+			throw new BadRequestException("Please provide valid doctor Id");
+		}
+		try {
+			BeanUtils.copyProperties(messageServiceRequest, messageService);
+		} catch (BeansException beansException) {
+			throw new BadRequestException(COMMON_BADREQEST_MESSAGE,
+					beansException);
+		}
+		return commonService.addMessageForDoctor(messageService);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getmessagefordoctor/{dId}/dId")
+	@ResponseBody
+	public List<MessageServiceResponse> getMessageforDoctor(
+			@PathVariable int dId) {
+		if (dId <= 0) {
+			throw new BadRequestException("Please provide valid Doctor Id");
+		}
+		return commonServiceMapper.mapMessageServices(commonService
+				.getMessageForDoctor(dId));
 	}
 
 }

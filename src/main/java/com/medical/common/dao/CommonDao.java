@@ -7,8 +7,12 @@ import com.medical.doctor.entity.MessageService;
 public interface CommonDao {
 
 	public List<MessageService> getMessageForPatient(int pId);
-	
-	public  String updateMessageForPatient(MessageService messageService);
-	
+
+	public String updateMessage(MessageService messageService);
+
 	public String addMessageForPatient(MessageService messageService);
+
+	public List<MessageService> getMessageForDoctor(int dId);
+
+	public String addMessageForDoctor(MessageService messageService);
 }
