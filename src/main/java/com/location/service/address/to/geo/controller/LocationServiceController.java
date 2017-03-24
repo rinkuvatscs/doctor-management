@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.location.service.address.to.geo.response.LocationResponse;
 import com.location.service.address.to.geo.service.LocationService;
-import com.location.service.address.to.geo.service.response.LocationResponse;
 
 @RestController
 @RequestMapping("/api/location")

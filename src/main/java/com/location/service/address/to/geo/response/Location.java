@@ -1,5 +1,5 @@
 
-package com.location.service.address.to.geo.service.response;
+package com.location.service.address.to.geo.response;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,36 +12,36 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "northeast",
-    "southwest"
+    "lat",
+    "lng"
 })
-public class Viewport {
+public class Location {
 
-    @JsonProperty("northeast")
-    private Northeast_ northeast;
-    @JsonProperty("southwest")
-    private Southwest_ southwest;
+    @JsonProperty("lat")
+    private Double lat;
+    @JsonProperty("lng")
+    private Double lng;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("northeast")
-    public Northeast_ getNortheast() {
-        return northeast;
+    @JsonProperty("lat")
+    public Double getLat() {
+        return lat;
     }
 
-    @JsonProperty("northeast")
-    public void setNortheast(Northeast_ northeast) {
-        this.northeast = northeast;
+    @JsonProperty("lat")
+    public void setLat(Double lat) {
+        this.lat = lat;
     }
 
-    @JsonProperty("southwest")
-    public Southwest_ getSouthwest() {
-        return southwest;
+    @JsonProperty("lng")
+    public Double getLng() {
+        return lng;
     }
 
-    @JsonProperty("southwest")
-    public void setSouthwest(Southwest_ southwest) {
-        this.southwest = southwest;
+    @JsonProperty("lng")
+    public void setLng(Double lng) {
+        this.lng = lng;
     }
 
     @JsonAnyGetter

@@ -1,4 +1,4 @@
-package com.location.service.address.to.geo.service.response;
+package com.location.service.address.to.geo.response;
 
 import java.util.HashMap;
 import java.util.List;

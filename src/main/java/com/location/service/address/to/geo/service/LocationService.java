@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import com.location.service.address.to.geo.service.response.LocationResponse;
+import com.location.service.address.to.geo.response.LocationResponse;
 
 @Service
 public class LocationService {
