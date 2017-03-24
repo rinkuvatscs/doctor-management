@@ -18,10 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.medical.common.service.CommonService;
 import com.medical.doctor.entity.MessageService;
+import com.medical.doctor.entity.NotificationService;
 import com.medical.doctor.exceptionhandler.BadRequestException;
 import com.medical.doctor.mappers.CommonServiceMapper;
 import com.medical.doctor.request.MessageServiceRequest;
+import com.medical.doctor.request.NotificationServiceRequest;
 import com.medical.doctor.response.MessageServiceResponse;
+import com.medical.doctor.response.NotificationServiceResponse;
 
 @RestController
 @RequestMapping("/api/common")
@@ -116,4 +119,89 @@ public class CommonServiceController {
 				.getMessageForDoctor(dId));
 	}
 
+	/*************************************** Notification Controller **************************************/
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/addNotifyforpatient")
+	@ResponseBody
+	public String addNotifyForPatient(
+			@RequestBody NotificationServiceRequest notificationServiceRequest) {
+		NotificationService notificationService = new NotificationService();
+
+		if (StringUtils.isEmpty(notificationServiceRequest)
+				&& StringUtils.isEmpty(notificationServiceRequest
+						.getNotiyfMessage())) {
+			throw new BadRequestException("Notification can not be null");
+		} else if (notificationServiceRequest.getpId() <= 0) {
+			throw new BadRequestException("Please provide valid patient Id");
+		}
+		try {
+			BeanUtils
+					.copyProperties(notificationServiceRequest, notificationService);
+		} catch (BeansException beansException) {
+			throw new BadRequestException(COMMON_BADREQEST_MESSAGE,
+					beansException);
+		}
+		return commonService.addNotifyForPatient(notificationService);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getNotifyforpatient/{pId}/pId")
+	@ResponseBody
+	public List<NotificationServiceResponse> getNotifyforPatient(
+			@PathVariable int pId) {
+		if (pId <= 0) {
+			throw new BadRequestException("Please provide valid patient Id");
+		}
+		return commonServiceMapper.mapNotifyServices(commonService
+				.getNotifyForPatient(pId));
+	}
+
+	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/updateNotify")
+	@ResponseBody
+	public String updateNotify(
+			@RequestBody NotificationServiceRequest notificationServiceRequest) {
+		NotificationService notificationService = new NotificationService();
+		try {
+			BeanUtils.copyProperties(notificationServiceRequest, notificationService);
+			if (notificationService.getpId() <= 0 && notificationService.getdId() <= 0) {
+				throw new BadRequestException("Please provide valid Id");
+			}
+		} catch (BeansException beansException) {
+			throw new BadRequestException(COMMON_BADREQEST_MESSAGE,
+					beansException);
+		}
+		return commonService.updateNotify(notificationService);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/addNotifyfordoctor")
+	@ResponseBody
+	public String addNotifyForDoctor(
+			@RequestBody NotificationServiceRequest notificationServiceRequest) {
+		NotificationService notificationService = new NotificationService();
+
+		if (StringUtils.isEmpty(notificationServiceRequest)
+				&& StringUtils.isEmpty(notificationServiceRequest
+						.getNotiyfMessage())) {
+			throw new BadRequestException("Notification can not be null");
+		} else if (notificationServiceRequest.getdId() <= 0) {
+			throw new BadRequestException("Please provide valid doctor Id");
+		}
+		try {
+			BeanUtils
+					.copyProperties(notificationServiceRequest, notificationService);
+		} catch (BeansException beansException) {
+			throw new BadRequestException(COMMON_BADREQEST_MESSAGE,
+					beansException);
+		}
+		return commonService.addNotifyForDoctor(notificationService);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getNotifyfordoctor/{dId}/dId")
+	@ResponseBody
+	public List<NotificationServiceResponse> getNotifyforDoctor(
+			@PathVariable int dId) {
+		if (dId <= 0) {
+			throw new BadRequestException("Please provide valid Doctor Id");
+		}
+		return commonServiceMapper.mapNotifyServices(commonService
+				.getNotifyForDoctor(dId));
+	}
 }
