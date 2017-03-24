@@ -19,5 +19,10 @@ public interface PatientQueryConstants {
 	String GET_PATIENT_BY_NAME = " SELECT * FROM patient WHERE name LIKE ? ";
 
 	String GET_PATIENT_BY_EMAIL = " SELECT * FROM patient WHERE email = ? ";
+	
+	String INSERT_APPOINTMENT ="insert into appointment(dId, pId, appointmentDesc, createdDate) values (?,?,?,NOW())" ;
 
+	String DELETE_APPOINTMENT ="delete from appointment where appointmentId = ?";
+	
+	String GET_APPOINTMENT_BY_PID = " SELECT * FROM appointment WHERE pId = ? ";
 }

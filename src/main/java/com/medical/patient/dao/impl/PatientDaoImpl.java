@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -12,6 +13,7 @@ import com.medical.doctor.exceptionhandler.BadRequestException;
 import com.medical.patient.constants.PatientLoginQueryConstants;
 import com.medical.patient.constants.PatientQueryConstants;
 import com.medical.patient.dao.PatientDao;
+import com.medical.patient.entity.Appointment;
 import com.medical.patient.entity.Patient;
 import com.medical.patient.extractor.PatientExtractor;
 
@@ -503,4 +505,50 @@ public class PatientDaoImpl implements PatientDao {
 
 		return 1;
 	}
+
+	@Override
+	public String makeAppointment(Appointment makeAppointment) {
+		
+		List<Object> args = new ArrayList<>();
+		args.add(makeAppointment.getdId());
+		args.add(makeAppointment.getpId());
+		args.add(makeAppointment.getAppointmentDesc());
+		int row = jdbcTemplate.update(PatientQueryConstants.INSERT_APPOINTMENT, args.toArray());
+		if (row > 0)
+		{
+			return "Appoinment Done";
+		}
+		else {
+			return "Appoinment Done";
+		}
+		
+	}
+
+	@Override
+	public String cancelAppointment(Integer id) {
+
+		if(!StringUtils.isEmpty(id)){
+			Object args[] = { id };
+			int row = jdbcTemplate.update(PatientQueryConstants.DELETE_APPOINTMENT, args);
+			if (row > 0){
+				return "Appoinment Cancelled";
+			}
+			else {
+				return "AppoinmentID does not exists";
+			}
+		}		
+		return "AppoinmentID is NULL";
+	}
+
+	@Override
+	public List<Appointment> viewAppointment(Integer pId) {
+		if(!StringUtils.isEmpty(pId)){
+			Object args[] = { pId };
+			List<Appointment> response = jdbcTemplate.query(PatientQueryConstants.GET_APPOINTMENT_BY_PID, args, new BeanPropertyRowMapper(Appointment.class));
+			System.out.println(response);
+			return response;
+		}
+		return null;
+	}
+	
 }

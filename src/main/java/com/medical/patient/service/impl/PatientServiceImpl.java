@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.medical.patient.dao.PatientDao;
+import com.medical.patient.entity.Appointment;
 import com.medical.patient.entity.Patient;
 import com.medical.patient.service.PatientService;
 
@@ -75,4 +76,22 @@ public class PatientServiceImpl implements PatientService {
 		return patientDao.updatepatient(patient);
 	}
 
+	@Override
+	public String makeAppointment(Appointment makeAppointment) {
+
+		return patientDao.makeAppointment(makeAppointment);
+	}
+
+	@Override
+	public String cancelAppoinment(Integer id) {
+
+		return patientDao.cancelAppointment(id);
+	}
+
+	@Override
+	public List<Appointment> viewAppointment(Integer pId) {
+
+		return patientDao.viewAppointment(pId);
+	}
+	
 }
