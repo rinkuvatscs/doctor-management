@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.location.service.address.to.geo.utility.LocationUtility;
-import com.location.service.address.to.geo.utility.response.LocationResponse;
+import com.location.service.address.to.geo.service.LocationService;
+import com.location.service.address.to.geo.service.response.LocationResponse;
 
 @RestController
 @RequestMapping("/api/location")
@@ -19,7 +19,7 @@ import com.location.service.address.to.geo.utility.response.LocationResponse;
 public class LocationServiceController {
 
 	@Autowired
-	private LocationUtility locationUtility;
+	private LocationService locationUtility;
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/{address}", method = RequestMethod.GET)
 	@ResponseBody

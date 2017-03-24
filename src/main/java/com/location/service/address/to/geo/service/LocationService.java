@@ -1,4 +1,4 @@
-package com.location.service.address.to.geo.utility;
+package com.location.service.address.to.geo.service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import com.location.service.address.to.geo.utility.response.LocationResponse;
+import com.location.service.address.to.geo.service.response.LocationResponse;
 
 @Service
-public class LocationUtility {
+public class LocationService {
 
 	private static final Logger LOGGER = LoggerFactory
-			.getLogger(LocationUtility.class);
+			.getLogger(LocationService.class);
 
 	private static final String GOOGLE_API_FOR_ADDRESS_TO_GEO = "https://maps.googleapis.com/maps/api/geocode/json?address={address}&key=AIzaSyDmBJYFTBQStGvEi9HcFjfVYjI27ju20IY";
 
@@ -33,7 +33,7 @@ public class LocationUtility {
 					urlVariables);
 			if (null != locationResponse
 					&& !StringUtils.isEmpty(locationResponse.getStatus())
-					&& "200".equalsIgnoreCase(locationResponse.getStatus())) {
+					&& "OK".equalsIgnoreCase(locationResponse.getStatus())) {
 				return locationResponse;
 			} else {
 				return new LocationResponse();

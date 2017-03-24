@@ -1,5 +1,5 @@
 
-package com.location.service.address.to.geo.utility.response;
+package com.location.service.address.to.geo.service.response;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "lat",
     "lng"
 })
-public class Southwest_ {
+public class Northeast_ {
 
     @JsonProperty("lat")
     private Double lat;

@@ -1,5 +1,5 @@
 
-package com.location.service.address.to.geo.utility.response;
+package com.location.service.address.to.geo.service.response;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,32 +15,32 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "northeast",
     "southwest"
 })
-public class Viewport {
+public class Bounds {
 
     @JsonProperty("northeast")
-    private Northeast_ northeast;
+    private Northeast northeast;
     @JsonProperty("southwest")
-    private Southwest_ southwest;
+    private Southwest southwest;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("northeast")
-    public Northeast_ getNortheast() {
+    public Northeast getNortheast() {
         return northeast;
     }
 
     @JsonProperty("northeast")
-    public void setNortheast(Northeast_ northeast) {
+    public void setNortheast(Northeast northeast) {
         this.northeast = northeast;
     }
 
     @JsonProperty("southwest")
-    public Southwest_ getSouthwest() {
+    public Southwest getSouthwest() {
         return southwest;
     }
 
     @JsonProperty("southwest")
-    public void setSouthwest(Southwest_ southwest) {
+    public void setSouthwest(Southwest southwest) {
         this.southwest = southwest;
     }
 
