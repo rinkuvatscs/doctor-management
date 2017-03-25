@@ -2,8 +2,9 @@ package com.medical.patient.dao;
 
 import java.util.List;
 
+import com.medical.patient.entity.Appointment;
 import com.medical.patient.entity.Patient;
-import com.medical.patient.request.PatientRequest;
+
 
 public interface PatientDao {
 
@@ -30,4 +31,10 @@ public interface PatientDao {
 	public Patient getpatientById(Integer id);
 
 	public String updatepatient(Patient patient);
+	
+    public String makeAppointment(Appointment makeAppointment);
+	
+	public String cancelAppointment(Integer id);
+	
+	public List<Appointment> viewAppointment(Integer pId);
 }

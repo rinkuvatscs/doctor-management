@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.medical.doctor.exceptionhandler.BadRequestException;
+import com.medical.patient.entity.Appointment;
 import com.medical.patient.entity.Patient;
 import com.medical.patient.response.PatientResponse;
 import com.medical.patient.service.PatientService;
@@ -145,6 +146,26 @@ public class PatientController {
 	public Boolean checkMobile(@PathVariable String mobile) {
 		System.out.println(mobile);
 		return patientService.checkMobile(mobile);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/appointment/make", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "make appointment", notes = "make appointment")
+	public String makeAppointment(@RequestBody Appointment makeAppointment){
+		return patientService.makeAppointment(makeAppointment);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value ="/appointment/cancel/{id}", produces = MediaType.APPLICATION_JSON_VALUE )
+	@ApiOperation(value = "cancel appointment", notes = "cancel appointment")
+	public String cancelAppointment (@PathVariable Integer id)
+	{
+		return patientService.cancelAppoinment(id);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value ="/appointment/view/{pId}", produces = MediaType.APPLICATION_JSON_VALUE )
+	@ApiOperation(value = "view appointment", notes = "view appointment")
+	public List<Appointment> viewAppointment (@PathVariable Integer pId)
+	{
+		return patientService.viewAppointment(pId);
 	}
 
 }
