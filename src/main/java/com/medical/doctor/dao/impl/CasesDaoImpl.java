@@ -83,6 +83,7 @@ public class CasesDaoImpl implements CasesDao {
 		List<Object> args = new ArrayList<>();
 		args.add(cases.getdId());
 		args.add(cases.getPrecaution());
+		args.add(cases.getCaseId());
 		int row = jdbcTemplate.update(CasesQueryConstants.UPDATE_CASE, args.toArray());
 		if (row > 0)
 		{
