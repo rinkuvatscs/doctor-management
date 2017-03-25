@@ -1,6 +1,8 @@
 package com.medical.doctor.request;
 
-public class DoctorRequest extends LocationServiceRequest{
+import com.medical.doctor.entity.DoctorAddress;
+
+public class DoctorRequest extends DoctorAddress {
 
 	private Integer doctorId;
 	private String name;
@@ -16,6 +18,15 @@ public class DoctorRequest extends LocationServiceRequest{
 	private String email;
 	private String gender;
 	private int age;
+	private String desc;
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
 
 	public Integer getDoctorId() {
 		return doctorId;

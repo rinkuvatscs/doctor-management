@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.medical.doctor.dao.DoctorDao;
 import com.medical.doctor.entity.Doctor;
+import com.medical.doctor.entity.DoctorAddress;
 import com.medical.doctor.service.DoctorService;
 import com.medical.doctor.util.ExpertiseParser;
 
@@ -80,7 +81,7 @@ public class DoctorServiceImpl implements DoctorService {
 	}
 
 	@Override
-	public String updateDoctor(Doctor doctor) {
+	public String updateDoctor(DoctorAddress doctor) {
 
 		return doctorDao.updateDoctor(doctor);
 	}

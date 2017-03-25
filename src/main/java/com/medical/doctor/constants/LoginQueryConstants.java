@@ -10,4 +10,5 @@ public interface LoginQueryConstants {
 	
 	String INSERT_LOGIN = "insert into login (mobile,password,adhaar,email,type,typeId,createdDate) values (?,?,?,?,?,?, NOW())";
 
+	String INSERT_DOCTOR_ADDRESS_AT_SIGNUP = "insert into doctorAddress(dId,createdDate) values(?,NOW()) ";
 }

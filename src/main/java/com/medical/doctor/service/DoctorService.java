@@ -3,6 +3,7 @@ package com.medical.doctor.service;
 import java.util.List;
 
 import com.medical.doctor.entity.Doctor;
+import com.medical.doctor.entity.DoctorAddress;
 
 public interface DoctorService {
 
@@ -26,7 +27,7 @@ public interface DoctorService {
 
     List<Doctor> getDoctors(Doctor doctor);
 
-    public String updateDoctor(Doctor doctor);
+    public String updateDoctor(DoctorAddress doctor);
 
     public String deleteDoctor(Doctor doctor);
 
