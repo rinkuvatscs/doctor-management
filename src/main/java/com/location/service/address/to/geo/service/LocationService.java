@@ -36,12 +36,12 @@ public class LocationService {
 					&& "OK".equalsIgnoreCase(locationResponse.getStatus())) {
 				return locationResponse;
 			} else {
-				return new LocationResponse();
+				return null;
 			}
 
 		} catch (RestClientException ex) {
 			LOGGER.error("message=errorGettingProjectName", ex);
-			return new LocationResponse();
+			return null;
 		}
 	}
 

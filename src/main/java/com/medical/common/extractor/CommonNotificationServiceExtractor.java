@@ -8,7 +8,6 @@ import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 
-import com.medical.doctor.entity.MessageService;
 import com.medical.doctor.entity.NotificationService;
 
 public class CommonNotificationServiceExtractor implements

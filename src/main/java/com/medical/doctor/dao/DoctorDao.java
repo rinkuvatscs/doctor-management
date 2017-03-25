@@ -3,6 +3,7 @@ package com.medical.doctor.dao;
 import java.util.List;
 
 import com.medical.doctor.entity.Doctor;
+import com.medical.doctor.entity.DoctorAddress;
 
 public interface DoctorDao {
 
@@ -28,7 +29,7 @@ public interface DoctorDao {
 
     public List<Doctor> getDoctorByConsultingFee(String consultingFee);
 
-    public String updateDoctor(Doctor doctor);
+    public String updateDoctor(DoctorAddress doctor);
 
     public String deleteDoctor(Doctor doctor);
 

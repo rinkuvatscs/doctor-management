@@ -2,7 +2,7 @@ package com.medical.doctor.constants;
 
 public interface QueryConstants {
 
-	String ADD_DOCTOR = "insert into  DOCTOR(Name,MobileNo,AdhaarNo," + "Email) values" + "(?,?,?,?)";
+	String ADD_DOCTOR = "insert into  DOCTOR(Name,mobile,adhaar,email) values(?,?,?,?)";
 
 	String IS_DOCTOR_EXIST = "SELECT * FROM doctor WHERE ";
 
@@ -37,5 +37,7 @@ public interface QueryConstants {
 	String INSERT_DOCTOR = "insert into doctor (name, mobile, adhaar, email, createdDate) values (?,?,?,?, NOW())";
 
 	String GET_DOCTOR_BY_MOBILE = "Select * from doctor where mobile = ? ";
+	
+	String INSERT_DOCTOR_ADDRESS_AT_SIGNUP = "insert into doctorAddress(dId,createdDate) values(?,NOW()) ";
 
 }

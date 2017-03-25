@@ -19,6 +19,15 @@ public class Doctor {
 	private String gender;
 	private Date DOB;
 	private String password;
+	private String desc;
+	
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
 
 	public String getEmail() {
 		return email;

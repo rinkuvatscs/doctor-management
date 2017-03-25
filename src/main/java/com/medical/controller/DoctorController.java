@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.medical.doctor.entity.Doctor;
+import com.medical.doctor.entity.DoctorAddress;
 import com.medical.doctor.exceptionhandler.BadRequestException;
 import com.medical.doctor.mappers.DoctorMapper;
 import com.medical.doctor.request.DoctorRequest;
@@ -233,7 +234,7 @@ public class DoctorController {
 			@ApiResponse(code = 201, message = "") })
 	public Response updateDoctor(@RequestBody DoctorRequest doctorRequest) {
 
-		Doctor doctor = new Doctor();
+		DoctorAddress doctor = new DoctorAddress();
 		try {
 			BeanUtils.copyProperties(doctorRequest, doctor);
 		} catch (BeansException beansException) {
