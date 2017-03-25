@@ -519,7 +519,7 @@ public class PatientDaoImpl implements PatientDao {
 			return "Appoinment Done";
 		}
 		else {
-			return "Appoinment Done";
+			return "Appoinment Not Successful";
 		}
 		
 	}
