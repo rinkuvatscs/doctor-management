@@ -77,6 +77,22 @@ public class CasesDaoImpl implements CasesDao {
 		}
 	}
 
+	@Override
+	public String updateCase(Cases cases) {
+		
+		List<Object> args = new ArrayList<>();
+		args.add(cases.getdId());
+		args.add(cases.getPrecaution());
+		int row = jdbcTemplate.update(CasesQueryConstants.UPDATE_CASE, args.toArray());
+		if (row > 0)
+		{
+			return "Case Updated";
+		}
+		else {
+			return "Case Not Updated";
+		}
+	}
+
 	
 
 }

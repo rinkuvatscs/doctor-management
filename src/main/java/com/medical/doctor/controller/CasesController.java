@@ -28,32 +28,39 @@ import com.medical.doctor.service.CasesService;
 
 
 @RestController
-@RequestMapping("/api")
-@Api(basePath = "/", value = "cases", description = "Operations with Landlords", produces = "application/json")
+@RequestMapping("/api/cases")
+@Api(basePath = "/cases", value = "cases", description = "Operations with Landlords", produces = "application/json")
 public class CasesController {
 
 	@Autowired
 	private CasesService caseService;
 	
-	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/cases/create")
+	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/create")
 	@ApiOperation(value = "create case", notes = "create case by doctor")
 	public String createCase(@RequestBody Cases cases) {
 		
 		return caseService.createCase(cases);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/cases/close/{caseId}")
+	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/close/{caseId}")
 	@ApiOperation(value = "close case", notes = "close case by doctor")
 	public String closeCaseByCaseId(@PathVariable Integer caseId) {
 		
 		return caseService.closeCase(caseId);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/cases/reopen/{caseId}")
+	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/reopen/{caseId}")
 	@ApiOperation(value = "reopen case", notes = "reopen case by doctor")
 	public String reopenCaseByCaseId(@PathVariable Integer caseId) {
 		
 		return caseService.reopenCase(caseId);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/update")
+	@ApiOperation(value = "update case", notes = "update case by doctor")
+	public String updateCase(@RequestBody Cases cases) {
+		
+		return caseService.updateCase(cases);
 	}
 	
 }

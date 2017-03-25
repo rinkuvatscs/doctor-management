@@ -10,6 +10,8 @@ public interface CasesDao {
 	
 	public String reopenCase(Integer caseId);
 
+	public String updateCase(Cases cases);
+
 	
 
 }

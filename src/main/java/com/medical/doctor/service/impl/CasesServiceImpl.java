@@ -31,6 +31,12 @@ public class CasesServiceImpl implements CasesService {
 		return casesDao.reopenCase(caseId);
 	}
 
+	@Override
+	public String updateCase(Cases cases) {
+	
+		return casesDao.updateCase(cases);
+	}
+
 	
 
 }

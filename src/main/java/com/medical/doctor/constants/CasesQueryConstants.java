@@ -7,5 +7,7 @@ public interface CasesQueryConstants {
 	String CLOSE_CASE = "UPDATE cases SET closed=0 WHERE caseId =?";
 	
 	String REOPEN_CASE ="UPDATE cases SET closed=1 WHERE caseId =?";
+	
+	String UPDATE_CASE ="UPDATE cases SET dId = ?, precaution =?, closed=1 WHERE caseId =?";
 
 }
