@@ -861,7 +861,7 @@ public class DoctorDaoImpl implements DoctorDao {
 					args = new ArrayList<>();
 					args.add(doctorsList.get(0).getDoctorId());
 					jdbcTemplate.update(
-							LoginQueryConstants.INSERT_DOCTOR_ADDRESS_AT_SIGNUP, args.toArray());
+							QueryConstants.INSERT_DOCTOR_ADDRESS_AT_SIGNUP, args.toArray());
 					
 					return doctorsList.get(0).getDoctorId();
 					
