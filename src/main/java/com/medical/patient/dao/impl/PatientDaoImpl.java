@@ -9,11 +9,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import com.medical.doctor.entity.Appointment;
 import com.medical.doctor.exceptionhandler.BadRequestException;
 import com.medical.patient.constants.PatientLoginQueryConstants;
 import com.medical.patient.constants.PatientQueryConstants;
 import com.medical.patient.dao.PatientDao;
-import com.medical.patient.entity.Appointment;
 import com.medical.patient.entity.Patient;
 import com.medical.patient.extractor.PatientExtractor;
 
@@ -32,14 +32,12 @@ public class PatientDaoImpl implements PatientDao {
 		args.add(patient.getMobile());
 		args.add(patient.getAdhaar());
 		args.add(patient.getEmail());
-		int patientResponse = jdbcTemplate.update(
-				PatientQueryConstants.INSERT_PATIENT, args.toArray());
+		int patientResponse = jdbcTemplate.update(PatientQueryConstants.INSERT_PATIENT, args.toArray());
 		if (patientResponse > 0) {
 			args = new ArrayList<>();
 			args.add(patient.getMobile());
-			patientList = jdbcTemplate.query(
-					PatientQueryConstants.GET_PATIENT_BY_MOBILE,
-					new PatientExtractor(), args.toArray());
+			patientList = jdbcTemplate.query(PatientQueryConstants.GET_PATIENT_BY_MOBILE, new PatientExtractor(),
+					args.toArray());
 			if (!StringUtils.isEmpty(patientList) && !patientList.isEmpty()) {
 				args = new ArrayList<>();
 				args.add(patient.getMobile());
@@ -48,9 +46,7 @@ public class PatientDaoImpl implements PatientDao {
 				args.add(patient.getEmail());
 				args.add("p");
 				args.add(patientList.get(0).getpId());
-				int response = jdbcTemplate
-						.update(PatientLoginQueryConstants.INSERT_LOGIN,
-								args.toArray());
+				int response = jdbcTemplate.update(PatientLoginQueryConstants.INSERT_LOGIN, args.toArray());
 				if (response > 0) {
 
 					return patientList.get(0).getpId();
@@ -63,9 +59,8 @@ public class PatientDaoImpl implements PatientDao {
 	@Override
 	public Boolean checkMobile(String mobile) {
 		Object[] args = { mobile };
-		List<Patient> response = jdbcTemplate.query(
-				"select * from patient where mobile = ? ",
-				new PatientExtractor(), args);
+		List<Patient> response = jdbcTemplate.query("select * from patient where mobile = ? ", new PatientExtractor(),
+				args);
 		if (!response.isEmpty()) {
 			return true;
 		}
@@ -75,9 +70,8 @@ public class PatientDaoImpl implements PatientDao {
 	@Override
 	public Boolean checkAdhaar(String adhaar) {
 		Object[] args = { adhaar };
-		List<Patient> response = jdbcTemplate.query(
-				"select * from patient where adhaar = ? ",
-				new PatientExtractor(), args);
+		List<Patient> response = jdbcTemplate.query("select * from patient where adhaar = ? ", new PatientExtractor(),
+				args);
 		if (!response.isEmpty()) {
 			return true;
 		}
@@ -87,9 +81,8 @@ public class PatientDaoImpl implements PatientDao {
 	@Override
 	public Boolean checkEmail(String email) {
 		Object[] args = { email };
-		List<Patient> response = jdbcTemplate.query(
-				" SELECT * from patient WHERE email = ? ",
-				new PatientExtractor(), args);
+		List<Patient> response = jdbcTemplate.query(" SELECT * from patient WHERE email = ? ", new PatientExtractor(),
+				args);
 		if (!response.isEmpty()) {
 			return true;
 		}
@@ -105,13 +98,11 @@ public class PatientDaoImpl implements PatientDao {
 			args.add(patient.getMobile());
 			args.add(patient.getAdhaar());
 			args.add(patient.getEmail());
-			int row = jdbcTemplate.update(PatientQueryConstants.ADD_PATIENT,
-					args.toArray());
+			int row = jdbcTemplate.update(PatientQueryConstants.ADD_PATIENT, args.toArray());
 			if (row == 1) {
 				response = patient.getName() + " registered successfully";
 			} else {
-				response = "Sorry, " + patient.getName()
-						+ " not registered . Please try again";
+				response = "Sorry, " + patient.getName() + " not registered . Please try again";
 			}
 		} else {
 			response = "Sorry, " + patient.getName() + " already registered";
@@ -124,8 +115,7 @@ public class PatientDaoImpl implements PatientDao {
 		boolean isExist = false;
 		boolean isMobile = false, isAadhaar = false, isEmail = false, isDoctorId = false;
 
-		StringBuffer query = new StringBuffer(
-				PatientQueryConstants.IS_PATIENT_EXIST);
+		StringBuffer query = new StringBuffer(PatientQueryConstants.IS_PATIENT_EXIST);
 		List<String> args = new ArrayList<>();
 
 		if (!StringUtils.isEmpty(patient.getAdhaar())) {
@@ -155,8 +145,7 @@ public class PatientDaoImpl implements PatientDao {
 			args.add(patient.getMobile());
 		}
 
-		List<Patient> response = jdbcTemplate.query(query.toString(),
-				new PatientExtractor(), args.toArray());
+		List<Patient> response = jdbcTemplate.query(query.toString(), new PatientExtractor(), args.toArray());
 		if (!StringUtils.isEmpty(response) && response.size() > 0) {
 			isExist = true;
 		}
@@ -171,38 +160,29 @@ public class PatientDaoImpl implements PatientDao {
 		String resp = "Please try again later";
 		int delete;
 		if (!StringUtils.isEmpty(patient)) {
-			if (!StringUtils.isEmpty(patient.getpId())
-					&& getpatientById(patient.getpId()) != null) {
+			if (!StringUtils.isEmpty(patient.getpId()) && getpatientById(patient.getpId()) != null) {
 				Object args[] = { patient.getpId() };
-				delete = jdbcTemplate.update(
-						"DELETE FROM patient WHERE id = ? ", args);
+				delete = jdbcTemplate.update("DELETE FROM patient WHERE id = ? ", args);
 				if (delete > 0) {
-					response = "Patient with Patient ID " + patient.getpId()
-							+ " successfully Deleted";
+					response = "Patient with Patient ID " + patient.getpId() + " successfully Deleted";
 				} else {
 					response = resp;
 				}
 			} else if (!StringUtils.isEmpty(patient.getAdhaar())
 					&& getpatientByAdharNumber(patient.getAdhaar()) != null) {
 				Object args[] = { patient.getAdhaar() };
-				delete = jdbcTemplate.update(
-						"DELETE FROM patient WHERE patient_adhaar_number = ? ",
-						args);
+				delete = jdbcTemplate.update("DELETE FROM patient WHERE patient_adhaar_number = ? ", args);
 				if (delete > 0) {
-					response = "Patient with Aadhar Number "
-							+ patient.getAdhaar() + " successfully Deleted";
+					response = "Patient with Aadhar Number " + patient.getAdhaar() + " successfully Deleted";
 				} else {
 					response = resp;
 				}
 			} else if (!StringUtils.isEmpty(patient.getMobile())
 					&& getpatientByMobileNumber(patient.getMobile()) != null) {
 				Object args[] = { patient.getMobile() };
-				delete = jdbcTemplate.update(
-						"DELETE FROM patient WHERE patient_mobile_number = ? ",
-						args);
+				delete = jdbcTemplate.update("DELETE FROM patient WHERE patient_mobile_number = ? ", args);
 				if (delete > 0) {
-					response = "Patient with Mobile Number "
-							+ patient.getMobile() + " successfully Deleted";
+					response = "Patient with Mobile Number " + patient.getMobile() + " successfully Deleted";
 				} else {
 					response = resp;
 				}
@@ -211,9 +191,7 @@ public class PatientDaoImpl implements PatientDao {
 						"Please provide valid Patient Id or Patient Adhar Number or Patient Mobile Number.");
 			}
 		} else {
-			throw new BadRequestException(
-					"Patient can not be deleted without details {" + patient
-							+ "}");
+			throw new BadRequestException("Patient can not be deleted without details {" + patient + "}");
 
 		}
 		return response;
@@ -224,8 +202,7 @@ public class PatientDaoImpl implements PatientDao {
 
 		if (!StringUtils.isEmpty(mobileNumber)) {
 			Object args[] = { mobileNumber };
-			List<Patient> response = jdbcTemplate.query(
-					PatientQueryConstants.GET_PATIENT_BY_MOBILE,
+			List<Patient> response = jdbcTemplate.query(PatientQueryConstants.GET_PATIENT_BY_MOBILE,
 					new PatientExtractor(), args);
 			if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
 				return response.get(0);
@@ -239,8 +216,7 @@ public class PatientDaoImpl implements PatientDao {
 
 		if (!StringUtils.isEmpty(adharNumber)) {
 			Object args[] = { adharNumber };
-			List<Patient> response = jdbcTemplate.query(
-					PatientQueryConstants.GET_PATIENT_BY_ADHAR_NUMBER,
+			List<Patient> response = jdbcTemplate.query(PatientQueryConstants.GET_PATIENT_BY_ADHAR_NUMBER,
 					new PatientExtractor(), args);
 			if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
 				return response.get(0);
@@ -254,8 +230,7 @@ public class PatientDaoImpl implements PatientDao {
 
 		if (!StringUtils.isEmpty(email)) {
 			Object args[] = { email };
-			List<Patient> response = jdbcTemplate.query(
-					PatientQueryConstants.GET_PATIENT_BY_EMAIL, args,
+			List<Patient> response = jdbcTemplate.query(PatientQueryConstants.GET_PATIENT_BY_EMAIL, args,
 					new PatientExtractor());
 			if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
 				return response.get(0);
@@ -269,8 +244,7 @@ public class PatientDaoImpl implements PatientDao {
 
 		if (!StringUtils.isEmpty(name)) {
 			Object args[] = { "%" + name + "%" };
-			List<Patient> response = jdbcTemplate.query(
-					PatientQueryConstants.GET_PATIENT_BY_NAME,
+			List<Patient> response = jdbcTemplate.query(PatientQueryConstants.GET_PATIENT_BY_NAME,
 					new PatientExtractor(), args);
 			if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
 				return response;
@@ -284,8 +258,7 @@ public class PatientDaoImpl implements PatientDao {
 
 		if (!StringUtils.isEmpty(id)) {
 			Object args[] = { id };
-			List<Patient> response = jdbcTemplate.query(
-					PatientQueryConstants.GET_PATIENT_BY_ID, args,
+			List<Patient> response = jdbcTemplate.query(PatientQueryConstants.GET_PATIENT_BY_ID, args,
 					new PatientExtractor());
 			if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
 				return response.get(0);
@@ -303,24 +276,18 @@ public class PatientDaoImpl implements PatientDao {
 		if (!StringUtils.isEmpty(patient)) {
 
 			if (!StringUtils.isEmpty(patient.getEmail())
-					&& !StringUtils.isEmpty(getpatientByEmail(patient
-							.getEmail()))) {
-				throw new BadRequestException(
-						"Updated Email ID already registered");
+					&& !StringUtils.isEmpty(getpatientByEmail(patient.getEmail()))) {
+				throw new BadRequestException("Updated Email ID already registered");
 			}
 
 			if (!StringUtils.isEmpty(patient.getAdhaar())
-					&& !StringUtils.isEmpty(getpatientByAdharNumber(patient
-							.getAdhaar()))) {
-				throw new BadRequestException(
-						"Updated Aadhaar already registered");
+					&& !StringUtils.isEmpty(getpatientByAdharNumber(patient.getAdhaar()))) {
+				throw new BadRequestException("Updated Aadhaar already registered");
 			}
 
 			if (!StringUtils.isEmpty(patient.getMobile())
-					&& !StringUtils.isEmpty(getpatientByMobileNumber(patient
-							.getMobile()))) {
-				throw new BadRequestException(
-						"Updated Mobile Number already registered ");
+					&& !StringUtils.isEmpty(getpatientByMobileNumber(patient.getMobile()))) {
+				throw new BadRequestException("Updated Mobile Number already registered ");
 			}
 
 			boolean isPatientName = false;
@@ -340,9 +307,9 @@ public class PatientDaoImpl implements PatientDao {
 			/*
 			 * if (null != patient.getHomeAddress()) { if (isPatientName) {
 			 * query.append(" , HomeAddress = ? ");
-			 * args.add(patient.getHomeAddress()); } else {
-			 * query.append(" HomeAddress = ? ");
-			 * args.add(patient.getHomeAddress()); } isHomeAddress = true; }
+			 * args.add(patient.getHomeAddress()); } else { query.append(
+			 * " HomeAddress = ? "); args.add(patient.getHomeAddress()); }
+			 * isHomeAddress = true; }
 			 */
 
 			if (null != patient.getMobile()) {
@@ -368,8 +335,7 @@ public class PatientDaoImpl implements PatientDao {
 			}
 
 			if (null != patient.getEmail()) {
-				if (isHomeAddress || isPatientName || isMobile || isAadhaar
-						|| isAge) {
+				if (isHomeAddress || isPatientName || isMobile || isAadhaar || isAge) {
 					query.append(", email = ? ");
 
 				} else {
@@ -380,8 +346,7 @@ public class PatientDaoImpl implements PatientDao {
 			}
 
 			if (null != patient.getGender()) {
-				if (isHomeAddress || isPatientName || isMobile || isAadhaar
-						|| isAge || isEmail) {
+				if (isHomeAddress || isPatientName || isMobile || isAadhaar || isAge || isEmail) {
 					query.append(", gender = ? ");
 
 				} else {
@@ -392,8 +357,7 @@ public class PatientDaoImpl implements PatientDao {
 			}
 
 			if (null != patient.getAllergies()) {
-				if (isHomeAddress || isPatientName || isMobile || isAadhaar
-						|| isAge || isEmail || isGender) {
+				if (isHomeAddress || isPatientName || isMobile || isAadhaar || isAge || isEmail || isGender) {
 					query.append(", allergies = ? ");
 				} else {
 					query.append(" allergies = ? ");
@@ -403,8 +367,8 @@ public class PatientDaoImpl implements PatientDao {
 			}
 
 			if (null != patient.getDOB()) {
-				if (isHomeAddress || isPatientName || isMobile || isAadhaar
-						|| isAge || isEmail || isGender || isAllergies) {
+				if (isHomeAddress || isPatientName || isMobile || isAadhaar || isAge || isEmail || isGender
+						|| isAllergies) {
 					query.append(", dob = ? ");
 				} else {
 					query.append(" dob = ? ");
@@ -413,15 +377,15 @@ public class PatientDaoImpl implements PatientDao {
 				isDOB = true;
 			}
 			int update = 0;
-			if(isHomeAddress || isPatientName || isMobile || isAadhaar
-					|| isAge || isEmail || isGender || isAllergies || isDOB){
-				
+			if (isHomeAddress || isPatientName || isMobile || isAadhaar || isAge || isEmail || isGender || isAllergies
+					|| isDOB) {
+
 				query.append(", updatedDate = NOW() ");
 				query.append(" WHERE pId = ? ");
 				args.add(patient.getpId());
 				update = jdbcTemplate.update(query.toString(), args.toArray());
 			}
-			
+
 			if (update > 0) {
 
 				int updatePatient = updatePatientLogin(patient);
@@ -505,49 +469,5 @@ public class PatientDaoImpl implements PatientDao {
 
 		return 1;
 	}
-	
-	@Override
-	public String makeAppointment(Appointment makeAppointment) {
-		
-		List<Object> args = new ArrayList<>();
-		args.add(makeAppointment.getdId());
-		args.add(makeAppointment.getpId());
-		args.add(makeAppointment.getAppointmentDesc());
-		int row = jdbcTemplate.update(PatientQueryConstants.INSERT_APPOINTMENT, args.toArray());
-		if (row > 0)
-		{
-			return "Appoinment Done";
-		}
-		else {
-			return "Appoinment Not Successful";
-		}
-		
-	}
 
-	@Override
-	public String cancelAppointment(Integer id) {
-
-		if(!StringUtils.isEmpty(id)){
-			Object args[] = { id };
-			int row = jdbcTemplate.update(PatientQueryConstants.DELETE_APPOINTMENT, args);
-			if (row > 0){
-				return "Appoinment Cancelled";
-			}
-			else {
-				return "AppoinmentID does not exists";
-			}
-		}		
-		return "AppoinmentID is NULL";
-	}
-
-	@Override
-	public List<Appointment> viewAppointment(Integer pId) {
-		if(!StringUtils.isEmpty(pId)){
-			Object args[] = { pId };
-			List<Appointment> response = jdbcTemplate.query(PatientQueryConstants.GET_APPOINTMENT_BY_PID, args, new BeanPropertyRowMapper(Appointment.class));
-			System.out.println(response);
-			return response;
-		}
-		return null;
-	}
 }
