@@ -11,18 +11,18 @@ import com.medical.doctor.constants.MiscQueryConstants;
 import com.medical.doctor.dao.ContactDao;
 import com.medical.doctor.entity.Contact;
 import com.medical.doctor.extractor.ContactExtractor;
+
 @Component
-public class ContactDaoImpl implements ContactDao{
+public class ContactDaoImpl implements ContactDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
+
 	@Override
 	public String addContact(Contact contact) {
 		String response = null;
-		if (!StringUtils.isEmpty(contact)){
-			Object args[] = { contact.getName(), contact.getEmail(), contact.getMobile(),
-					contact.getMessage() };
+		if (!StringUtils.isEmpty(contact)) {
+			Object args[] = { contact.getName(), contact.getMobile(), contact.getEmail(), contact.getMessage() };
 			int add = jdbcTemplate.update(MiscQueryConstants.ADD_CONTENT, args);
 			if (add > 0) {
 				response = "Successfully inserted";
@@ -34,8 +34,9 @@ public class ContactDaoImpl implements ContactDao{
 	}
 
 	@Override
-	public Contact getContact() {
-		List<Contact> contacts = jdbcTemplate.query(MiscQueryConstants.GET_CONTENT, new ContactExtractor());
+	public Contact getContact(String email) {
+		Object[] args = { email };
+		List<Contact> contacts = jdbcTemplate.query(MiscQueryConstants.GET_CONTENT, new ContactExtractor(), args);
 		if (!contacts.isEmpty()) {
 			return contacts.get(0);
 		}
@@ -46,8 +47,7 @@ public class ContactDaoImpl implements ContactDao{
 	public String updateContact(Contact contact) {
 		String response = null;
 		if (!StringUtils.isEmpty(contact)) {
-			Object args[] = { contact.getName(), contact.getMobile(),
-					contact.getMessage(), contact.getEmail() };
+			Object args[] = { contact.getName(), contact.getMobile(), contact.getMessage(), contact.getEmail() };
 			int add = jdbcTemplate.update(MiscQueryConstants.UPDATE_CONTENT, args);
 			if (add > 0) {
 				response = "Successfully Updated";
@@ -59,9 +59,11 @@ public class ContactDaoImpl implements ContactDao{
 	}
 
 	@Override
-	public List<Contact> getAll() {
-		List<Contact> contact = jdbcTemplate.query(MiscQueryConstants.GET_ALL, new ContactExtractor());
-		return contact;
+	public List<Contact> getAll(Contact contact) {
+		Object[] args = { contact.getId(), contact.getName(), contact.getMobile(), contact.getEmail(),
+				contact.getMessage() };
+		List<Contact> response = jdbcTemplate.query(MiscQueryConstants.GET_ALL, new ContactExtractor(), args);
+		return response;
 	}
 
 }

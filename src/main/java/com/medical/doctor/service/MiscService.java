@@ -17,11 +17,11 @@ public interface MiscService {
 	
 	public String addContact(Contact contact);
 
-	public Contact getContact();
+	public Contact getContact(String email);
 
 	public String updateContact(Contact contact);
 	
-	public List<Contact> getAll();
+	public List<Contact> getAll(Contact contact);
 	
 	public List<AdvertiseDoctor> getDoctorByDate( AdvertiseDoctor advertiseDoctor);
 	
