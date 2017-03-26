@@ -144,8 +144,8 @@ public class MiscUsingDatabaseImpl implements MiscService {
 	}
 
 	@Override
-	public Contact getContact() {
-		return contactDao.getContact();
+	public Contact getContact(String email) {
+		return contactDao.getContact(email);
 	}
 
 	@Override
@@ -154,8 +154,8 @@ public class MiscUsingDatabaseImpl implements MiscService {
 	}
 
 	@Override
-	public List<Contact> getAll() {
-		return contactDao.getAll();
+	public List<Contact> getAll(Contact contact) {
+		return contactDao.getAll(contact);
 	}
 
 	@Override
