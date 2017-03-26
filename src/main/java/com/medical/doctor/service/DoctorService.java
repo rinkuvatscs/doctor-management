@@ -1,9 +1,9 @@
 package com.medical.doctor.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.medical.doctor.entity.Doctor;
+import com.medical.doctor.entity.DoctorAddress;
 
 public interface DoctorService {
 
@@ -27,11 +27,11 @@ public interface DoctorService {
 
     List<Doctor> getDoctors(Doctor doctor);
 
-    public String updateDoctor(Doctor doctor);
+    public String updateDoctor(DoctorAddress doctor);
 
     public String deleteDoctor(Doctor doctor);
 
-    public Map<Integer, String> getAllExpertized();
+    public List<String> getAllExpertized();
 
     public Integer addExpertisation(String expertise);
 
@@ -41,6 +41,12 @@ public interface DoctorService {
     
     public String approveExpertise(Integer expertise);
     
-    public Map<Integer, String> getUnApprovedExpertise() ;
+    public List<String> getUnApprovedExpertise() ;
+    
+    public Integer doctorSignUp(Doctor doctor);
+    
+    public Boolean checkMobile(String mobile);
+    
+    public Boolean checkAdhaar(String adhaar);
     
 }

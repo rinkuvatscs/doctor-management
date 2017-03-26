@@ -1,4 +1,4 @@
-package com.medical.doctor.controller;
+package com.medical.controller;
 
 import java.util.List;
 

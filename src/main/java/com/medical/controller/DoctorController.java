@@ -1,4 +1,4 @@
-package com.medical.doctor.controller;
+package com.medical.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.medical.doctor.entity.Doctor;
+import com.medical.doctor.entity.DoctorAddress;
 import com.medical.doctor.exceptionhandler.BadRequestException;
 import com.medical.doctor.mappers.DoctorMapper;
 import com.medical.doctor.request.DoctorRequest;
@@ -32,10 +32,11 @@ import com.medical.doctor.response.Response;
 import com.medical.doctor.service.DoctorService;
 
 @RestController
-@RequestMapping("/doctor")
+@RequestMapping("/api/doctor")
 @Api(basePath = "/doctor", value = "doctor", description = "Operations with Landlords", produces = "application/json")
 public class DoctorController {
 
+	private static final String DOCTOR_BADREQEST_MESSAGE = "Doctor Do not have enough information";
 	@Autowired
 	private DoctorService doctorService;
 
@@ -55,8 +56,8 @@ public class DoctorController {
 		try {
 			BeanUtils.copyProperties(doctorRequest, doctor);
 		} catch (BeansException beansException) {
-			throw new BadRequestException(
-					"Doctor Do not have enough information", beansException);
+			throw new BadRequestException(DOCTOR_BADREQEST_MESSAGE,
+					beansException);
 		}
 
 		if (!StringUtils.isEmpty(doctor)
@@ -127,10 +128,9 @@ public class DoctorController {
 		try {
 			BeanUtils.copyProperties(searchDoctorRequest, doctor);
 		} catch (BeansException beansException) {
-			throw new BadRequestException(
-					"Doctor Do not have enough information", beansException);
+			throw new BadRequestException(DOCTOR_BADREQEST_MESSAGE,
+					beansException);
 		}
-
 		return doctorMapper.mapDoctors(doctorService.getDoctors(doctor));
 
 	}
@@ -138,10 +138,8 @@ public class DoctorController {
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{id}/id")
 	@ResponseBody
 	public DoctorResponse getDoctorById(@PathVariable Integer id) {
-
-		if (!StringUtils.isEmpty(id) && id.intValue() > 0) {
-			return doctorMapper.mapDoctor(doctorService.getDoctorById(id
-					.intValue()));
+		if (!StringUtils.isEmpty(id) && id > 0) {
+			return doctorMapper.mapDoctor(doctorService.getDoctorById(id));
 		} else {
 			throw new BadRequestException("Doctor ID should not be blank");
 		}
@@ -199,19 +197,20 @@ public class DoctorController {
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{expertisted}/expertisted")
-	@ResponseBody
-	public List<DoctorResponse> getDoctorByExpertisted(
-			@PathVariable String expertisted) {
-
-		if (!StringUtils.isEmpty(expertisted)) {
-			return doctorMapper.mapDoctors(doctorService
-					.getDoctorByExpertisted(expertisted));
-		} else {
-			throw new BadRequestException(
-					"Doctor Expertisted should not be blank");
-		}
-	}
+	/*
+	 * @RequestMapping(method = RequestMethod.GET, produces =
+	 * MediaType.APPLICATION_JSON_VALUE, value =
+	 * "/get/{expertisted}/expertisted")
+	 * 
+	 * @ResponseBody public List<DoctorResponse> getDoctorByExpertisted(
+	 * 
+	 * @PathVariable String expertisted) {
+	 * 
+	 * if (!StringUtils.isEmpty(expertisted)) { return
+	 * doctorMapper.mapDoctors(doctorService
+	 * .getDoctorByExpertisted(expertisted)); } else { throw new
+	 * BadRequestException( "Doctor Expertisted should not be blank"); } }
+	 */
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{fee}/fee")
 	@ResponseBody
@@ -235,12 +234,12 @@ public class DoctorController {
 			@ApiResponse(code = 201, message = "") })
 	public Response updateDoctor(@RequestBody DoctorRequest doctorRequest) {
 
-		Doctor doctor = new Doctor();
+		DoctorAddress doctor = new DoctorAddress();
 		try {
 			BeanUtils.copyProperties(doctorRequest, doctor);
 		} catch (BeansException beansException) {
-			throw new BadRequestException(
-					"Doctor Do not have enough information", beansException);
+			throw new BadRequestException(DOCTOR_BADREQEST_MESSAGE,
+					beansException);
 		}
 		return new Response(doctorService.updateDoctor(doctor));
 	}
@@ -253,7 +252,7 @@ public class DoctorController {
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/all/expertisation")
 	@ResponseBody
-	public Map<Integer, String> getAllExpertisations() {
+	public List<String> getAllExpertisations() {
 
 		return doctorService.getAllExpertized();
 	}
@@ -269,22 +268,30 @@ public class DoctorController {
 		}
 	}
 
+	/**
+	 * getRecentDoctors will provide recently joined doctors
+	 * 
+	 * 
+	 * Days already taken in Integer because this will come from UI end not will
+	 * be provided by any user always will come in correct format
+	 * 
+	 * @param days
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{days}/recentdoctors")
 	@ResponseBody
 	public List<DoctorResponse> getRecentDoctors(@PathVariable Integer days) {
-
-		if (!StringUtils.isEmpty(days) && days.intValue() > 0) {
-			return doctorMapper.mapDoctors(doctorService.getRecentDoctors(days
-					.intValue()));
+		if (!StringUtils.isEmpty(days) && days > 0) {
+			return doctorMapper
+					.mapDoctors(doctorService.getRecentDoctors(days));
 		} else {
 			throw new BadRequestException("Doctor ID should not be blank");
 		}
 	}
-	
-	
+
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/all/unapproved/expertisation")
 	@ResponseBody
-	public Map<Integer, String> getAllUnApprovedExpertisations() {
+	public List<String> getAllUnApprovedExpertisations() {
 
 		return doctorService.getUnApprovedExpertise();
 	}
@@ -300,5 +307,36 @@ public class DoctorController {
 		}
 	}
 
+	@RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, value = "/signup")
+	@ResponseBody
+	public Integer doctorSignUp(@RequestBody Doctor doctor) {
 
+		if (!StringUtils.isEmpty(doctor) && !doctor.getName().isEmpty()
+				&& !doctor.getEmail().isEmpty()
+				&& !doctor.getMobile().isEmpty()
+				&& !doctor.getAadhaarNumber().isEmpty()
+				&& !doctor.getPassword().isEmpty()) {
+			return doctorService.doctorSignUp(doctor);
+		} else {
+			throw new BadRequestException(
+					"Doctor SignUp details should not be blank");
+		}
+	}
+
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/checkMobile/{mobile}")
+	public Boolean checkMobile(@PathVariable String mobile) {
+		return doctorService.checkMobile(mobile);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/checkAdhaar/{adhaar}")
+	public Boolean checkAdhaar(@PathVariable String adhaar) {
+		System.out.println(adhaar);
+		return doctorService.checkMobile(adhaar);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/checkEmail/{email}")
+	public Boolean checkEmail(@PathVariable String email) {
+		System.out.println(email);
+		return doctorService.checkMobile(email);
+	}
 }

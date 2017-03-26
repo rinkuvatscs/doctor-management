@@ -2,13 +2,13 @@ package com.medical.doctor.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.medical.doctor.dao.DoctorDao;
 import com.medical.doctor.entity.Doctor;
+import com.medical.doctor.entity.DoctorAddress;
 import com.medical.doctor.service.DoctorService;
 import com.medical.doctor.util.ExpertiseParser;
 
@@ -81,7 +81,7 @@ public class DoctorServiceImpl implements DoctorService {
 	}
 
 	@Override
-	public String updateDoctor(Doctor doctor) {
+	public String updateDoctor(DoctorAddress doctor) {
 
 		return doctorDao.updateDoctor(doctor);
 	}
@@ -99,7 +99,7 @@ public class DoctorServiceImpl implements DoctorService {
 	}
 
 	@Override
-	public Map<Integer, String> getAllExpertized() {
+	public List<String> getAllExpertized() {
 
 		return doctorDao.getAllExpertized();
 	}
@@ -128,8 +128,25 @@ public class DoctorServiceImpl implements DoctorService {
 	}
 
 	@Override
-	public Map<Integer, String> getUnApprovedExpertise() {
+	public List<String> getUnApprovedExpertise() {
 		return doctorDao.getUnApprovedExpertise();
+	}
+
+	@Override
+	public Integer doctorSignUp(Doctor doctor) {
+		
+		return doctorDao.doctorSignUp(doctor);
+	}
+
+	@Override
+	public Boolean checkMobile(String mobile) {
+		return doctorDao.checkMobile(mobile);
+		
+	}
+
+	@Override
+	public Boolean checkAdhaar(String adhaar) {
+		return doctorDao.checkAdhaar(adhaar);
 	}
 
 }
