@@ -50,13 +50,12 @@ public class MiscUsingDatabaseImpl implements MiscService {
 
 	// final String username = "aviralmittal@srydada.96.lt";
 	// final String password = "aviral";
-	
+
 	@Autowired
 	private ContactDao contactDao;
-	
+
 	@Autowired
 	private AdvertiseDoctorDao advertiseDoctorDao;
-	
 
 	@Override
 	public String sendMail(Email email) {
@@ -67,8 +66,7 @@ public class MiscUsingDatabaseImpl implements MiscService {
 			message.setFrom(new InternetAddress(username));
 
 			if (!StringUtils.isEmpty(email.getTo())) {
-				message.setRecipients(Message.RecipientType.TO,
-						InternetAddress.parse(email.getTo()));
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email.getTo()));
 			}
 			if (!StringUtils.isEmpty(email.getMessageSubject())) {
 				message.setSubject(email.getMessageSubject());
@@ -90,19 +88,19 @@ public class MiscUsingDatabaseImpl implements MiscService {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(username));
 			if (!StringUtils.isEmpty(email.getTo())) {
-				message.setRecipients(Message.RecipientType.TO,
-						InternetAddress.parse(email.getTo()));
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email.getTo()));
 			}
 			if (!StringUtils.isEmpty(email.getMessageSubject())) {
 				message.setSubject(email.getMessageSubject());
 			}
-			if(!StringUtils.isEmpty(email.getMultiple_cc()) && !email.getMultiple_cc().isEmpty()){
-				
-				InternetAddress[][] addresses = new InternetAddress[email.getMultiple_cc().size()][email.getMultiple_cc().size()];
-				for(int i = 0; i < email.getMultiple_cc().size(); i++){
+			if (!StringUtils.isEmpty(email.getMultiple_cc()) && !email.getMultiple_cc().isEmpty()) {
+
+				InternetAddress[][] addresses = new InternetAddress[email.getMultiple_cc().size()][email
+						.getMultiple_cc().size()];
+				for (int i = 0; i < email.getMultiple_cc().size(); i++) {
 					addresses[i] = InternetAddress.parse(email.getMultiple_cc().get(i));
 				}
-				for(InternetAddress[] internetAddress: addresses){
+				for (InternetAddress[] internetAddress : addresses) {
 					message.setRecipients(Message.RecipientType.CC, internetAddress);
 				}
 			}
@@ -123,12 +121,11 @@ public class MiscUsingDatabaseImpl implements MiscService {
 		props.put(host, hostUrl);
 		props.put(port, portNumber);
 
-		Session session = Session.getInstance(props,
-				new javax.mail.Authenticator() {
-					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(username, password);
-					}
-				});
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
 		return session;
 	}
 
@@ -147,8 +144,8 @@ public class MiscUsingDatabaseImpl implements MiscService {
 	}
 
 	@Override
-	public Contact getContact(String email) {
-		return contactDao.getContact(email);
+	public Contact getContact() {
+		return contactDao.getContact();
 	}
 
 	@Override
@@ -157,13 +154,13 @@ public class MiscUsingDatabaseImpl implements MiscService {
 	}
 
 	@Override
-	public List<Contact> getAll(Contact contact) {
-		return contactDao.getAll(contact);
+	public List<Contact> getAll() {
+		return contactDao.getAll();
 	}
 
 	@Override
 	public List<AdvertiseDoctor> getDoctorByDate(AdvertiseDoctor advertiseDoctor) {
 		return advertiseDoctorDao.getDoctorByDate(advertiseDoctor);
 	}
-	
+
 }

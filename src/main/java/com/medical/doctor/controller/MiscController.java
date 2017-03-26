@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -95,15 +94,16 @@ public class MiscController {
 		return response;
 	}
 
-	@RequestMapping(value = "/getContact/{email}/email", method = RequestMethod.GET)
-	public Contact getContact(@PathVariable String email) {
-		return miscFactory.getMiscService().getContact(email);
+	@RequestMapping(value = "/getContact", method = RequestMethod.GET)
+	public Contact getContact() {
+		return miscFactory.getMiscService().getContact();
 	}
 
-	/*@RequestMapping(value = "/getAll", method = RequestMethod.GET)
-	public List<Contact> getAll(@RequestBody Contact contact) {
-		return miscFactory.getMiscService().getAll(contact);
-	}*/
+	@RequestMapping(value = "/getAll", method = RequestMethod.GET)
+	public List<Contact> getAll() {
+
+		return miscFactory.getMiscService().getAll();
+	}
 
 	@RequestMapping(value = "/updateContact", method = RequestMethod.PUT)
 	public String updateContent(@RequestBody Contact contact) {
@@ -113,7 +113,7 @@ public class MiscController {
 
 	// controller for advertise doctor in front page of UI
 
-	/*@RequestMapping("/advertiseDoctor")
+	@RequestMapping("/advertiseDoctor")
 	public List<AdvertiseDoctor> test() {
 		AdvertiseDoctor advertiseDoctor = new AdvertiseDoctor();
 		advertiseDoctor.setId(1);
@@ -124,5 +124,5 @@ public class MiscController {
 				.getDoctorByDate(advertiseDoctor);
 		return response;
 
-	}*/
+	}
 }
