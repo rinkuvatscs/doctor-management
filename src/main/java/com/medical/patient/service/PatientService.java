@@ -2,7 +2,7 @@ package com.medical.patient.service;
 
 import java.util.List;
 
-import com.medical.patient.entity.Appointment;
+import com.medical.doctor.entity.Appointment;
 import com.medical.patient.entity.Patient;
 
 
@@ -32,9 +32,4 @@ public interface PatientService {
 
 	public String updatepatient(Patient patient);
 	
-    public String makeAppointment(Appointment makeAppointment);
-	
-	public String cancelAppoinment(Integer id);
-	
-	public List<Appointment> viewAppointment(Integer pId);
 }
