@@ -17,13 +17,12 @@ import com.medical.doctor.service.MiscService;
 @Service
 public class MiscUsingRestCallImpl implements MiscService {
 
-	
 	@Autowired
 	private ContactDao contactDao;
-	
+
 	@Autowired
 	private AdvertiseDoctorDao advertiseDoctorDao;
-	
+
 	@Override
 	public String sendMail(Email email) {
 		// TODO Auto-generated method stub
