@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.medical.common.entity.MessageService;
 import com.medical.common.factory.CommonFactory;
 import com.medical.common.mappers.MessageServiceMapper;
+import com.medical.common.request.MessageServiceRequest;
+import com.medical.common.response.MessageServiceResponse;
 import com.medical.doctor.exceptionhandler.BadRequestException;
-import com.medical.doctor.request.MessageServiceRequest;
-import com.medical.doctor.response.MessageServiceResponse;
 
 @RestController
 @RequestMapping("/api/message")

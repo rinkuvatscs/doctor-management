@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.medical.common.entity.NotificationService;
+import com.medical.common.response.NotificationServiceResponse;
 import com.medical.doctor.exceptionhandler.BadRequestException;
-import com.medical.doctor.response.NotificationServiceResponse;
 
 @Component
 public class NotificationServiceMapper {

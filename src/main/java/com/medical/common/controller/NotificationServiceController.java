@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.medical.common.entity.NotificationService;
 import com.medical.common.factory.CommonFactory;
 import com.medical.common.mappers.NotificationServiceMapper;
+import com.medical.common.request.NotificationServiceRequest;
+import com.medical.common.response.NotificationServiceResponse;
 import com.medical.doctor.exceptionhandler.BadRequestException;
-import com.medical.doctor.request.NotificationServiceRequest;
-import com.medical.doctor.response.NotificationServiceResponse;
 
 @RestController
 @RequestMapping("/api/notification")

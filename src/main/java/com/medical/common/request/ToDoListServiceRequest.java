@@ -1,6 +1,6 @@
-package com.medical.doctor.response;
+package com.medical.common.request;
 
-public class ToDoListServiceResponse {
+public class ToDoListServiceRequest {
 
 	private int dId;
 	private int pId;

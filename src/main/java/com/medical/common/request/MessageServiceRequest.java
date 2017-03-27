@@ -1,4 +1,4 @@
-package com.medical.doctor.request;
+package com.medical.common.request;
 
 public class MessageServiceRequest {
 

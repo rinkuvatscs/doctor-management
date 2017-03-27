@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.medical.common.entity.TodoListService;
 import com.medical.common.factory.CommonFactory;
 import com.medical.common.mappers.TodoTaskServiceMapper;
+import com.medical.common.request.ToDoListServiceRequest;
+import com.medical.common.response.ToDoListServiceResponse;
 import com.medical.doctor.exceptionhandler.BadRequestException;
-import com.medical.doctor.request.ToDoListServiceRequest;
-import com.medical.doctor.response.ToDoListServiceResponse;
 
 @RestController
 @RequestMapping("/api/todo")

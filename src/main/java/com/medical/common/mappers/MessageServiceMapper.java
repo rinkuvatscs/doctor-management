@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.medical.common.entity.MessageService;
+import com.medical.common.response.MessageServiceResponse;
 import com.medical.doctor.exceptionhandler.BadRequestException;
-import com.medical.doctor.response.MessageServiceResponse;
 
 @Component
 public class MessageServiceMapper {
