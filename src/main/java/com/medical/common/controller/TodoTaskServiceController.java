@@ -1,4 +1,4 @@
-package com.medical.doctor.controller;
+package com.medical.common.controller;
 
 import java.util.List;
 
@@ -6,7 +6,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.medical.common.service.CommonToDoService;
-import com.medical.doctor.entity.TodoListService;
+import com.medical.common.entity.TodoListService;
+import com.medical.common.factory.CommonFactory;
+import com.medical.common.service.CommonService;
 import com.medical.doctor.exceptionhandler.BadRequestException;
 import com.medical.doctor.mappers.CommonTodoServiceMapper;
 import com.medical.doctor.request.ToDoListServiceRequest;
@@ -27,11 +27,12 @@ import io.swagger.annotations.Api;
 @RestController
 @RequestMapping("/api/todo")
 @Api(basePath = "/todo", value = "todo", description = "Operations with Landlords", produces = "application/json")
-public class CommonToDoServiceController {
+public class TodoTaskServiceController {
+
 	private static final String COMMON_BADREQEST_MESSAGE = "To do List Do not have enough information";
 
 	@Autowired
-	private CommonToDoService commonToDoService;
+	private CommonFactory commonFactory;
 	@Autowired
 	private CommonTodoServiceMapper commonTodoServiceMapper;
 
@@ -51,7 +52,7 @@ public class CommonToDoServiceController {
 		} catch (BeansException beansException) {
 			throw new BadRequestException(COMMON_BADREQEST_MESSAGE, beansException);
 		}
-		return commonToDoService.addToDoListForPatient(todoListService);
+		return commonFactory.getCommonService().addToDoListForPatient(todoListService);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/gettodoListforpatient/{pId}/pId")
@@ -60,7 +61,7 @@ public class CommonToDoServiceController {
 		if (pId <= 0) {
 			throw new BadRequestException("Please provide valid patient Id");
 		}
-		return commonTodoServiceMapper.mapTodoListService(commonToDoService.getToDOListForPateint(pId));
+		return commonTodoServiceMapper.mapTodoListService(commonFactory.getCommonService().getToDOListForPateint(pId));
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/updatetodoListforPatient")
@@ -75,9 +76,9 @@ public class CommonToDoServiceController {
 		} catch (BeansException beansException) {
 			throw new BadRequestException(COMMON_BADREQEST_MESSAGE, beansException);
 		}
-		return commonToDoService.updateToDoListForPatient(todoListService);
+		return commonFactory.getCommonService().updateToDoListForPatient(todoListService);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/deletetodoListforPatient")
 	@ResponseBody
 	public String deleteToDoListForPatient(@RequestBody ToDoListServiceRequest toDoListServiceRequest) {
@@ -90,7 +91,7 @@ public class CommonToDoServiceController {
 		} catch (BeansException beansException) {
 			throw new BadRequestException(COMMON_BADREQEST_MESSAGE, beansException);
 		}
-		return commonToDoService.deleteToDoListForPatient(todoListService);
+		return commonFactory.getCommonService().deleteToDoListForPatient(todoListService);
 	}
 
 	/******************* To do list for Doctor ******************/
@@ -110,7 +111,7 @@ public class CommonToDoServiceController {
 		} catch (BeansException beansException) {
 			throw new BadRequestException(COMMON_BADREQEST_MESSAGE, beansException);
 		}
-		return commonToDoService.addToDoListForDoctor(todoListService);
+		return commonFactory.getCommonService().addToDoListForDoctor(todoListService);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/gettodoListfordoctor/{dId}/dId")
@@ -119,7 +120,7 @@ public class CommonToDoServiceController {
 		if (dId <= 0) {
 			throw new BadRequestException("Please provide valid doctor Id");
 		}
-		return commonTodoServiceMapper.mapTodoListService(commonToDoService.getToDOListForDoctor(dId));
+		return commonTodoServiceMapper.mapTodoListService(commonFactory.getCommonService().getToDOListForDoctor(dId));
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/updatetodoListfordoctor")
@@ -135,9 +136,9 @@ public class CommonToDoServiceController {
 		} catch (BeansException beansException) {
 			throw new BadRequestException(COMMON_BADREQEST_MESSAGE, beansException);
 		}
-		return commonToDoService.updateToDoListForDoctor(todoListService);
+		return commonFactory.getCommonService().updateToDoListForDoctor(todoListService);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/deletetodoListforDoctor")
 	@ResponseBody
 	public String deleteToDoListForDoctor(@RequestBody ToDoListServiceRequest toDoListServiceRequest) {
@@ -150,7 +151,7 @@ public class CommonToDoServiceController {
 		} catch (BeansException beansException) {
 			throw new BadRequestException(COMMON_BADREQEST_MESSAGE, beansException);
 		}
-		return commonToDoService.deleteToDoListForDoctor(todoListService);
+		return commonFactory.getCommonService().deleteToDoListForDoctor(todoListService);
 	}
 
 }

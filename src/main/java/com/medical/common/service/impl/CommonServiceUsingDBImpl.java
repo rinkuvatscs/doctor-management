@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.medical.common.dao.CommonDao;
+import com.medical.common.entity.MessageService;
+import com.medical.common.entity.NotificationService;
+import com.medical.common.entity.TodoListService;
+import com.medical.common.enums.CommonServiceEnum;
 import com.medical.common.service.CommonService;
-import com.medical.doctor.entity.MessageService;
-import com.medical.doctor.entity.NotificationService;
 
 @Service
-public class CommonServiceImpl implements CommonService {
+public class CommonServiceUsingDBImpl implements CommonService {
 
 	@Autowired
 	private CommonDao commonDao;
@@ -66,4 +68,53 @@ public class CommonServiceImpl implements CommonService {
 		return commonDao.addNotifyForDoctor(notificationService);
 	}
 
+	/*****************************************
+	 * TODo Service
+	 *****************************************************/
+
+	@Override
+	public List<TodoListService> getToDOListForPateint(int pId) {
+		return commonDao.getToDOListForPateint(pId);
+	}
+
+	@Override
+	public String addToDoListForPatient(TodoListService todoListService) {
+		return commonDao.addToDoListForPatient(todoListService);
+	}
+
+	@Override
+	public String updateToDoListForPatient(TodoListService todoListService) {
+		return commonDao.updateToDoListForPatient(todoListService);
+	}
+
+	@Override
+	public List<TodoListService> getToDOListForDoctor(int dId) {
+		return commonDao.getToDOListForDoctor(dId);
+	}
+
+	@Override
+	public String addToDoListForDoctor(TodoListService todoListService) {
+		return commonDao.addToDoListForDoctor(todoListService);
+	}
+
+	@Override
+	public String updateToDoListForDoctor(TodoListService todoListService) {
+		return commonDao.updateToDoListForDoctor(todoListService);
+	}
+
+	@Override
+	public String deleteToDoListForPatient(TodoListService todoListService) {
+		return commonDao.deleteToDoListForPatient(todoListService);
+	}
+
+	@Override
+	public String deleteToDoListForDoctor(TodoListService todoListService) {
+		return commonDao.deleteToDoListForDoctor(todoListService);
+	}
+
+	@Override
+	public CommonServiceEnum getCommonService() {
+
+		return CommonServiceEnum.DIRECT_DATABASE;
+	}
 }

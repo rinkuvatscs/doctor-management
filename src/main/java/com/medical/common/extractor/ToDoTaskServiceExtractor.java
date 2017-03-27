@@ -5,17 +5,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 
-import com.medical.doctor.entity.TodoListService;
+import com.medical.common.entity.TodoListService;
 
-public class CommonToDoServiceExtractor implements ResultSetExtractor<List<TodoListService>> {
+public class ToDoTaskServiceExtractor implements ResultSetExtractor<List<TodoListService>> {
 
 	@Override
-	public List<TodoListService> extractData(ResultSet rs) throws SQLException, DataAccessException {
+	public List<TodoListService> extractData(ResultSet rs) throws SQLException {
 
-		List<TodoListService> todoListServices = new ArrayList<TodoListService>();
+		List<TodoListService> todoListServices = new ArrayList<>();
 
 		TodoListService todoListService;
 		while (rs.next()) {

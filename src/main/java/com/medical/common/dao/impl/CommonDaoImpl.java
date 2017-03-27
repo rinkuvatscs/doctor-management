@@ -8,24 +8,26 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import com.medical.common.dao.CommonDao;
-import com.medical.common.extractor.CommonExtractor;
-import com.medical.common.extractor.CommonNotificationServiceExtractor;
+import com.medical.common.entity.MessageService;
+import com.medical.common.entity.NotificationService;
+import com.medical.common.entity.TodoListService;
+import com.medical.common.extractor.MessageServiceExtractor;
+import com.medical.common.extractor.NotificationServiceExtractor;
+import com.medical.common.extractor.ToDoTaskServiceExtractor;
 import com.medical.doctor.constants.CommonServiceConstants;
-import com.medical.doctor.entity.MessageService;
-import com.medical.doctor.entity.NotificationService;
+import com.medical.doctor.constants.CommonToDoServiceConstants;
 
 @Repository
 public class CommonDaoImpl implements CommonDao {
 
 	@Autowired
-	private JdbcTemplate JdbcTemplate;
+	private JdbcTemplate jdbcTemplate;
 
 	@Override
 	public List<MessageService> getMessageForPatient(int pId) {
 		Object[] args = { pId };
-		List<MessageService> response = JdbcTemplate.query(
-				CommonServiceConstants.GET_MESSAGE_FOR_PATIENT,
-				new CommonExtractor(), args);
+		List<MessageService> response = jdbcTemplate.query(CommonServiceConstants.GET_MESSAGE_FOR_PATIENT,
+				new MessageServiceExtractor(), args);
 		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
 			return response;
 		}
@@ -37,8 +39,7 @@ public class CommonDaoImpl implements CommonDao {
 		String response;
 		if (!StringUtils.isEmpty(messageService)) {
 			Object[] args = { messageService.getMessageId() };
-			int res = JdbcTemplate.update(
-					CommonServiceConstants.UPDATE_MESSAGE, args);
+			int res = jdbcTemplate.update(CommonServiceConstants.UPDATE_MESSAGE, args);
 			if (res > 0) {
 				response = "Message successfully read";
 			} else {
@@ -54,8 +55,7 @@ public class CommonDaoImpl implements CommonDao {
 	public String addMessageForPatient(MessageService messageService) {
 		String response;
 		Object[] args = { messageService.getMessage(), messageService.getpId() };
-		int res = JdbcTemplate.update(
-				CommonServiceConstants.INSERT_MESSAGE_INTO_PATIENT, args);
+		int res = jdbcTemplate.update(CommonServiceConstants.INSERT_MESSAGE_INTO_PATIENT, args);
 		if (res > 0) {
 			response = "Message Successfully inserted..!!!";
 		} else {
@@ -67,9 +67,8 @@ public class CommonDaoImpl implements CommonDao {
 	@Override
 	public List<MessageService> getMessageForDoctor(int dId) {
 		Object[] args = { dId };
-		List<MessageService> response = JdbcTemplate.query(
-				CommonServiceConstants.GET_MESSAGE_FOR_DOCTOR,
-				new CommonExtractor(), args);
+		List<MessageService> response = jdbcTemplate.query(CommonServiceConstants.GET_MESSAGE_FOR_DOCTOR,
+				new MessageServiceExtractor(), args);
 		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
 			return response;
 		}
@@ -80,8 +79,7 @@ public class CommonDaoImpl implements CommonDao {
 	public String addMessageForDoctor(MessageService messageService) {
 		String response;
 		Object[] args = { messageService.getMessage(), messageService.getdId() };
-		int res = JdbcTemplate.update(
-				CommonServiceConstants.INSERT_MESSAGE_INTO_DOCTOR, args);
+		int res = jdbcTemplate.update(CommonServiceConstants.INSERT_MESSAGE_INTO_DOCTOR, args);
 		if (res > 0) {
 			response = "Message Successfully inserted..!!!";
 		} else {
@@ -93,9 +91,8 @@ public class CommonDaoImpl implements CommonDao {
 	@Override
 	public List<NotificationService> getNotifyForPatient(int pId) {
 		Object[] args = { pId };
-		List<NotificationService> response = JdbcTemplate.query(
-				CommonServiceConstants.GET_NOTIFICATION_FOR_PATIENT,
-				new CommonNotificationServiceExtractor(), args);
+		List<NotificationService> response = jdbcTemplate.query(CommonServiceConstants.GET_NOTIFICATION_FOR_PATIENT,
+				new NotificationServiceExtractor(), args);
 		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
 			return response;
 		}
@@ -107,8 +104,7 @@ public class CommonDaoImpl implements CommonDao {
 		String response;
 		if (!StringUtils.isEmpty(notificationService)) {
 			Object[] args = { notificationService.getNotifyId() };
-			int res = JdbcTemplate.update(
-					CommonServiceConstants.UPDATE_NOTIFICATION, args);
+			int res = jdbcTemplate.update(CommonServiceConstants.UPDATE_NOTIFICATION, args);
 			if (res > 0) {
 				response = "Notification message successfully read";
 			} else {
@@ -123,10 +119,8 @@ public class CommonDaoImpl implements CommonDao {
 	@Override
 	public String addNotifyForPatient(NotificationService notificationService) {
 		String response;
-		Object[] args = { notificationService.getNotiyfMessage(),
-				notificationService.getpId() };
-		int res = JdbcTemplate.update(
-				CommonServiceConstants.INSERT_NOTIFICATION_INTO_PATIENT, args);
+		Object[] args = { notificationService.getNotiyfMessage(), notificationService.getpId() };
+		int res = jdbcTemplate.update(CommonServiceConstants.INSERT_NOTIFICATION_INTO_PATIENT, args);
 		if (res > 0) {
 			response = "Notification message Successfully inserted..!!!";
 		} else {
@@ -138,9 +132,8 @@ public class CommonDaoImpl implements CommonDao {
 	@Override
 	public List<NotificationService> getNotifyForDoctor(int dId) {
 		Object[] args = { dId };
-		List<NotificationService> response = JdbcTemplate.query(
-				CommonServiceConstants.GET_NOTIFICATION_FOR_DOCTOR,
-				new CommonNotificationServiceExtractor(), args);
+		List<NotificationService> response = jdbcTemplate.query(CommonServiceConstants.GET_NOTIFICATION_FOR_DOCTOR,
+				new NotificationServiceExtractor(), args);
 		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
 			return response;
 		}
@@ -150,14 +143,132 @@ public class CommonDaoImpl implements CommonDao {
 	@Override
 	public String addNotifyForDoctor(NotificationService notificationService) {
 		String response;
-		Object[] args = { notificationService.getNotiyfMessage(),
-				notificationService.getdId() };
-		int res = JdbcTemplate.update(
-				CommonServiceConstants.INSERT_NOTIFICATION_INTO_DOCTOR, args);
+		Object[] args = { notificationService.getNotiyfMessage(), notificationService.getdId() };
+		int res = jdbcTemplate.update(CommonServiceConstants.INSERT_NOTIFICATION_INTO_DOCTOR, args);
 		if (res > 0) {
 			response = "Notification message Successfully inserted..!!!";
 		} else {
 			response = "Try again later..!!";
+		}
+		return response;
+	}
+
+	/*****************************************************
+	 **************** ToDo Service
+	 *****************************************************/
+
+	@Override
+	public List<TodoListService> getToDOListForPateint(int pId) {
+		Object[] args = { pId };
+		List<TodoListService> response = jdbcTemplate.query(CommonToDoServiceConstants.GET_TODO_FOR_PATIENT,
+				new ToDoTaskServiceExtractor(), args);
+		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
+			return response;
+		}
+		return null;
+	}
+
+	@Override
+	public String addToDoListForPatient(TodoListService todoListService) {
+		String response;
+		Object[] args = { todoListService.getTodoMessage(), todoListService.getpId() };
+		int res = jdbcTemplate.update(CommonToDoServiceConstants.ADD_TODO_FOR_PATIENT, args);
+		if (res > 0) {
+			response = "To do List insert successfully";
+		} else {
+			response = "Try again later..!!!!";
+		}
+		return response;
+	}
+
+	@Override
+	public String updateToDoListForPatient(TodoListService todoListService) {
+		String response;
+		if (!StringUtils.isEmpty(todoListService)) {
+			Object[] args = { todoListService.getTodoMessage(), todoListService.getTodoId() };
+			int res = jdbcTemplate.update(CommonToDoServiceConstants.UPDATE_TODO_FOR_PATIENT, args);
+			if (res > 0) {
+				response = "To do List successfully updated..!!!";
+			} else {
+				response = "try again later";
+			}
+		} else {
+			response = "Not updated , please check..!!!";
+		}
+		return response;
+	}
+
+	@Override
+	public List<TodoListService> getToDOListForDoctor(int dId) {
+		Object[] args = { dId };
+		List<TodoListService> response = jdbcTemplate.query(CommonToDoServiceConstants.GET_TODO_FOR_DOCTOR,
+				new ToDoTaskServiceExtractor(), args);
+		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
+			return response;
+		}
+		return null;
+	}
+
+	@Override
+	public String addToDoListForDoctor(TodoListService todoListService) {
+		String response;
+		Object[] args = { todoListService.getTodoMessage(), todoListService.getdId() };
+		int res = jdbcTemplate.update(CommonToDoServiceConstants.ADD_TODO_FOR_DOCTOR, args);
+		if (res > 0) {
+			response = "To do List insert successfully";
+		} else {
+			response = "Try again later..!!!!";
+		}
+		return response;
+	}
+
+	@Override
+	public String updateToDoListForDoctor(TodoListService todoListService) {
+		String response;
+		if (!StringUtils.isEmpty(todoListService)) {
+			Object[] args = { todoListService.getTodoMessage(), todoListService.getTodoId() };
+			int res = jdbcTemplate.update(CommonToDoServiceConstants.UPDATE_TODO_FOR_DOCTOR, args);
+			if (res > 0) {
+				response = "To do List successfully updated..!!!";
+			} else {
+				response = "try again later";
+			}
+		} else {
+			response = "Not updated , please check..!!!";
+		}
+		return response;
+	}
+
+	@Override
+	public String deleteToDoListForPatient(TodoListService todoListService) {
+		String response;
+		if (!StringUtils.isEmpty(todoListService)) {
+			Object[] args = { todoListService.getTodoId() };
+			int res = jdbcTemplate.update(CommonToDoServiceConstants.DELETE_TODO_FOR_PATIENT, args);
+			if (res > 0) {
+				response = "To do list Successfully deleted..!!!";
+			} else {
+				response = "try again later..!!!";
+			}
+		} else {
+			response = "not deleted , please check ..!!!";
+		}
+		return response;
+	}
+
+	@Override
+	public String deleteToDoListForDoctor(TodoListService todoListService) {
+		String response;
+		if (!StringUtils.isEmpty(todoListService)) {
+			Object[] args = { todoListService.getTodoId() };
+			int res = jdbcTemplate.update(CommonToDoServiceConstants.DELETE_TODO_FOR_DOCTOR, args);
+			if (res > 0) {
+				response = "To do list Successfully deleted..!!!";
+			} else {
+				response = "try again later..!!!";
+			}
+		} else {
+			response = "not deleted , please check ..!!!";
 		}
 		return response;
 	}

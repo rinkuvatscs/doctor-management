@@ -1,4 +1,4 @@
-package com.medical.doctor.entity;
+package com.medical.common.entity;
 
 public class TodoListService {
 

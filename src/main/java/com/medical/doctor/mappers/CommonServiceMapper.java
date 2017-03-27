@@ -8,8 +8,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import com.medical.doctor.entity.MessageService;
-import com.medical.doctor.entity.NotificationService;
+import com.medical.common.entity.MessageService;
+import com.medical.common.entity.NotificationService;
 import com.medical.doctor.exceptionhandler.BadRequestException;
 import com.medical.doctor.response.MessageServiceResponse;
 import com.medical.doctor.response.NotificationServiceResponse;
