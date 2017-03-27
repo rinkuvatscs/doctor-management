@@ -1,5 +1,7 @@
 package com.medical.common.controller;
 
+import io.swagger.annotations.Api;
+
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -16,13 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.medical.common.entity.TodoListService;
 import com.medical.common.factory.CommonFactory;
-import com.medical.common.service.CommonService;
+import com.medical.common.mappers.TodoTaskServiceMapper;
 import com.medical.doctor.exceptionhandler.BadRequestException;
-import com.medical.doctor.mappers.CommonTodoServiceMapper;
 import com.medical.doctor.request.ToDoListServiceRequest;
 import com.medical.doctor.response.ToDoListServiceResponse;
-
-import io.swagger.annotations.Api;
 
 @RestController
 @RequestMapping("/api/todo")
@@ -34,11 +33,12 @@ public class TodoTaskServiceController {
 	@Autowired
 	private CommonFactory commonFactory;
 	@Autowired
-	private CommonTodoServiceMapper commonTodoServiceMapper;
+	private TodoTaskServiceMapper todoTaskServiceMapper;
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/addToDoListforpatient")
 	@ResponseBody
-	public String addToDoListForPatient(@RequestBody ToDoListServiceRequest toDoListServiceRequest) {
+	public String addToDoListForPatient(
+			@RequestBody ToDoListServiceRequest toDoListServiceRequest) {
 		TodoListService todoListService = new TodoListService();
 
 		if (StringUtils.isEmpty(toDoListServiceRequest)
@@ -50,23 +50,28 @@ public class TodoTaskServiceController {
 		try {
 			BeanUtils.copyProperties(toDoListServiceRequest, todoListService);
 		} catch (BeansException beansException) {
-			throw new BadRequestException(COMMON_BADREQEST_MESSAGE, beansException);
+			throw new BadRequestException(COMMON_BADREQEST_MESSAGE,
+					beansException);
 		}
-		return commonFactory.getCommonService().addToDoListForPatient(todoListService);
+		return commonFactory.getCommonService().addToDoListForPatient(
+				todoListService);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/gettodoListforpatient/{pId}/pId")
 	@ResponseBody
-	public List<ToDoListServiceResponse> getToDoListforPatient(@PathVariable int pId) {
+	public List<ToDoListServiceResponse> getToDoListforPatient(
+			@PathVariable int pId) {
 		if (pId <= 0) {
 			throw new BadRequestException("Please provide valid patient Id");
 		}
-		return commonTodoServiceMapper.mapTodoListService(commonFactory.getCommonService().getToDOListForPateint(pId));
+		return todoTaskServiceMapper.mapTodoListService(commonFactory
+				.getCommonService().getToDOListForPateint(pId));
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/updatetodoListforPatient")
 	@ResponseBody
-	public String updateToDoListForPatient(@RequestBody ToDoListServiceRequest toDoListServiceRequest) {
+	public String updateToDoListForPatient(
+			@RequestBody ToDoListServiceRequest toDoListServiceRequest) {
 		TodoListService todoListService = new TodoListService();
 		try {
 			BeanUtils.copyProperties(toDoListServiceRequest, todoListService);
@@ -74,14 +79,17 @@ public class TodoTaskServiceController {
 				throw new BadRequestException("Please provide valid Id");
 			}
 		} catch (BeansException beansException) {
-			throw new BadRequestException(COMMON_BADREQEST_MESSAGE, beansException);
+			throw new BadRequestException(COMMON_BADREQEST_MESSAGE,
+					beansException);
 		}
-		return commonFactory.getCommonService().updateToDoListForPatient(todoListService);
+		return commonFactory.getCommonService().updateToDoListForPatient(
+				todoListService);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/deletetodoListforPatient")
 	@ResponseBody
-	public String deleteToDoListForPatient(@RequestBody ToDoListServiceRequest toDoListServiceRequest) {
+	public String deleteToDoListForPatient(
+			@RequestBody ToDoListServiceRequest toDoListServiceRequest) {
 		TodoListService todoListService = new TodoListService();
 		try {
 			BeanUtils.copyProperties(toDoListServiceRequest, todoListService);
@@ -89,15 +97,18 @@ public class TodoTaskServiceController {
 				throw new BadRequestException("Please provide valid Id");
 			}
 		} catch (BeansException beansException) {
-			throw new BadRequestException(COMMON_BADREQEST_MESSAGE, beansException);
+			throw new BadRequestException(COMMON_BADREQEST_MESSAGE,
+					beansException);
 		}
-		return commonFactory.getCommonService().deleteToDoListForPatient(todoListService);
+		return commonFactory.getCommonService().deleteToDoListForPatient(
+				todoListService);
 	}
 
 	/******************* To do list for Doctor ******************/
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/addToDoListfordoctor")
 	@ResponseBody
-	public String addToDoListForDoctor(@RequestBody ToDoListServiceRequest toDoListServiceRequest) {
+	public String addToDoListForDoctor(
+			@RequestBody ToDoListServiceRequest toDoListServiceRequest) {
 		TodoListService todoListService = new TodoListService();
 
 		if (StringUtils.isEmpty(toDoListServiceRequest)
@@ -109,24 +120,28 @@ public class TodoTaskServiceController {
 		try {
 			BeanUtils.copyProperties(toDoListServiceRequest, todoListService);
 		} catch (BeansException beansException) {
-			throw new BadRequestException(COMMON_BADREQEST_MESSAGE, beansException);
+			throw new BadRequestException(COMMON_BADREQEST_MESSAGE,
+					beansException);
 		}
-		return commonFactory.getCommonService().addToDoListForDoctor(todoListService);
+		return commonFactory.getCommonService().addToDoListForDoctor(
+				todoListService);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/gettodoListfordoctor/{dId}/dId")
 	@ResponseBody
-	public List<ToDoListServiceResponse> getToDoListforDoctor(@PathVariable int dId) {
+	public List<ToDoListServiceResponse> getToDoListforDoctor(
+			@PathVariable int dId) {
 		if (dId <= 0) {
 			throw new BadRequestException("Please provide valid doctor Id");
 		}
-		return commonTodoServiceMapper.mapTodoListService(commonFactory.getCommonService().getToDOListForDoctor(dId));
+		return todoTaskServiceMapper.mapTodoListService(commonFactory
+				.getCommonService().getToDOListForDoctor(dId));
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/updatetodoListfordoctor")
-
 	@ResponseBody
-	public String updateToDoListforDoctor(@RequestBody ToDoListServiceRequest toDoListServiceRequest) {
+	public String updateToDoListforDoctor(
+			@RequestBody ToDoListServiceRequest toDoListServiceRequest) {
 		TodoListService todoListService = new TodoListService();
 		try {
 			BeanUtils.copyProperties(toDoListServiceRequest, todoListService);
@@ -134,14 +149,17 @@ public class TodoTaskServiceController {
 				throw new BadRequestException("Please provide valid Id");
 			}
 		} catch (BeansException beansException) {
-			throw new BadRequestException(COMMON_BADREQEST_MESSAGE, beansException);
+			throw new BadRequestException(COMMON_BADREQEST_MESSAGE,
+					beansException);
 		}
-		return commonFactory.getCommonService().updateToDoListForDoctor(todoListService);
+		return commonFactory.getCommonService().updateToDoListForDoctor(
+				todoListService);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/deletetodoListforDoctor")
 	@ResponseBody
-	public String deleteToDoListForDoctor(@RequestBody ToDoListServiceRequest toDoListServiceRequest) {
+	public String deleteToDoListForDoctor(
+			@RequestBody ToDoListServiceRequest toDoListServiceRequest) {
 		TodoListService todoListService = new TodoListService();
 		try {
 			BeanUtils.copyProperties(toDoListServiceRequest, todoListService);
@@ -149,9 +167,11 @@ public class TodoTaskServiceController {
 				throw new BadRequestException("Please provide valid Id");
 			}
 		} catch (BeansException beansException) {
-			throw new BadRequestException(COMMON_BADREQEST_MESSAGE, beansException);
+			throw new BadRequestException(COMMON_BADREQEST_MESSAGE,
+					beansException);
 		}
-		return commonFactory.getCommonService().deleteToDoListForDoctor(todoListService);
+		return commonFactory.getCommonService().deleteToDoListForDoctor(
+				todoListService);
 	}
 
 }

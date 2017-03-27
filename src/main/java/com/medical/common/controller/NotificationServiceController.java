@@ -1,5 +1,7 @@
 package com.medical.common.controller;
 
+import io.swagger.annotations.Api;
+
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -16,17 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.medical.common.entity.NotificationService;
 import com.medical.common.factory.CommonFactory;
-import com.medical.common.service.CommonService;
+import com.medical.common.mappers.NotificationServiceMapper;
 import com.medical.doctor.exceptionhandler.BadRequestException;
-import com.medical.doctor.mappers.CommonServiceMapper;
 import com.medical.doctor.request.NotificationServiceRequest;
 import com.medical.doctor.response.NotificationServiceResponse;
 
-import io.swagger.annotations.Api;
-
 @RestController
 @RequestMapping("/api/notification")
-@Api(basePath = "/common", value = "common", description = "Operations with Landlords", produces = "application/json")
+@Api(basePath = "/notification", value = "notification", description = "Operations with Landlords", produces = "application/json")
 public class NotificationServiceController {
 
 	private static final String COMMON_BADREQEST_MESSAGE = "Doctor Do not have enough information";
@@ -34,7 +33,7 @@ public class NotificationServiceController {
 	@Autowired
 	private CommonFactory commonFactory;
 	@Autowired
-	private CommonServiceMapper commonServiceMapper;
+	private NotificationServiceMapper notificationServiceMapper;
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/addNotifyforpatient")
 	@ResponseBody
@@ -61,7 +60,7 @@ public class NotificationServiceController {
 		if (pId <= 0) {
 			throw new BadRequestException("Please provide valid patient Id");
 		}
-		return commonServiceMapper.mapNotifyServices(commonFactory.getCommonService().getNotifyForPatient(pId));
+		return notificationServiceMapper.mapNotifyServices(commonFactory.getCommonService().getNotifyForPatient(pId));
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/updateNotify")
@@ -104,6 +103,6 @@ public class NotificationServiceController {
 		if (dId <= 0) {
 			throw new BadRequestException("Please provide valid Doctor Id");
 		}
-		return commonServiceMapper.mapNotifyServices(commonFactory.getCommonService().getNotifyForDoctor(dId));
+		return notificationServiceMapper.mapNotifyServices(commonFactory.getCommonService().getNotifyForDoctor(dId));
 	}
 }

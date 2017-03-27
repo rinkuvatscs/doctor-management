@@ -1,4 +1,4 @@
-package com.medical.doctor.mappers;
+package com.medical.common.mappers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import com.medical.common.entity.TodoListService;
 import com.medical.doctor.exceptionhandler.BadRequestException;
 import com.medical.doctor.response.ToDoListServiceResponse;
 @Component
-public class CommonTodoServiceMapper {
+public class TodoTaskServiceMapper {
 
 	public List<ToDoListServiceResponse> mapTodoListService(List<TodoListService> todoListServices) {
 

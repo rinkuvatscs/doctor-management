@@ -42,6 +42,10 @@ public class CommonServiceUsingDBImpl implements CommonService {
 	public String addMessageForDoctor(MessageService messageService) {
 		return commonDao.addMessageForDoctor(messageService);
 	}
+	
+	/*****************************************
+	 * Notofication Service
+	 *****************************************************/
 
 	@Override
 	public List<NotificationService> getNotifyForPatient(int pId) {
@@ -69,7 +73,7 @@ public class CommonServiceUsingDBImpl implements CommonService {
 	}
 
 	/*****************************************
-	 * TODo Service
+	 * ToDo Service
 	 *****************************************************/
 
 	@Override
