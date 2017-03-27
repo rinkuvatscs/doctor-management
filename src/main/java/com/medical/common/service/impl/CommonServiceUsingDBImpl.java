@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.medical.common.dao.CommonDao;
+import com.medical.common.entity.CalendarService;
 import com.medical.common.entity.MessageService;
 import com.medical.common.entity.NotificationService;
 import com.medical.common.entity.TodoListService;
@@ -42,7 +43,7 @@ public class CommonServiceUsingDBImpl implements CommonService {
 	public String addMessageForDoctor(MessageService messageService) {
 		return commonDao.addMessageForDoctor(messageService);
 	}
-	
+
 	/*****************************************
 	 * Notofication Service
 	 *****************************************************/
@@ -120,5 +121,28 @@ public class CommonServiceUsingDBImpl implements CommonService {
 	public CommonServiceEnum getCommonService() {
 
 		return CommonServiceEnum.DIRECT_DATABASE;
+	}
+
+	/*****************************************
+	 * Calendar Service
+	 *****************************************************/
+	@Override
+	public String addCalendarEventForPatient(CalendarService calendarService) {
+		return commonDao.addCalendarEventForPatient(calendarService);
+	}
+
+	@Override
+	public String updateCalendarEventForPatient(CalendarService calendarService) {
+		return commonDao.updateCalendarEventForPatient(calendarService);
+	}
+
+	@Override
+	public String deleteCalendarEventForPatient(CalendarService calendarService) {
+		return commonDao.deleteCalendarEventForPatient(calendarService);
+	}
+
+	@Override
+	public List<CalendarService> getCalendarEventForPatient(int pId) {
+		return commonDao.getCalendarEventForPatient(pId);
 	}
 }

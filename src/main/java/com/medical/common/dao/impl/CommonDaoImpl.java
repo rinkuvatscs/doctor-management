@@ -1,6 +1,16 @@
 package com.medical.common.dao.impl;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
+
+import junit.framework.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,9 +21,11 @@ import com.medical.common.constants.MessageServiceConstants;
 import com.medical.common.constants.NotificationServiceConstants;
 import com.medical.common.constants.ToDoServiceConstants;
 import com.medical.common.dao.CommonDao;
+import com.medical.common.entity.CalendarService;
 import com.medical.common.entity.MessageService;
 import com.medical.common.entity.NotificationService;
 import com.medical.common.entity.TodoListService;
+import com.medical.common.extractor.CalendarServiceExtractor;
 import com.medical.common.extractor.MessageServiceExtractor;
 import com.medical.common.extractor.NotificationServiceExtractor;
 import com.medical.common.extractor.ToDoTaskServiceExtractor;
@@ -300,4 +312,97 @@ public class CommonDaoImpl implements CommonDao {
 		return response;
 	}
 
+	/*****************************************************
+	 **************** Calendar Service
+	 *****************************************************/
+	@Override
+	public String addCalendarEventForPatient(CalendarService calendarService) {
+		String response;
+		if (!StringUtils.isEmpty(calendarService)) {
+			Object[] args = { calendarService.getCalendarEventId(),
+					calendarService.getCalendarTitle(),
+					calendarService.getStartDate(),
+					calendarService.getEndDate(), calendarService.getpId() };
+			int res = jdbcTemplate
+					.update("INSERT INTO calendar( calendarEventId, calendarTitle, startDate, endDate, pId) VALUES(?,?,?,?,?)",
+							args);
+			if (res > 0) {
+				response = "Successfully created calendar Event.!!!";
+			} else {
+				response = "Try again later..!!!";
+			}
+		} else {
+			response = "Try again later..!!!";
+		}
+		return response;
+	}
+
+	@Override
+	public String updateCalendarEventForPatient(CalendarService calendarService) {
+		String response;
+		if (!StringUtils.isEmpty(calendarService)) {
+			Object[] args = { calendarService.getCalendarTitle(),
+					calendarService.getStartDate(),
+					calendarService.getEndDate(),
+					calendarService.getCalendarId() };
+			int res = jdbcTemplate
+					.update("UPDATE calendar SET calendarTitle = ?, startDate = ?, endDate = ? WHERE calendarId =?",
+							args);
+			if (res > 0) {
+				response = "Successfully calendar updated..!!!";
+			} else {
+				response = "Try again later..!!!";
+			}
+		} else {
+			response = "Try again later..!!!";
+		}
+		return response;
+	}
+
+	@Override
+	public String deleteCalendarEventForPatient(CalendarService calendarService) {
+		String response;
+		if (!StringUtils.isEmpty(calendarService)) {
+			Object[] args = { calendarService.getCalendarId() };
+			int res = jdbcTemplate.update(
+					"delete from calendar where calendarId=?", args);
+			if (res > 0) {
+				response = "Successfully calendar deleted..!!!";
+			} else {
+				response = "Try again later..!!!";
+			}
+		} else {
+			response = "Try again later..!!!";
+		}
+		return response;
+	}
+
+	@Override
+	public List<CalendarService> getCalendarEventForPatient(int pId) {
+		Object[] args = { pId };
+		List<CalendarService> response = jdbcTemplate.query(
+				"SELECT * FROM calendar WHERE pId=?",
+				new CalendarServiceExtractor(), args);
+		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
+			/*
+			 * for(CalendarService calendarService : response){ Date startDate =
+			 * formatDate(calendarService.getStartDate().toString(),
+			 * calendarService.getStartTime().toString());
+			 * calendarService.setStartDate(startDate); Date endDate =
+			 * formatDate(calendarService.getEndDate().toString(),
+			 * calendarService.getEndTime().toString());
+			 * calendarService.setEndDate(endDate); }
+			 */
+			return response;
+		}
+		return null;
+	}
+
+	/*
+	 * private Date formatDate(String date1, String date2) {
+	 * 
+	 * String startDate = date1 + " " + date2; SimpleDateFormat sdf = new
+	 * SimpleDateFormat("yyyy-M-dd HH:m"); try { return sdf.parse(startDate); }
+	 * catch (ParseException e) { e.printStackTrace(); } return null; }
+	 */
 }
