@@ -5,18 +5,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 
-import com.medical.doctor.entity.NotificationService;
+import com.medical.common.entity.NotificationService;
 
-public class CommonNotificationServiceExtractor implements
-		ResultSetExtractor<List<NotificationService>> {
+public class NotificationServiceExtractor implements ResultSetExtractor<List<NotificationService>> {
 
 	@Override
-	public List<NotificationService> extractData(ResultSet rs)
-			throws SQLException, DataAccessException {
-		List<NotificationService> notificationServices = new ArrayList<NotificationService>();
+	public List<NotificationService> extractData(ResultSet rs) throws SQLException {
+		List<NotificationService> notificationServices = new ArrayList<>();
 		NotificationService notificationService;
 
 		while (rs.next()) {

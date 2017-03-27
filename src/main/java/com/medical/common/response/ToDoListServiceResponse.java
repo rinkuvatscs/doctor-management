@@ -1,6 +1,6 @@
-package com.medical.doctor.entity;
+package com.medical.common.response;
 
-public class TodoListService {
+public class ToDoListServiceResponse {
 
 	private int dId;
 	private int pId;
@@ -41,7 +41,7 @@ public class TodoListService {
 
 	@Override
 	public String toString() {
-		return "TodoListService [dId=" + dId + ", pId=" + pId + ", todoId=" + todoId + ", todoMessage=" + todoMessage
-				+ "]";
+		return "TodoListService [dId=" + dId + ", pId=" + pId + ", todoId="
+				+ todoId + ", todoMessage=" + todoMessage + "]";
 	}
 }

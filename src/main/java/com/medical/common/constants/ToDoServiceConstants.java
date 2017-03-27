@@ -1,6 +1,6 @@
-package com.medical.doctor.constants;
+package com.medical.common.constants;
 
-public interface CommonToDoServiceConstants {
+public interface ToDoServiceConstants {
 
 	String GET_TODO_FOR_PATIENT = "SELECT * FROM todoList WHERE pId = ? ";
 

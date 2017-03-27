@@ -1,4 +1,4 @@
-package com.medical.doctor.mappers;
+package com.medical.common.mappers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +8,11 @@ import org.springframework.beans.BeansException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import com.medical.doctor.entity.TodoListService;
+import com.medical.common.entity.TodoListService;
+import com.medical.common.response.ToDoListServiceResponse;
 import com.medical.doctor.exceptionhandler.BadRequestException;
-import com.medical.doctor.response.ToDoListServiceResponse;
 @Component
-public class CommonTodoServiceMapper {
+public class TodoTaskServiceMapper {
 
 	public List<ToDoListServiceResponse> mapTodoListService(List<TodoListService> todoListServices) {
 

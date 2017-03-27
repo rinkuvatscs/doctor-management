@@ -1,8 +1,6 @@
-package com.medical.doctor.response;
+package com.medical.common.request;
 
-public class MessageServiceResponse {
-
-
+public class MessageServiceRequest {
 
 	private int messageId;
 	private String message;
@@ -55,6 +53,5 @@ public class MessageServiceResponse {
 		return "Message [messageId=" + messageId + ", message=" + message
 				+ ", pId=" + pId + ", dId=" + dId + ", status=" + status + "]";
 	}
-
 
 }

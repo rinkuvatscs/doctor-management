@@ -1,6 +1,6 @@
-package com.medical.doctor.request;
+package com.medical.common.entity;
 
-public class MessageServiceRequest {
+public class MessageService {
 
 	private int messageId;
 	private String message;
