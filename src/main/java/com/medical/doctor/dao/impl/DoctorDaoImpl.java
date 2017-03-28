@@ -318,6 +318,16 @@ public class DoctorDaoImpl implements DoctorDao {
 			updateLocations = true;
 		}
 
+		if (null != doctorAddress.getState()) {
+			if (updateRow > 0) {
+				query.append(", state = ? ");
+			} else {
+				query.append(" state = ? ");
+			}
+			args.add(doctorAddress.getState());
+			updateRow = updateRow + 1;
+		}
+
 		if (null != doctorAddress.getLandmark()) {
 			if (updateRow > 0) {
 				query.append(", landmark = ? ");
@@ -355,8 +365,7 @@ public class DoctorDaoImpl implements DoctorDao {
 
 		query.append("  WHERE dId = ? ");
 		args.add(doctorAddress.getDoctorId());
-		return jdbcTemplate.update(query.toString(), args.toArray());
-
+	    return   jdbcTemplate.update(query.toString(), args.toArray());
 	}
 
 	private String createAddress(DoctorAddress doctorAddress) {
