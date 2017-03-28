@@ -2,6 +2,7 @@ package com.medical.common.service.impl;
 
 import java.util.List;
 
+import com.medical.common.entity.CalendarService;
 import com.medical.common.entity.MessageService;
 import com.medical.common.entity.NotificationService;
 import com.medical.common.entity.TodoListService;
@@ -120,6 +121,30 @@ public class CommonServiceUsingRestImpl implements CommonService {
 
 	@Override
 	public String deleteToDoListForDoctor(TodoListService todoListService) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String addCalendarEventForPatient(CalendarService calendarService) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String updateCalendarEventForPatient(CalendarService calendarService) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String deleteCalendarEventForPatient(CalendarService calendarService) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CalendarService> getCalendarEventForPatient(int pId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

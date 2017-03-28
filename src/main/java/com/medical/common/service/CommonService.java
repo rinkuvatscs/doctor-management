@@ -2,13 +2,14 @@ package com.medical.common.service;
 
 import java.util.List;
 
+import com.medical.common.entity.CalendarService;
 import com.medical.common.entity.MessageService;
 import com.medical.common.entity.NotificationService;
 import com.medical.common.entity.TodoListService;
 import com.medical.common.enums.CommonServiceEnum;
 
 public interface CommonService {
-	
+
 	public CommonServiceEnum getCommonService();
 
 	public List<MessageService> getMessageForPatient(int pId);
@@ -46,4 +47,12 @@ public interface CommonService {
 	public String updateToDoListForDoctor(TodoListService todoListService);
 
 	public String deleteToDoListForDoctor(TodoListService todoListService);
+
+	public String addCalendarEventForPatient(CalendarService calendarService);
+
+	public String updateCalendarEventForPatient(CalendarService calendarService);
+
+	public String deleteCalendarEventForPatient(CalendarService calendarService);
+
+	public List<CalendarService> getCalendarEventForPatient(int pId);
 }

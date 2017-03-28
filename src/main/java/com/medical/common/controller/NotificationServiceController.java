@@ -69,7 +69,7 @@ public class NotificationServiceController {
 		NotificationService notificationService = new NotificationService();
 		try {
 			BeanUtils.copyProperties(notificationServiceRequest, notificationService);
-			if (notificationService.getpId() <= 0 && notificationService.getdId() <= 0) {
+			if (notificationService.getNotifyId()) {
 				throw new BadRequestException("Please provide valid Id");
 			}
 		} catch (BeansException beansException) {
