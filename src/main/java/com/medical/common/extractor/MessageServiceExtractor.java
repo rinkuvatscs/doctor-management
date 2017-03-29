@@ -5,18 +5,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 
-import com.medical.doctor.entity.MessageService;
+import com.medical.common.entity.MessageService;
 
-public class CommonExtractor implements ResultSetExtractor<List<MessageService>> {
+public class MessageServiceExtractor implements ResultSetExtractor<List<MessageService>> {
 
 	@Override
-	public List<MessageService> extractData(ResultSet rs) throws SQLException,
-			DataAccessException {
+	public List<MessageService> extractData(ResultSet rs) throws SQLException {
 
-		List<MessageService> messages = new ArrayList<MessageService>();
+		List<MessageService> messages = new ArrayList<>();
 		MessageService message;
 
 		while (rs.next()) {

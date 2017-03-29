@@ -2,8 +2,10 @@ package com.medical.common.dao;
 
 import java.util.List;
 
-import com.medical.doctor.entity.MessageService;
-import com.medical.doctor.entity.NotificationService;
+import com.medical.common.entity.CalendarService;
+import com.medical.common.entity.MessageService;
+import com.medical.common.entity.NotificationService;
+import com.medical.common.entity.TodoListService;
 
 public interface CommonDao {
 
@@ -26,4 +28,28 @@ public interface CommonDao {
 	public List<NotificationService> getNotifyForDoctor(int dId);
 
 	public String addNotifyForDoctor(NotificationService notificationService);
+
+	public List<TodoListService> getToDOListForPateint(int pId);
+
+	public String addToDoListForPatient(TodoListService todoListService);
+
+	public String updateToDoListForPatient(TodoListService todoListService);
+
+	public String deleteToDoListForPatient(TodoListService todoListService);
+
+	public List<TodoListService> getToDOListForDoctor(int dId);
+
+	public String addToDoListForDoctor(TodoListService todoListService);
+
+	public String updateToDoListForDoctor(TodoListService todoListService);
+
+	public String deleteToDoListForDoctor(TodoListService todoListService);
+
+	public String addCalendarEventForPatient(CalendarService calendarService);
+
+	public String updateCalendarEventForPatient(CalendarService calendarService);
+
+	public String deleteCalendarEventForPatient(CalendarService calendarService);
+
+	public List<CalendarService> getCalendarEventForPatient(int pId);
 }

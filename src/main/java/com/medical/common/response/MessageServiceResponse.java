@@ -1,6 +1,6 @@
-package com.medical.doctor.entity;
+package com.medical.common.response;
 
-public class MessageService {
+public class MessageServiceResponse {
 
 	private int messageId;
 	private String message;

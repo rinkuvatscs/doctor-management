@@ -1,6 +1,6 @@
-package com.medical.doctor.response;
+package com.medical.common.request;
 
-public class NotificationServiceResponse {
+public class NotificationServiceRequest {
 
 	private int notifyId;
 	private String notiyfMessage;
