@@ -119,6 +119,7 @@ public class DoctorController {
 					"Doctor Mobile Number should not be blank");
 	}
 
+	//TODO getDoctorByAll need to add Location Service 
 	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/all")
 	@ResponseBody
 	public List<DoctorResponse> getDoctorByAll(
@@ -134,7 +135,7 @@ public class DoctorController {
 		return doctorMapper.mapDoctors(doctorService.getDoctors(doctor));
 
 	}
-
+    
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{id}/id")
 	@ResponseBody
 	public DoctorResponse getDoctorById(@PathVariable Integer id) {
@@ -185,7 +186,7 @@ public class DoctorController {
 		}
 	}
 
-	// Location need to be added within this operation.
+	//TODO Location need to be added getDoctorByName
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{name}/name")
 	@ResponseBody
 	public List<DoctorResponse> getDoctorByName(@PathVariable String name) {
@@ -197,20 +198,21 @@ public class DoctorController {
 		}
 	}
 
-	/*
-	 * @RequestMapping(method = RequestMethod.GET, produces =
-	 * MediaType.APPLICATION_JSON_VALUE, value =
-	 * "/get/{expertisted}/expertisted")
-	 * 
-	 * @ResponseBody public List<DoctorResponse> getDoctorByExpertisted(
-	 * 
-	 * @PathVariable String expertisted) {
-	 * 
-	 * if (!StringUtils.isEmpty(expertisted)) { return
-	 * doctorMapper.mapDoctors(doctorService
-	 * .getDoctorByExpertisted(expertisted)); } else { throw new
-	 * BadRequestException( "Doctor Expertisted should not be blank"); } }
-	 */
+	
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{expertisted}/expertisted")
+	@ResponseBody
+	public List<DoctorResponse> getDoctorByExpertisted(
+
+	@PathVariable String expertisted) {
+
+		if (!StringUtils.isEmpty(expertisted)) {
+			return doctorMapper.mapDoctors(doctorService
+					.getDoctorByExpertisted(expertisted));
+		} else {
+			throw new BadRequestException(
+					"Doctor Expertisted should not be blank");
+		}
+	} 
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{fee}/fee")
 	@ResponseBody
