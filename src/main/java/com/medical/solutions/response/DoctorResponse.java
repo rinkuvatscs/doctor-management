@@ -14,8 +14,27 @@ public class DoctorResponse {
 	private Integer daysCheckFree;
 	private String clinicAddress;
 	private String email;
-	private String gender ;
+	private String gender;
 	private int age;
+	private String desc;
+	private String profilePath;
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	
+	public String getProfilePath() {
+		return profilePath;
+	}
+
+	public void setProfilePath(String profilePath) {
+		this.profilePath = profilePath;
+	}
 
 	public String getEmail() {
 		return email;
@@ -40,7 +59,6 @@ public class DoctorResponse {
 	public void setAge(int age) {
 		this.age = age;
 	}
-
 
 	public Integer getDoctorId() {
 		return doctorId;

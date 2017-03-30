@@ -2,7 +2,7 @@ package com.medical.solutions.entity;
 
 import java.util.Date;
 
-public class Doctor {
+public class Doctor extends DoctorAddress{
 
 	private Integer dId;
 	private String name;
@@ -20,7 +20,16 @@ public class Doctor {
 	private Date DOB;
 	private String password;
 	private String desc;
+	private String profilePath;
 	
+	public String getProfilePath() {
+		return profilePath;
+	}
+
+	public void setProfilePath(String profilePath) {
+		this.profilePath = profilePath;
+	}
+
 	public Integer getdId() {
 		return dId;
 	}
