@@ -12,7 +12,6 @@ import com.medical.solutions.constants.LoginQueryConstants;
 import com.medical.solutions.constants.QueryConstants;
 import com.medical.solutions.dao.DoctorDao;
 import com.medical.solutions.entity.Doctor;
-import com.medical.solutions.entity.DoctorAddress;
 import com.medical.solutions.exceptionhandler.BadRequestException;
 import com.medical.solutions.extractor.DoctorExtractor;
 import com.medical.solutions.extractor.ExpertizedExtractor;
@@ -263,78 +262,78 @@ public class DoctorDaoImpl implements DoctorDao {
 		}
 	}
 
-	private int updateDoctorAddress(DoctorAddress doctorAddress) {
+	private int updateDoctorAddress(Doctor doctor) {
 		int updateRow = 0;
 		boolean updateLocations = false;
 		String clinic = " clinic =  ? ";
 		List<Object> args = new ArrayList<>();
 		StringBuilder query = new StringBuilder("UPDATE doctorAddress SET ");
 
-		if (null != doctorAddress.getExpertized()) {
+		if (null != doctor.getExpertized()) {
 			query.append(" expertise = ? ");
-			args.add(doctorAddress.getExpertized().toLowerCase());
+			args.add(doctor.getExpertized().toLowerCase());
 			updateRow = updateRow + 1;
 		}
-		if (null != doctorAddress.getClinicAddress()) {
+		if (null != doctor.getClinicAddress()) {
 			if (updateRow > 0) {
 				query.append("," + clinic);
 			} else {
 				query.append(clinic);
 			}
-			args.add(doctorAddress.getClinicAddress());
+			args.add(doctor.getClinicAddress());
 			updateRow = updateRow + 1;
 			updateLocations = true;
 		}
 
-		if (null != doctorAddress.getTiming()) {
+		if (null != doctor.getTiming()) {
 			if (updateRow > 0) {
 				query.append(", timing = ? ");
 			} else {
 				query.append(" timing = ? ");
 			}
-			args.add(doctorAddress.getTiming());
+			args.add(doctor.getTiming());
 			updateRow = updateRow + 1;
 		}
 
-		if (null != doctorAddress.getCity()) {
+		if (null != doctor.getCity()) {
 			if (updateRow > 0) {
 				query.append(", city = ? ");
 			} else {
 				query.append(" city = ? ");
 			}
-			args.add(doctorAddress.getCity());
+			args.add(doctor.getCity());
 			updateRow = updateRow + 1;
 			updateLocations = true;
 		}
 
-		if (doctorAddress.getPin() != null) {
+		if (doctor.getPin() != null) {
 			if (updateRow > 0) {
 				query.append(", pin = ? ");
 			} else {
 				query.append(" pin = ? ");
 			}
-			args.add(doctorAddress.getPin());
+			args.add(doctor.getPin());
 			updateRow = updateRow + 1;
 			updateLocations = true;
 		}
 
-		if (null != doctorAddress.getState()) {
+		if (null != doctor.getState()) {
 			if (updateRow > 0) {
 				query.append(", state = ? ");
 			} else {
 				query.append(" state = ? ");
 			}
-			args.add(doctorAddress.getState());
+			args.add(doctor.getState());
 			updateRow = updateRow + 1;
 		}
 
-		if (null != doctorAddress.getLandmark()) {
+		if (null != doctor.getLandmark()) {
 			if (updateRow > 0) {
 				query.append(", landmark = ? ");
 			} else {
 				query.append(" landmark = ? ");
 			}
-			args.add(doctorAddress.getLandmark());
+			args.add(doctor.getLandmark());
 			updateRow = updateRow + 1;
 		}
 
@@ -343,7 +342,7 @@ public class DoctorDaoImpl implements DoctorDao {
 		}
 		if (updateLocations) {
 			LocationResponse locationResponse = locationService
-					.getGeoCodeFromAddress(createAddress(doctorAddress));
+					.getGeoCodeFromAddress(createAddress(doctor));
 			if (locationResponse != null) {
 				if (updateRow > 0) {
 					query.append(", latitude = ? ");
@@ -364,18 +363,17 @@ public class DoctorDaoImpl implements DoctorDao {
 		}
 
 		query.append("  WHERE dId = ? ");
-		args.add(doctorAddress.getdId());
+		args.add(doctor.getdId());
 		return jdbcTemplate.update(query.toString(), args.toArray());
 	}
 
-	private String createAddress(DoctorAddress doctorAddress) {
-		return doctorAddress.getClinicAddress() + ", "
-				+ doctorAddress.getCity() + " ," + doctorAddress.getState()
-				+ ", India";
+	private String createAddress(Doctor doctor) {
+		return doctor.getClinicAddress() + ", " + doctor.getCity() + " ,"
+				+ doctor.getState() + ", India";
 	}
 
 	@Override
-	public String updateDoctor(DoctorAddress doctor) {
+	public String updateDoctor(Doctor doctor) {
 
 		String response;
 		List<Object> args = new ArrayList<>();

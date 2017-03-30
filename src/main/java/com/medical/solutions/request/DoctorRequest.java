@@ -19,6 +19,15 @@ public class DoctorRequest extends DoctorAddress {
 	private String gender;
 	private int age;
 	private String desc;
+	private String profilePath;
+
+	public String getProfilePath() {
+		return profilePath;
+	}
+
+	public void setProfilePath(String profilePath) {
+		this.profilePath = profilePath;
+	}
 
 	public String getDesc() {
 		return desc;

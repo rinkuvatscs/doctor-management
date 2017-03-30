@@ -3,7 +3,7 @@ package com.medical.solutions.entity;
 import java.math.BigInteger;
 
 
-public class DoctorAddress extends Doctor {
+public class DoctorAddress {
 
 	private String timing ;
 	private String city;
