@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import com.medical.solutions.constants.AppointmentQueryConstants;
 import com.medical.solutions.dao.AppointmentDao;
 import com.medical.solutions.entity.Appointment;
+import com.medical.solutions.extractor.AppointmentExtractor;
 
 @Repository
 public class ApointmentDaoImpl implements AppointmentDao {
@@ -27,7 +28,8 @@ public class ApointmentDaoImpl implements AppointmentDao {
 		args.add(makeAppointment.getdId());
 		args.add(makeAppointment.getpId());
 		args.add(makeAppointment.getAppointmentDesc());
-		int row = jdbcTemplate.update(AppointmentQueryConstants.INSERT_APPOINTMENT, args.toArray());
+		int row = jdbcTemplate.update(
+				AppointmentQueryConstants.INSERT_APPOINTMENT, args.toArray());
 		if (row > 0) {
 			response = "Appoinment Done";
 		} else {
@@ -42,7 +44,8 @@ public class ApointmentDaoImpl implements AppointmentDao {
 		String response = null;
 		if (!StringUtils.isEmpty(id)) {
 			Object args[] = { id };
-			int row = jdbcTemplate.update(AppointmentQueryConstants.DELETE_APPOINTMENT, args);
+			int row = jdbcTemplate.update(
+					AppointmentQueryConstants.DELETE_APPOINTMENT, args);
 			if (row > 0) {
 				response = "Appoinment Cancelled";
 			} else {
@@ -58,8 +61,10 @@ public class ApointmentDaoImpl implements AppointmentDao {
 		List<Appointment> response = null;
 		if (!StringUtils.isEmpty(pId)) {
 			Object args[] = { pId };
-			response = jdbcTemplate.query(AppointmentQueryConstants.GET_APPOINTMENT_BY_PID,
-					new BeanPropertyRowMapper<Appointment>(Appointment.class), args);
+			response = jdbcTemplate.query(
+					AppointmentQueryConstants.GET_APPOINTMENT_BY_PID,
+					new BeanPropertyRowMapper<Appointment>(Appointment.class),
+					args);
 			return response;
 		}
 		return response;
@@ -71,8 +76,24 @@ public class ApointmentDaoImpl implements AppointmentDao {
 		List<Appointment> response = null;
 		if (!StringUtils.isEmpty(dId)) {
 			Object args[] = { dId };
-			response = jdbcTemplate.query(AppointmentQueryConstants.GET_APPOINTMENT_BY_DID,
-					new BeanPropertyRowMapper<Appointment>(Appointment.class), args);
+			response = jdbcTemplate.query(
+					AppointmentQueryConstants.GET_APPOINTMENT_BY_DID,
+					new BeanPropertyRowMapper<Appointment>(Appointment.class),
+					args);
+			return response;
+		}
+		return response;
+	}
+
+	@Override
+	public List<Appointment> doctorAppointmentWithPatientProfile(Integer pId) {
+
+		List<Appointment> response = null;
+		if (!StringUtils.isEmpty(pId)) {
+			Object args[] = { pId };
+			response = jdbcTemplate
+					.query(AppointmentQueryConstants.GET_APPOINTMENT_FOR_DOCTORS_BY_PID,
+							new AppointmentExtractor(), args);
 			return response;
 		}
 		return response;

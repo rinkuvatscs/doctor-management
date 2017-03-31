@@ -12,6 +12,7 @@ import com.medical.solutions.constants.LoginQueryConstants;
 import com.medical.solutions.constants.QueryConstants;
 import com.medical.solutions.dao.DoctorDao;
 import com.medical.solutions.entity.Doctor;
+import com.medical.solutions.entity.DoctorAddress;
 import com.medical.solutions.exceptionhandler.BadRequestException;
 import com.medical.solutions.extractor.DoctorExtractor;
 import com.medical.solutions.extractor.ExpertizedExtractor;
@@ -372,7 +373,6 @@ public class DoctorDaoImpl implements DoctorDao {
 				+ doctor.getState() + ", India";
 	}
 
-	@Override
 	public String updateDoctor(Doctor doctor) {
 
 		String response;
@@ -912,6 +912,12 @@ public class DoctorDaoImpl implements DoctorDao {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public String updateDoctor(DoctorAddress doctor) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

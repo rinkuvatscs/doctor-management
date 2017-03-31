@@ -13,4 +13,6 @@ public interface AppointmentDao {
 	public List<Appointment> viewAppointment(Integer pId);
 	
 	public List<Appointment> viewAppointmentForDoctor(Integer dId);
+
+	public List<Appointment> doctorAppointmentWithPatientProfile(Integer pId);
 }
