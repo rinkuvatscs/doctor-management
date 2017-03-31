@@ -2,7 +2,7 @@ package com.medical.solutions.response;
 
 public class DoctorResponse {
 
-	private Integer doctorId;
+	private Integer dId;
 	private String name;
 	private String mobile;
 	private String homeAddress;
@@ -60,12 +60,12 @@ public class DoctorResponse {
 		this.age = age;
 	}
 
-	public Integer getDoctorId() {
-		return doctorId;
+	public Integer getDId() {
+		return dId;
 	}
 
-	public void setDoctorId(Integer doctorId) {
-		this.doctorId = doctorId;
+	public void setDId(Integer dId) {
+		this.dId = dId;
 	}
 
 	public String getName() {
@@ -150,7 +150,7 @@ public class DoctorResponse {
 
 	@Override
 	public String toString() {
-		return "Doctor [doctorId=" + doctorId + ", name=" + name + ", mobile="
+		return "Doctor [dId=" + dId + ", name=" + name + ", mobile="
 				+ mobile + ", homeAddress=" + homeAddress + ", aadhaarNumber="
 				+ aadhaarNumber + ", highestDegree=" + highestDegree
 				+ ", expertized=" + expertized + ", isGovernmentServent="
