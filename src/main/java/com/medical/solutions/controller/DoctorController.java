@@ -235,7 +235,7 @@ public class DoctorController {
 			@ApiResponse(code = 201, message = "") })
 	public Response updateDoctor(@RequestBody DoctorRequest doctorRequest) {
 
-		DoctorAddress doctor = new DoctorAddress();
+		Doctor doctor = new Doctor();
 		try {
 			BeanUtils.copyProperties(doctorRequest, doctor);
 		} catch (BeansException beansException) {

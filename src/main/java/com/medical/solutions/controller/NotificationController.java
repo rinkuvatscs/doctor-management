@@ -37,7 +37,7 @@ public class NotificationController {
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/addNotifyforpatient")
 	@ResponseBody
-	public String addNotifyForPatient(
+	public NotificationServiceResponse addNotifyForPatient(
 			@RequestBody NotificationServiceRequest notificationServiceRequest) {
 		NotificationService notificationService = new NotificationService();
 
@@ -55,14 +55,13 @@ public class NotificationController {
 			throw new BadRequestException(COMMON_BADREQEST_MESSAGE,
 					beansException);
 		}
-		return commonFactory.getCommonService().addNotifyForPatient(
-				notificationService);
+		return new NotificationServiceResponse(commonFactory.getCommonService()
+				.addNotifyForPatient(notificationService));
 	}
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getNotifyforpatient/{pId}/pId")
 	@ResponseBody
-	public List<NotificationServiceResponse> getNotifyforPatient(
-			@PathVariable int pId) {
+	public List<NotificationService> getNotifyforPatient(@PathVariable int pId) {
 		if (pId <= 0) {
 			throw new BadRequestException("Please provide valid patient Id");
 		}
@@ -72,7 +71,7 @@ public class NotificationController {
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/updateNotify")
 	@ResponseBody
-	public String updateNotify(
+	public NotificationServiceResponse updateNotify(
 			@RequestBody NotificationServiceRequest notificationServiceRequest) {
 		NotificationService notificationService = new NotificationService();
 		try {
@@ -85,13 +84,13 @@ public class NotificationController {
 			throw new BadRequestException(COMMON_BADREQEST_MESSAGE,
 					beansException);
 		}
-		return commonFactory.getCommonService().updateNotify(
-				notificationService);
+		return new NotificationServiceResponse(commonFactory.getCommonService()
+				.updateNotify(notificationService));
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/addNotifyfordoctor")
 	@ResponseBody
-	public String addNotifyForDoctor(
+	public NotificationServiceResponse addNotifyForDoctor(
 			@RequestBody NotificationServiceRequest notificationServiceRequest) {
 		NotificationService notificationService = new NotificationService();
 
@@ -109,14 +108,13 @@ public class NotificationController {
 			throw new BadRequestException(COMMON_BADREQEST_MESSAGE,
 					beansException);
 		}
-		return commonFactory.getCommonService().addNotifyForDoctor(
-				notificationService);
+		return new NotificationServiceResponse(commonFactory.getCommonService()
+				.addNotifyForDoctor(notificationService));
 	}
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getNotifyfordoctor/{dId}/dId")
 	@ResponseBody
-	public List<NotificationServiceResponse> getNotifyforDoctor(
-			@PathVariable int dId) {
+	public List<NotificationService> getNotifyforDoctor(@PathVariable int dId) {
 		if (dId <= 0) {
 			throw new BadRequestException("Please provide valid Doctor Id");
 		}
