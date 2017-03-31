@@ -15,13 +15,13 @@ import com.medical.solutions.response.MessageServiceResponse;
 @Component
 public class MessageServiceMapper {
 
-	public List<MessageServiceResponse> mapMessageServices(
+	public List<MessageService> mapMessageServices(
 			List<MessageService> messageServices) {
 
 		if (StringUtils.isEmpty(messageServices) || messageServices.isEmpty()) {
 			return null;
 		}
-		List<MessageServiceResponse> messageServiceResponses = new ArrayList<MessageServiceResponse>(
+		List<MessageService> messageServiceResponses = new ArrayList<>(
 				messageServices.size());
 		for (MessageService messageService : messageServices) {
 			messageServiceResponses.add(mapMessageService(messageService));
@@ -30,18 +30,17 @@ public class MessageServiceMapper {
 		return messageServiceResponses;
 	}
 
-	public MessageServiceResponse mapMessageService(
-			MessageService messageService) {
-		MessageServiceResponse messageServiceResponse = new MessageServiceResponse();
+	public MessageService mapMessageService(MessageService messageServices) {
+		MessageService messageService = new MessageService();
 		try {
-			BeanUtils.copyProperties(messageService, messageServiceResponse);
+			BeanUtils.copyProperties(messageServices, messageService);
 		} catch (BeansException beansException) {
 			throw new BadRequestException(
 					"Doctor Do not have enough information for mapping",
 					beansException);
 		}
 
-		return messageServiceResponse;
+		return messageService;
 	}
 
 }

@@ -37,7 +37,7 @@ public class MessageController {
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/addmessageforpatient")
 	@ResponseBody
-	public String addMessageForPatient(
+	public MessageServiceResponse addMessageForPatient(
 			@RequestBody MessageServiceRequest messageServiceRequest) {
 		MessageService messageService = new MessageService();
 
@@ -53,13 +53,13 @@ public class MessageController {
 			throw new BadRequestException(COMMON_BADREQEST_MESSAGE,
 					beansException);
 		}
-		return commonFactory.getCommonService().addMessageForPatient(
-				messageService);
+		return new MessageServiceResponse(commonFactory.getCommonService().addMessageForPatient(
+				messageService));
 	}
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getmessageforpatient/{pId}/pId")
 	@ResponseBody
-	public List<MessageServiceResponse> getMessageforPatient(
+	public List<MessageService> getMessageforPatient(
 			@PathVariable int pId) {
 		if (pId <= 0) {
 			throw new BadRequestException("Please provide valid patient Id");
@@ -70,7 +70,7 @@ public class MessageController {
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/updatemessage")
 	@ResponseBody
-	public String updateMessage(
+	public MessageServiceResponse updateMessage(
 			@RequestBody MessageServiceRequest messageServiceRequest) {
 		MessageService messages = new MessageService();
 		try {
@@ -82,12 +82,12 @@ public class MessageController {
 			throw new BadRequestException(COMMON_BADREQEST_MESSAGE,
 					beansException);
 		}
-		return commonFactory.getCommonService().updateMessage(messages);
+		return new MessageServiceResponse(commonFactory.getCommonService().updateMessage(messages));
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/addmessagefordoctor")
 	@ResponseBody
-	public String addMessageForDoctor(
+	public MessageServiceResponse addMessageForDoctor(
 			@RequestBody MessageServiceRequest messageServiceRequest) {
 		MessageService messageService = new MessageService();
 
@@ -103,13 +103,13 @@ public class MessageController {
 			throw new BadRequestException(COMMON_BADREQEST_MESSAGE,
 					beansException);
 		}
-		return commonFactory.getCommonService().addMessageForDoctor(
-				messageService);
+		return new MessageServiceResponse(commonFactory.getCommonService().addMessageForDoctor(
+				messageService));
 	}
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getmessagefordoctor/{dId}/dId")
 	@ResponseBody
-	public List<MessageServiceResponse> getMessageforDoctor(
+	public List<MessageService> getMessageforDoctor(
 			@PathVariable int dId) {
 		if (dId <= 0) {
 			throw new BadRequestException("Please provide valid Doctor Id");

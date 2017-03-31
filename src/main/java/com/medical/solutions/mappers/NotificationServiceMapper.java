@@ -10,19 +10,18 @@ import org.springframework.util.StringUtils;
 
 import com.medical.solutions.entity.NotificationService;
 import com.medical.solutions.exceptionhandler.BadRequestException;
-import com.medical.solutions.response.NotificationServiceResponse;
 
 @Component
 public class NotificationServiceMapper {
 
-	public List<NotificationServiceResponse> mapNotifyServices(
+	public List<NotificationService> mapNotifyServices(
 			List<NotificationService> notificationServices) {
 
 		if (StringUtils.isEmpty(notificationServices)
 				|| notificationServices.isEmpty()) {
 			return null;
 		}
-		List<NotificationServiceResponse> serviceResponses = new ArrayList<NotificationServiceResponse>(
+		List<NotificationService> serviceResponses = new ArrayList<>(
 				notificationServices.size());
 		for (NotificationService notificationService : notificationServices) {
 			serviceResponses.add(mapNotifyService(notificationService));
@@ -31,9 +30,9 @@ public class NotificationServiceMapper {
 		return serviceResponses;
 	}
 
-	public NotificationServiceResponse mapNotifyService(
+	public NotificationService mapNotifyService(
 			NotificationService notificationService) {
-		NotificationServiceResponse notificationServiceResponse = new NotificationServiceResponse();
+		NotificationService notificationServiceResponse = new NotificationService();
 		try {
 			BeanUtils.copyProperties(notificationService,
 					notificationServiceResponse);

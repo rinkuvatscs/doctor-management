@@ -81,7 +81,7 @@ public class DoctorServiceImpl implements DoctorService {
 	}
 
 	@Override
-	public String updateDoctor(DoctorAddress doctor) {
+	public String updateDoctor(Doctor doctor) {
 
 		return doctorDao.updateDoctor(doctor);
 	}
