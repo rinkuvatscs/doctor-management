@@ -82,7 +82,7 @@ public class AppointmentController {
 		if (pId == null || pId <= 0) {
 			throw new BadRequestException("Please provide valid Id");
 		}
-		return appointmentFactory.getAppointmentService().viewAppointmentForDoctor(pId);
+		return appointmentFactory.getAppointmentService().doctorAppointmentWithPatientProfile(pId);
 	}
 	
 }
