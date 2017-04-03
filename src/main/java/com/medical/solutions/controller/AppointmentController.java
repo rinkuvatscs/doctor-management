@@ -75,14 +75,14 @@ public class AppointmentController {
 		return appointmentFactory.getAppointmentService().viewAppointmentForDoctor(dId);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/appointment/{pId}/doctorwithpatient", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.GET, value = "/appointment/{dId}/doctorBydId", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "view appointment", notes = "view appointment for Doctor with patient profile")
-	public List<Appointment> viewAppointmentForDoctorWithPatientProfile(@PathVariable Integer pId) {
+	public List<Appointment> viewAppointmentForDoctorWithPatientProfile(@PathVariable Integer dId) {
 
-		if (pId == null || pId <= 0) {
+		if (dId == null || dId <= 0) {
 			throw new BadRequestException("Please provide valid Id");
 		}
-		return appointmentFactory.getAppointmentService().doctorAppointmentWithPatientProfile(pId);
+		return appointmentFactory.getAppointmentService().doctorAppointmentWithPatientProfile(dId);
 	}
 	
 }

@@ -86,13 +86,13 @@ public class ApointmentDaoImpl implements AppointmentDao {
 	}
 
 	@Override
-	public List<Appointment> doctorAppointmentWithPatientProfile(Integer pId) {
+	public List<Appointment> doctorAppointmentWithPatientProfile(Integer dId) {
 
 		List<Appointment> response = null;
-		if (!StringUtils.isEmpty(pId)) {
-			Object args[] = { pId };
+		if (!StringUtils.isEmpty(dId)) {
+			Object args[] = { dId };
 			response = jdbcTemplate
-					.query(AppointmentQueryConstants.GET_APPOINTMENT_FOR_DOCTORS_BY_PID,
+					.query(AppointmentQueryConstants.GET_APPOINTMENT_FOR_DOCTORS_BY_DID,
 							new AppointmentExtractor(), args);
 			return response;
 		}
