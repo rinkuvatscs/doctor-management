@@ -11,8 +11,8 @@ public interface AppointmentDao {
 	public String cancelAppointment(Integer id);
 
 	public List<Appointment> viewAppointment(Integer pId);
-	
+
 	public List<Appointment> viewAppointmentForDoctor(Integer dId);
 
-	public List<Appointment> doctorAppointmentWithPatientProfile(Integer pId);
+	public List<Appointment> doctorAppointmentWithPatientProfile(Integer dId);
 }
