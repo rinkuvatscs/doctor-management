@@ -63,7 +63,7 @@ public class ApointmentDaoImpl implements AppointmentDao {
 			Object args[] = { pId };
 			response = jdbcTemplate.query(
 					AppointmentQueryConstants.GET_APPOINTMENT_BY_PID,
-					new BeanPropertyRowMapper<Appointment>(Appointment.class),
+					new AppointmentExtractor(),
 					args);
 			return response;
 		}

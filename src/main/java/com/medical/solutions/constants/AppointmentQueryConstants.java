@@ -6,7 +6,9 @@ public interface AppointmentQueryConstants {
 
 	String DELETE_APPOINTMENT = "DELETE FROM appointment where appointmentId = ?";
 
-	String GET_APPOINTMENT_BY_PID = " SELECT * FROM appointment WHERE pId = ? ";
+	String GET_APPOINTMENT_BY_PID = " SELECT APP.appointmentId, APP.pId, APP.dId, APP.appointmentDesc, APP.createdDate, DOC.name, DOC.mobile, DOC.email, "
+			+ "DOC.gender, DOC.dob, DOC.profilePicPath from u754709029_doc.appointment AS APP INNER JOIN u754709029_doc.doctor AS DOC ON "
+			+ "APP.dId = DOC.dId WHERE APP.pId = ? ";
 
 	String GET_APPOINTMENT_BY_DID = " SELECT * FROM appointment WHERE dId = ? ";
 
