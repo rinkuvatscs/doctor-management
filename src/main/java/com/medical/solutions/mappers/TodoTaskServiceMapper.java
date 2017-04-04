@@ -10,18 +10,17 @@ import org.springframework.util.StringUtils;
 
 import com.medical.solutions.entity.TodoListService;
 import com.medical.solutions.exceptionhandler.BadRequestException;
-import com.medical.solutions.response.ToDoListServiceResponse;
 
 @Component
 public class TodoTaskServiceMapper {
 
-	public List<ToDoListServiceResponse> mapTodoListService(
+	public List<TodoListService> mapTodoListService(
 			List<TodoListService> todoListServices) {
 
 		if (StringUtils.isEmpty(todoListServices) || todoListServices.isEmpty()) {
 			return null;
 		}
-		List<ToDoListServiceResponse> toDoListServiceResponses = new ArrayList<ToDoListServiceResponse>(
+		List<TodoListService> toDoListServiceResponses = new ArrayList<>(
 				todoListServices.size());
 		for (TodoListService todoListService : todoListServices) {
 			toDoListServiceResponses.add(mapTodoListService(todoListService));
@@ -30,9 +29,8 @@ public class TodoTaskServiceMapper {
 		return toDoListServiceResponses;
 	}
 
-	public ToDoListServiceResponse mapTodoListService(
-			TodoListService todoListService) {
-		ToDoListServiceResponse toDoListServiceResponse = new ToDoListServiceResponse();
+	public TodoListService mapTodoListService(TodoListService todoListService) {
+		TodoListService toDoListServiceResponse = new TodoListService();
 		try {
 			BeanUtils.copyProperties(todoListService, toDoListServiceResponse);
 		} catch (BeansException beansException) {

@@ -39,7 +39,13 @@ public class AppointmentUsingDatabaseImpl implements AppointmentService {
 
 		return appointmentDao.viewAppointmentForDoctor(dId);
 	}
+	
+	@Override
+	public List<Appointment> doctorAppointmentWithPatientProfile(Integer dId) {
 
+		return appointmentDao.doctorAppointmentWithPatientProfile(dId);
+	}
+	
 	@Override
 	public AppointmentEnum getAppointmentEnum() {
 		

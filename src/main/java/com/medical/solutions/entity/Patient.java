@@ -14,6 +14,7 @@ public class Patient {
 	private Date DOB;
 	private String password;
 	private String homeAddress;
+	private String profilePicPath;
 
 	public String getHomeAddress() {
 		return homeAddress;
@@ -95,11 +96,21 @@ public class Patient {
 		this.password = password;
 	}
 
+	public String getProfilePicPath() {
+		return profilePicPath;
+	}
+
+	public void setProfilePicPath(String profilePicPath) {
+		this.profilePicPath = profilePicPath;
+	}
+
 	@Override
 	public String toString() {
-		return "Patient [pId=" + pId + ", name=" + name + ", mobile=" + mobile + ", adhaar=" + adhaar + ", email="
-				+ email + ", gender=" + gender + ", allergies=" + allergies + ", DOB=" + DOB + ", password=" + password
-				+ ", homeAddress=" + homeAddress + "]";
+		return "Patient [pId=" + pId + ", name=" + name + ", mobile=" + mobile
+				+ ", adhaar=" + adhaar + ", email=" + email + ", gender="
+				+ gender + ", allergies=" + allergies + ", DOB=" + DOB
+				+ ", password=" + password + ", homeAddress=" + homeAddress
+				+ ", profilePicPath=" + profilePicPath + "]";
 	}
 
 }

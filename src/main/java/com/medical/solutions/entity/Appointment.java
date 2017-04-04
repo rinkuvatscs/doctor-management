@@ -1,6 +1,7 @@
 package com.medical.solutions.entity;
 
 import java.util.Date;
+import com.medical.solutions.entity.Patient;
 
 public class Appointment {
 
@@ -9,6 +10,8 @@ public class Appointment {
 	private Integer pId;
 	private String appointmentDesc;
 	private Date createdDate;
+	private Patient patient;
+	private Doctor doctor;
 
 	public Integer getAppointmentId() {
 		return appointmentId;
@@ -50,10 +53,27 @@ public class Appointment {
 		this.createdDate = createdDate;
 	}
 
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	public Doctor getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
+
 	@Override
 	public String toString() {
 		return "Appointment [appointmentId=" + appointmentId + ", dId=" + dId + ", pId=" + pId + ", appointmentDesc="
-				+ appointmentDesc + ", createdDate=" + createdDate + "]";
+				+ appointmentDesc + ", createdDate=" + createdDate + ", patient=" + patient + ", doctor=" + doctor
+				+ "]";
 	}
 
 }

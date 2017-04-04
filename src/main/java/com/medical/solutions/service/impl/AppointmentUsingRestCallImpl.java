@@ -33,9 +33,14 @@ public class AppointmentUsingRestCallImpl implements AppointmentService {
 	}
 
 	@Override
+	public List<Appointment> doctorAppointmentWithPatientProfile(Integer dId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public AppointmentEnum getAppointmentEnum() {
 
 		return AppointmentEnum.THROUGH_RESTTEMPLATE;
 	}
-
 }

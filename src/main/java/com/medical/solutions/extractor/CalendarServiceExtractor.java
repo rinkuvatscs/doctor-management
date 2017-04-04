@@ -23,10 +23,8 @@ public class CalendarServiceExtractor implements
 			calendarService.setCalendarId(rs.getInt("calendarId"));
 			calendarService.setCalendarEventId(rs.getInt("calendarEventId"));
 			calendarService.setCalendarTitle(rs.getString("calendarTitle"));
-			calendarService.setStartDate(rs.getTimestamp("startDate"));
-//			calendarService.setStartTime(rs.getTime("startDate"));
+			calendarService.setStartDate(rs.getDate("startDate"));
 			calendarService.setEndDate(rs.getDate("endDate"));
-//			calendarService.setEndTime(rs.getTime("endDate"));
 			calendarService.setpId(rs.getInt("pId"));
 			calendarService.setdId(rs.getInt("dId"));
 			calendarServices.add(calendarService);

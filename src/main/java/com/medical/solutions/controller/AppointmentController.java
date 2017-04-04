@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.medical.solutions.entity.Appointment;
 import com.medical.solutions.exceptionhandler.BadRequestException;
 import com.medical.solutions.factory.AppointmentFactory;
+import com.medical.solutions.response.AppointmentResponse;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,7 +30,7 @@ public class AppointmentController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/appointment/make", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "make appointment", notes = "make appointment")
-	public String makeAppointment(@RequestBody Appointment makeAppointment) {
+	public AppointmentResponse makeAppointment(@RequestBody Appointment makeAppointment) {
 
 		if (StringUtils.isEmpty(makeAppointment)) {
 			throw new BadRequestException("Please provide data");
@@ -41,17 +42,17 @@ public class AppointmentController {
 			throw new BadRequestException("Please provide appointment description");
 		}
 
-		return appointmentFactory.getAppointmentService().makeAppointment(makeAppointment);
+		return new AppointmentResponse(appointmentFactory.getAppointmentService().makeAppointment(makeAppointment));
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/appointment/cancel/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public String cancelAppointment(@PathVariable Integer id) {
+	public AppointmentResponse cancelAppointment(@PathVariable Integer id) {
 
 		if (id == null || id <= 0) {
 			throw new BadRequestException("Please provide valid Id");
 		}
-		return appointmentFactory.getAppointmentService().cancelAppoinment(id);
+		return new AppointmentResponse(appointmentFactory.getAppointmentService().cancelAppoinment(id));
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/appointment/{pId}/patient", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -73,4 +74,15 @@ public class AppointmentController {
 		}
 		return appointmentFactory.getAppointmentService().viewAppointmentForDoctor(dId);
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/appointment/{dId}/doctorBydId", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "view appointment", notes = "view appointment for Doctor with patient profile")
+	public List<Appointment> viewAppointmentForDoctorWithPatientProfile(@PathVariable Integer dId) {
+
+		if (dId == null || dId <= 0) {
+			throw new BadRequestException("Please provide valid Id");
+		}
+		return appointmentFactory.getAppointmentService().doctorAppointmentWithPatientProfile(dId);
+	}
+	
 }

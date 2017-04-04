@@ -27,7 +27,7 @@ public interface DoctorService {
 
     List<Doctor> getDoctors(Doctor doctor);
 
-    public String updateDoctor(DoctorAddress doctor);
+    public String updateDoctor(Doctor doctor);
 
     public String deleteDoctor(Doctor doctor);
 
