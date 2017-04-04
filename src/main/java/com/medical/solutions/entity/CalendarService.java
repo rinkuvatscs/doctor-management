@@ -8,9 +8,7 @@ public class CalendarService {
 	private int calendarEventId;
 	private String calendarTitle;
 	private Date startDate;
-	private Date startTime;
 	private Date endDate;
-	private Date endTime;
 	private int pId;
 	private int dId;
 
@@ -69,29 +67,12 @@ public class CalendarService {
 	public void setdId(int dId) {
 		this.dId = dId;
 	}
-	
-	public Date getStartTime() {
-		return startTime;
-	}
-
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-
-	public Date getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
 
 	@Override
 	public String toString() {
-		return "CalendarService [calendarId=" + calendarId
-				+ ", calendarEventId=" + calendarEventId + ", calendarTitle="
-				+ calendarTitle + ", startDate=" + startDate + ", endDate="
-				+ endDate + ", pId=" + pId + ", dId=" + dId + "]";
+		return "CalendarService [calendarId=" + calendarId + ", calendarEventId=" + calendarEventId + ", calendarTitle="
+				+ calendarTitle + ", startDate=" + startDate + ", endDate=" + endDate + ", pId=" + pId + ", dId=" + dId
+				+ "]";
 	}
 
 }

@@ -10,17 +10,16 @@ import org.springframework.util.StringUtils;
 
 import com.medical.solutions.entity.CalendarService;
 import com.medical.solutions.exceptionhandler.BadRequestException;
-import com.medical.solutions.response.CalendarServiceResponse;
 
 @Component
 public class CalendarServiceMapper {
-	public List<CalendarServiceResponse> mapcalendarServices(
+	public List<CalendarService> mapcalendarServices(
 			List<CalendarService> calendarServices) {
 
 		if (StringUtils.isEmpty(calendarServices) || calendarServices.isEmpty()) {
 			return null;
 		}
-		List<CalendarServiceResponse> calendarServiceResponses = new ArrayList<CalendarServiceResponse>(
+		List<CalendarService> calendarServiceResponses = new ArrayList<>(
 				calendarServices.size());
 		for (CalendarService calendarService : calendarServices) {
 			calendarServiceResponses.add(mapCalendarService(calendarService));
@@ -29,9 +28,9 @@ public class CalendarServiceMapper {
 		return calendarServiceResponses;
 	}
 
-	public CalendarServiceResponse mapCalendarService(
+	public CalendarService mapCalendarService(
 			CalendarService calendarService) {
-		CalendarServiceResponse calendarServiceResponse = new CalendarServiceResponse();
+		CalendarService calendarServiceResponse = new CalendarService();
 		try {
 			BeanUtils.copyProperties(calendarService, calendarServiceResponse);
 		} catch (BeansException beansException) {
