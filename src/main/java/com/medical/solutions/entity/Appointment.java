@@ -12,7 +12,6 @@ public class Appointment {
 	private Date createdDate;
 	private Patient patient;
 	private Doctor doctor;
-	private DoctorAddress doctorAddress;
 
 	public Integer getAppointmentId() {
 		return appointmentId;
@@ -78,21 +77,13 @@ public class Appointment {
 		this.doctor = doctor;
 	}
 
-	public void setDoctorAddress(DoctorAddress doctorAddress) {
-		this.doctorAddress = doctorAddress;
-	}
-
-	public DoctorAddress getDoctorAddress() {
-		return doctorAddress;
-	}
-
 	@Override
 	public String toString() {
 		return "Appointment [appointmentId=" + appointmentId + ", dId=" + dId
 				+ ", pId=" + pId + ", appointmentDate=" + appointmentDate
 				+ ", appointmentDesc=" + appointmentDesc + ", createdDate="
 				+ createdDate + ", patient=" + patient + ", doctor=" + doctor
-				+ ", doctorAddress=" + doctorAddress + "]";
+				+ "]";
 	}
 
 }
