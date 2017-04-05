@@ -1,7 +1,6 @@
 package com.medical.solutions.entity;
 
 import java.util.Date;
-import com.medical.solutions.entity.Patient;
 
 public class Appointment {
 
