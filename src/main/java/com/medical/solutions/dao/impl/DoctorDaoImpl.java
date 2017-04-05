@@ -284,17 +284,6 @@ public class DoctorDaoImpl implements DoctorDao {
 			updateRow = updateRow + 1;
 			updateLocations = true;
 		}
-
-		if (null != doctor.getTiming()) {
-			if (updateRow > 0) {
-				query.append(", timing = ? ");
-			} else {
-				query.append(" timing = ? ");
-			}
-			args.add(doctor.getTiming());
-			updateRow = updateRow + 1;
-		}
-
 		if (null != doctor.getCity()) {
 			if (updateRow > 0) {
 				query.append(", city = ? ");
@@ -372,9 +361,56 @@ public class DoctorDaoImpl implements DoctorDao {
 				+ doctor.getState() + ", India";
 	}
 
+	private int appendDoctorName(Doctor doctor, StringBuilder query,
+			List<Object> args) {
+		if (null != doctor.getName()) {
+			query.append(" name = ? ");
+			args.add(doctor.getName());
+			return 1;
+		}
+		return 0;
+	}
+
+	private int appendDoctorHomeAddress(int updateRow, Doctor doctor,
+			StringBuilder query, List<Object> args) {
+		if (updateRow > 0) {
+			query.append(" , homeAddress = ? ");
+			args.add(doctor.getHomeAddress());
+		} else {
+			query.append(" homeAddress = ? ");
+			args.add(doctor.getHomeAddress());
+		}
+		return updateRow + 1;
+	}
+
+	private int appendDoctorHighestDegree(int updateRow, Doctor doctor,
+			StringBuilder query, List<Object> args) {
+		if (updateRow > 0) {
+			query.append(", highestDegree = ? ");
+			args.add(doctor.getHighestDegree());
+		} else {
+			query.append(" highestDegree = ? ");
+			args.add(doctor.getHighestDegree());
+		}
+		return updateRow + 1;
+	}
+
+	private int appendDoctorExpertized(int updateRow, Doctor doctor,
+			StringBuilder query, List<Object> args) {
+		if (updateRow > 0) {
+			query.append(", expertise = ? ");
+			args.add(doctor.getExpertized().toLowerCase());
+		} else {
+			query.append(" expertise = ? ");
+			args.add(doctor.getExpertized().toLowerCase());
+		}
+		return updateRow + 1;
+	}
+
 	@Override
 	public String updateDoctor(Doctor doctor) {
 
+		int updateRow = 0;
 		String response;
 		List<Object> args = new ArrayList<>();
 		StringBuilder query = new StringBuilder("UPDATE doctor SET ");
@@ -382,161 +418,98 @@ public class DoctorDaoImpl implements DoctorDao {
 
 			validateDoctor(doctor);
 
-			boolean isDoctorName = false;
-			boolean isHomeAddress = false;
-			boolean isHighestDegree = false;
-			boolean isExpertized = false;
-			boolean isGovtServant = false;
-			boolean isOneTimeFees = false;
-			boolean isDayFreeInConsultingFee = false;
-			boolean isShopAddress = false;
-			boolean isMobile = false;
-			boolean isAadhaar = false;
-			boolean isAge = false;
-			boolean isEmail = false;
-			if (null != doctor.getName()) {
-				query.append(" name = ? ");
-				args.add(doctor.getName());
-				isDoctorName = true;
-			}
-			if (null != doctor.getHomeAddress()) {
-				if (isDoctorName) {
-					query.append(" , homeAddress = ? ");
-					args.add(doctor.getHomeAddress());
-				} else {
-					query.append(" homeAddress = ? ");
-					args.add(doctor.getHomeAddress());
-				}
-				isHomeAddress = true;
-			}
-			if (null != doctor.getHighestDegree()) {
-				if (isHomeAddress || isDoctorName) {
-					query.append(", highestDegree = ? ");
-					args.add(doctor.getHighestDegree());
-				} else {
-					query.append(" highestDegree = ? ");
-					args.add(doctor.getHighestDegree());
-				}
-				isHighestDegree = true;
-			}
-			if (null != doctor.getExpertized()) {
-				if (isHomeAddress || isDoctorName || isHighestDegree) {
-					query.append(", expertise = ? ");
-					args.add(doctor.getExpertized().toLowerCase());
-				} else {
-					query.append(" expertise = ? ");
-					args.add(doctor.getExpertized().toLowerCase());
-				}
-				isExpertized = true;
-			}
+			updateRow = updateRow + appendDoctorName(doctor, query, args);
+			updateRow = appendDoctorHomeAddress(updateRow, doctor, query, args);
+			updateRow = appendDoctorHighestDegree(updateRow, doctor, query,
+					args);
+			updateRow = appendDoctorExpertized(updateRow, doctor, query, args);
+
 			if (null != doctor.getIsGovernmentServent()) {
-				if (isHomeAddress || isDoctorName || isHighestDegree
-						|| isExpertized) {
+				if (updateRow > 0) {
 					query.append(", gov = ? ");
 					args.add(doctor.getIsGovernmentServent());
 				} else {
 					query.append(" gov = ? ");
 					args.add(doctor.getIsGovernmentServent());
 				}
-				isGovtServant = true;
+				updateRow = updateRow + 1;
 			}
 			if (null != doctor.getOneTimeFee()) {
-				if (isHomeAddress || isDoctorName || isHighestDegree
-						|| isExpertized || isGovtServant) {
+				if (updateRow > 0) {
 					query.append(", fee = ? ");
 					args.add(doctor.getOneTimeFee());
 				} else {
 					query.append(" fee = ? ");
 					args.add(doctor.getOneTimeFee());
 				}
-				isOneTimeFees = true;
+				updateRow = updateRow + 1;
 			}
 			if (null != doctor.getDaysCheckFree()) {
-				if (isHomeAddress || isDoctorName || isHighestDegree
-						|| isExpertized || isGovtServant || isOneTimeFees) {
+				if (updateRow > 0) {
 					query.append(", freeDay = ? ");
 					args.add(doctor.getDaysCheckFree());
 				} else {
 					query.append(" freeDay = ? ");
 					args.add(doctor.getDaysCheckFree());
 				}
-				isDayFreeInConsultingFee = true;
+				updateRow = updateRow + 1;
 			}
 			if (null != doctor.getClinicAddress()) {
-				if (isHomeAddress || isDoctorName || isHighestDegree
-						|| isExpertized || isGovtServant || isOneTimeFees
-						|| isDayFreeInConsultingFee) {
+				if (updateRow > 0) {
 					query.append(", clinic = ? ");
 				} else {
 					query.append(" clinic = ? ");
 
 				}
 				args.add(doctor.getClinicAddress());
-				isShopAddress = true;
+				updateRow = updateRow + 1;
 			}
 
 			if (null != doctor.getMobile()) {
-				if (isHomeAddress || isDoctorName || isHighestDegree
-						|| isExpertized || isGovtServant || isOneTimeFees
-						|| isDayFreeInConsultingFee || isShopAddress) {
+				if (updateRow > 0) {
 					query.append(", mobile = ? ");
 
 				} else {
 					query.append(" mobile = ? ");
 				}
 				args.add(doctor.getMobile());
-				isMobile = true;
+				updateRow = updateRow + 1;
 			}
 
 			if (null != doctor.getAadhaarNumber()) {
-				if (isHomeAddress || isDoctorName || isHighestDegree
-						|| isExpertized || isGovtServant || isOneTimeFees
-						|| isDayFreeInConsultingFee || isShopAddress
-						|| isMobile) {
+				if (updateRow > 0) {
 					query.append(", adhaar = ? ");
 
 				} else {
 					query.append(" adhaar = ? ");
 				}
 				args.add(doctor.getAadhaarNumber());
-				isAadhaar = true;
+				updateRow = updateRow + 1;
 			}
 
 			if (null != doctor.getEmail()) {
-				if (isHomeAddress || isDoctorName || isHighestDegree
-						|| isExpertized || isGovtServant || isOneTimeFees
-						|| isDayFreeInConsultingFee || isShopAddress
-						|| isMobile || isAadhaar || isAge) {
+				if (updateRow > 0) {
 					query.append(", email = ? ");
 
 				} else {
 					query.append(" email = ? ");
 				}
 				args.add(doctor.getEmail());
-				isEmail = true;
+				updateRow = updateRow + 1;
 			}
 
-			boolean isGender = false;
 			if (null != doctor.getGender()) {
-				if (isHomeAddress || isDoctorName || isHighestDegree
-						|| isExpertized || isGovtServant || isOneTimeFees
-						|| isDayFreeInConsultingFee || isShopAddress
-						|| isMobile || isAadhaar || isAge || isEmail) {
+				if (updateRow > 0) {
 					query.append(", gender = ? ");
 
 				} else {
 					query.append(" gender = ? ");
 				}
 				args.add(doctor.getGender());
-				isGender = true;
+				updateRow = updateRow + 1;
 			}
-
 			if (null != doctor.getDesc()) {
-				if (isHomeAddress || isDoctorName || isHighestDegree
-						|| isExpertized || isGovtServant || isOneTimeFees
-						|| isDayFreeInConsultingFee || isShopAddress
-						|| isMobile || isAadhaar || isAge || isEmail
-						|| isGender) {
+				if (updateRow > 0) {
 					query.append(", selfDesc = ? ");
 
 				} else {
@@ -544,7 +517,17 @@ public class DoctorDaoImpl implements DoctorDao {
 				}
 				query.append(", updatedDate = NOW()");
 				args.add(doctor.getDesc());
+				updateRow = updateRow + 1;
 			}
+			if (null != doctor.getTiming()) {
+				if (updateRow > 0) {
+					query.append(", timing = ? ");
+				} else {
+					query.append(" timing = ? ");
+				}
+				args.add(doctor.getTiming());
+			}
+
 			query.append("  WHERE dId = ? ");
 			args.add(doctor.getdId());
 
@@ -552,10 +535,6 @@ public class DoctorDaoImpl implements DoctorDao {
 			if (update > 0) {
 
 				if (updateDoctorAddress(doctor) > 0) {
-
-					// TODO need to add later
-					// loginFactory.getLoginService().addLoginDetails(doctor);
-
 					response = "Doctor successfully Updated...!!!";
 				} else {
 					return "Doctor Address Details not added";
