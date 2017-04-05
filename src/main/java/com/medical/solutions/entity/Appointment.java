@@ -1,13 +1,13 @@
 package com.medical.solutions.entity;
 
 import java.util.Date;
-import com.medical.solutions.entity.Patient;
 
 public class Appointment {
 
 	private Integer appointmentId;
 	private Integer dId;
 	private Integer pId;
+	private Date appointmentDate;
 	private String appointmentDesc;
 	private Date createdDate;
 	private Patient patient;
@@ -35,6 +35,14 @@ public class Appointment {
 
 	public void setdId(Integer dId) {
 		this.dId = dId;
+	}
+
+	public Date getAppointmentDate() {
+		return appointmentDate;
+	}
+
+	public void setAppointmentDate(Date appointmentDate) {
+		this.appointmentDate = appointmentDate;
 	}
 
 	public String getAppointmentDesc() {
@@ -71,8 +79,10 @@ public class Appointment {
 
 	@Override
 	public String toString() {
-		return "Appointment [appointmentId=" + appointmentId + ", dId=" + dId + ", pId=" + pId + ", appointmentDesc="
-				+ appointmentDesc + ", createdDate=" + createdDate + ", patient=" + patient + ", doctor=" + doctor
+		return "Appointment [appointmentId=" + appointmentId + ", dId=" + dId
+				+ ", pId=" + pId + ", appointmentDate=" + appointmentDate
+				+ ", appointmentDesc=" + appointmentDesc + ", createdDate="
+				+ createdDate + ", patient=" + patient + ", doctor=" + doctor
 				+ "]";
 	}
 
