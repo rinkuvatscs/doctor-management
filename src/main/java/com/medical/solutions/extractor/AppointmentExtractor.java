@@ -26,6 +26,7 @@ public class AppointmentExtractor implements ResultSetExtractor<List<Appointment
 			appointment.setCreatedDate(rs.getDate("createdDate"));
 			appointment.setdId(rs.getInt("dId"));
 			appointment.setpId(rs.getInt("pId"));
+			appointment.setAppointmentDate(rs.getDate("appointmentDate"));
 
 			Object obj = createObject(rs);
 			if (obj instanceof Patient) {

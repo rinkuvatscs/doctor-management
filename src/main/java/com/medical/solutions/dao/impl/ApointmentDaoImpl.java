@@ -27,6 +27,7 @@ public class ApointmentDaoImpl implements AppointmentDao {
 		List<Object> args = new ArrayList<>();
 		args.add(makeAppointment.getdId());
 		args.add(makeAppointment.getpId());
+		args.add(makeAppointment.getAppointmentDate());
 		args.add(makeAppointment.getAppointmentDesc());
 		int row = jdbcTemplate.update(
 				AppointmentQueryConstants.INSERT_APPOINTMENT, args.toArray());
