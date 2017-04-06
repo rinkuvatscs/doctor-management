@@ -402,47 +402,6 @@ public class CommonDaoImpl implements CommonDao {
 	}
 
 	@Override
-	public String updateCalendarEventForDoctor(CalendarService calendarService) {
-		String response = null;
-		if (!StringUtils.isEmpty(calendarService)) {
-			Object[] args = { calendarService.getCalendarTitle(),
-					calendarService.getStartDate(),
-					calendarService.getEndDate(),
-					calendarService.getCalendarId() };
-			int res = jdbcTemplate.update(
-					CalendarQueryConstants.UPDATE_CALENDAR_EVENT_BY_DOCTOR,
-					args);
-			if (res > 0) {
-				response = "Successfully calendar event update...!!!";
-			} else {
-				response = "please try again later..!!!";
-			}
-		} else {
-			response = "please try again later..!!!";
-		}
-		return response;
-	}
-
-	@Override
-	public String deleteCalendarEventForDoctor(CalendarService calendarService) {
-		String response = null;
-		if (!StringUtils.isEmpty(calendarService)) {
-			Object[] args = { calendarService.getCalendarId() };
-			int res = jdbcTemplate.update(
-					CalendarQueryConstants.DELETE_CALENDAR_EVENT_BY_DOCTOR,
-					args);
-			if (res > 0) {
-				response = "Successfully calendar event deleted..!!!";
-			} else {
-				response = "pleaes try again later...!!!";
-			}
-		} else {
-			response = "try again later..!!!";
-		}
-		return response;
-	}
-
-	@Override
 	public List<CalendarService> getCalendarEventForDoctor(int dId) {
 		Object[] args = { dId };
 		List<CalendarService> response = jdbcTemplate.query(
@@ -453,12 +412,4 @@ public class CommonDaoImpl implements CommonDao {
 		}
 		return null;
 	}
-
-	/*
-	 * private Date formatDate(String date1, String date2) {
-	 * 
-	 * String startDate = date1 + " " + date2; SimpleDateFormat sdf = new
-	 * SimpleDateFormat("yyyy-M-dd HH:m"); try { return sdf.parse(startDate); }
-	 * catch (ParseException e) { e.printStackTrace(); } return null; }
-	 */
 }

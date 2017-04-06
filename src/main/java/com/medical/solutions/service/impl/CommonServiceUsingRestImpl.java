@@ -156,18 +156,6 @@ public class CommonServiceUsingRestImpl implements CommonService {
 	}
 
 	@Override
-	public String updateCalendarEventForDoctor(CalendarService calendarService) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String deleteCalendarEventForDoctor(CalendarService calendarService) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<CalendarService> getCalendarEventForDoctor(int dId) {
 		// TODO Auto-generated method stub
 		return null;

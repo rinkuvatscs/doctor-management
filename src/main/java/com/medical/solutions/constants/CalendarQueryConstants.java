@@ -13,8 +13,4 @@ public interface CalendarQueryConstants {
 	String ADD_CALENDAR_EVENT_BY_DOCTOR = "INSERT INTO calendar(calendarEventId, calendarTitle, startDate, endDate, dId) VALUES(?,?,?,?,?)";
 
 	String GET_CALENDAR_EVENT_BY_DOCTOR = "SELECT * FROM calendar WHERE dId=?";
-
-	String UPDATE_CALENDAR_EVENT_BY_DOCTOR = "UPDATE calendar SET calendarTitle = ?, startDate = ?, endDate = ? WHERE calendarId=?";
-
-	String DELETE_CALENDAR_EVENT_BY_DOCTOR = "DELETE FROM calendar WHERE calendarId=?";
 }

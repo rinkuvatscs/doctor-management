@@ -55,12 +55,8 @@ public interface CommonService {
 	public String deleteCalendarEventForPatient(CalendarService calendarService);
 
 	public List<CalendarService> getCalendarEventForPatient(int pId);
-	
+
 	public String addCalendarEventForDoctor(CalendarService calendarService);
-
-	public String updateCalendarEventForDoctor(CalendarService calendarService);
-
-	public String deleteCalendarEventForDoctor(CalendarService calendarService);
 
 	public List<CalendarService> getCalendarEventForDoctor(int dId);
 }

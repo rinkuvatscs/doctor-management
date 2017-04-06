@@ -129,44 +129,6 @@ public class CalendarController {
 				.addCalendarEventForDoctor(calendarService));
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/updateCalendarForDoctor")
-	@ResponseBody
-	public CalendarServiceResponse updateCalendarEventForDoctor(
-			@RequestBody CalendarServiceRequest calendarServiceRequest) {
-		CalendarService calendarService = new CalendarService();
-		try {
-			BeanUtils.copyProperties(calendarServiceRequest, calendarService);
-			if (calendarService.getCalendarId() <= 0) {
-				throw new BadRequestException(
-						"Please provide valid calendar Id");
-			}
-		} catch (BeansException beansException) {
-			throw new BadRequestException(COMMON_BADREQEST_MESSAGE,
-					beansException);
-		}
-		return new CalendarServiceResponse(commonFactory.getCommonService()
-				.updateCalendarEventForDoctor(calendarService));
-	}
-
-	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/deleteCalendarforDoctor")
-	@ResponseBody
-	public CalendarServiceResponse deleteCalendarEventForDoctor(
-			@RequestBody CalendarServiceRequest calendarServiceRequest) {
-		CalendarService calendarService = new CalendarService();
-		try {
-			BeanUtils.copyProperties(calendarServiceRequest, calendarService);
-			if (calendarService.getCalendarId() <= 0) {
-				throw new BadRequestException(
-						"Please provide valid calendar Id");
-			}
-		} catch (BeansException beansException) {
-			throw new BadRequestException(COMMON_BADREQEST_MESSAGE,
-					beansException);
-		}
-		return new CalendarServiceResponse(commonFactory.getCommonService()
-				.deleteCalendarEventForDoctor(calendarService));
-	}
-
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getCalendarForDoctor/{dId}/dId")
 	@ResponseBody
 	public List<CalendarService> getCalendarEventForDoctor(@PathVariable int dId) {

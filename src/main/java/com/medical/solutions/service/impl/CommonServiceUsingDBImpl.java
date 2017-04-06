@@ -152,16 +152,6 @@ public class CommonServiceUsingDBImpl implements CommonService {
 	}
 
 	@Override
-	public String updateCalendarEventForDoctor(CalendarService calendarService) {
-		return commonDao.updateCalendarEventForDoctor(calendarService);
-	}
-
-	@Override
-	public String deleteCalendarEventForDoctor(CalendarService calendarService) {
-		return commonDao.deleteCalendarEventForDoctor(calendarService);
-	}
-
-	@Override
 	public List<CalendarService> getCalendarEventForDoctor(int dId) {
 		return commonDao.getCalendarEventForDoctor(dId);
 	}
