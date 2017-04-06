@@ -145,4 +145,24 @@ public class CommonServiceUsingDBImpl implements CommonService {
 	public List<CalendarService> getCalendarEventForPatient(int pId) {
 		return commonDao.getCalendarEventForPatient(pId);
 	}
+
+	@Override
+	public String addCalendarEventForDoctor(CalendarService calendarService) {
+		return commonDao.addCalendarEventForDoctor(calendarService);
+	}
+
+	@Override
+	public String updateCalendarEventForDoctor(CalendarService calendarService) {
+		return commonDao.updateCalendarEventForDoctor(calendarService);
+	}
+
+	@Override
+	public String deleteCalendarEventForDoctor(CalendarService calendarService) {
+		return commonDao.deleteCalendarEventForDoctor(calendarService);
+	}
+
+	@Override
+	public List<CalendarService> getCalendarEventForDoctor(int dId) {
+		return commonDao.getCalendarEventForDoctor(dId);
+	}
 }
