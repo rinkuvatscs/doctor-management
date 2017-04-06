@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import com.medical.solutions.constants.CalendarQueryConstants;
 import com.medical.solutions.constants.MessageServiceConstants;
 import com.medical.solutions.constants.NotificationServiceConstants;
 import com.medical.solutions.constants.ToDoServiceConstants;
@@ -313,9 +314,8 @@ public class CommonDaoImpl implements CommonDao {
 					calendarService.getCalendarTitle(),
 					calendarService.getStartDate(),
 					calendarService.getEndDate(), calendarService.getpId() };
-			int res = jdbcTemplate
-					.update("INSERT INTO calendar( calendarEventId, calendarTitle, startDate, endDate, pId) VALUES(?,?,?,?,?)",
-							args);
+			int res = jdbcTemplate.update(
+					CalendarQueryConstants.ADD_CALENDAR_EVENT_BY_PATIENT, args);
 			if (res > 0) {
 				response = "Successfully created calendar Event.!!!";
 			} else {
@@ -328,16 +328,16 @@ public class CommonDaoImpl implements CommonDao {
 	}
 
 	@Override
-	public String updateCalendarEventForPatient(CalendarService calendarService) {
+	public String updateCalendarEvent(CalendarService calendarService) {
 		String response;
 		if (!StringUtils.isEmpty(calendarService)) {
 			Object[] args = { calendarService.getCalendarTitle(),
 					calendarService.getStartDate(),
 					calendarService.getEndDate(),
 					calendarService.getCalendarId() };
-			int res = jdbcTemplate
-					.update("UPDATE calendar SET calendarTitle = ?, startDate = ?, endDate = ? WHERE calendarId =?",
-							args);
+			int res = jdbcTemplate.update(
+					CalendarQueryConstants.UPDATE_CALENDAR_EVENT,
+					args);
 			if (res > 0) {
 				response = "Successfully calendar updated..!!!";
 			} else {
@@ -350,12 +350,13 @@ public class CommonDaoImpl implements CommonDao {
 	}
 
 	@Override
-	public String deleteCalendarEventForPatient(CalendarService calendarService) {
+	public String deleteCalendarEvent(CalendarService calendarService) {
 		String response;
 		if (!StringUtils.isEmpty(calendarService)) {
 			Object[] args = { calendarService.getCalendarId() };
 			int res = jdbcTemplate.update(
-					"delete from calendar where calendarId=?", args);
+					CalendarQueryConstants.DELETE_CALENDAR_EVENT,
+					args);
 			if (res > 0) {
 				response = "Successfully calendar deleted..!!!";
 			} else {
@@ -371,28 +372,44 @@ public class CommonDaoImpl implements CommonDao {
 	public List<CalendarService> getCalendarEventForPatient(int pId) {
 		Object[] args = { pId };
 		List<CalendarService> response = jdbcTemplate.query(
-				"SELECT * FROM calendar WHERE pId=?",
+				CalendarQueryConstants.GET_CALENDAR_EVENT_BY_PATIENT,
 				new CalendarServiceExtractor(), args);
 		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
-			/*
-			 * for(CalendarService calendarService : response){ Date startDate =
-			 * formatDate(calendarService.getStartDate().toString(),
-			 * calendarService.getStartTime().toString());
-			 * calendarService.setStartDate(startDate); Date endDate =
-			 * formatDate(calendarService.getEndDate().toString(),
-			 * calendarService.getEndTime().toString());
-			 * calendarService.setEndDate(endDate); }
-			 */
 			return response;
 		}
 		return null;
 	}
 
-	/*
-	 * private Date formatDate(String date1, String date2) {
-	 * 
-	 * String startDate = date1 + " " + date2; SimpleDateFormat sdf = new
-	 * SimpleDateFormat("yyyy-M-dd HH:m"); try { return sdf.parse(startDate); }
-	 * catch (ParseException e) { e.printStackTrace(); } return null; }
-	 */
+	@Override
+	public String addCalendarEventForDoctor(CalendarService calendarService) {
+		String response = null;
+		if (!StringUtils.isEmpty(calendarService)) {
+			Object[] args = { calendarService.getCalendarEventId(),
+					calendarService.getCalendarTitle(),
+					calendarService.getStartDate(),
+					calendarService.getEndDate(), calendarService.getdId() };
+			int res = jdbcTemplate.update(
+					CalendarQueryConstants.ADD_CALENDAR_EVENT_BY_DOCTOR, args);
+			if (res > 0) {
+				response = "Successsfully calendar event created..!!!";
+			} else {
+				response = "Please try again later..!!!";
+			}
+		} else {
+			response = "Please try again later..!!!";
+		}
+		return response;
+	}
+
+	@Override
+	public List<CalendarService> getCalendarEventForDoctor(int dId) {
+		Object[] args = { dId };
+		List<CalendarService> response = jdbcTemplate.query(
+				CalendarQueryConstants.GET_CALENDAR_EVENT_BY_DOCTOR,
+				new CalendarServiceExtractor(), args);
+		if (!StringUtils.isEmpty(response) && !response.isEmpty()) {
+			return response;
+		}
+		return null;
+	}
 }
