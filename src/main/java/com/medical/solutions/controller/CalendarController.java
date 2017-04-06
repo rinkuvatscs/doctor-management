@@ -59,7 +59,7 @@ public class CalendarController {
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/updateCalendarForPatient")
 	@ResponseBody
-	public CalendarServiceResponse updateCalendarEventForPatient(
+	public CalendarServiceResponse updateCalendarEvent(
 			@RequestBody CalendarServiceRequest calendarServiceRequest) {
 		CalendarService calendarService = new CalendarService();
 		try {
@@ -73,13 +73,13 @@ public class CalendarController {
 					beansException);
 		}
 		return new CalendarServiceResponse(commonFactory.getCommonService()
-				.updateCalendarEventForPatient(calendarService));
+				.updateCalendarEvent(calendarService));
 	}
 
 	/* /Need to do work / */
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/deleteCalendarforPatient")
 	@ResponseBody
-	public CalendarServiceResponse deleteCalendarEventForPatient(
+	public CalendarServiceResponse deleteCalendarEvent(
 			@RequestBody CalendarServiceRequest calendarServiceRequest) {
 		CalendarService calendarService = new CalendarService();
 		try {
@@ -93,7 +93,7 @@ public class CalendarController {
 					beansException);
 		}
 		return new CalendarServiceResponse(commonFactory.getCommonService()
-				.deleteCalendarEventForPatient(calendarService));
+				.deleteCalendarEvent(calendarService));
 	}
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getCalendarForPatient/{pId}/pId")

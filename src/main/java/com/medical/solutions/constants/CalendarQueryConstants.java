@@ -6,9 +6,9 @@ public interface CalendarQueryConstants {
 
 	String GET_CALENDAR_EVENT_BY_PATIENT = "SELECT * FROM calendar WHERE pId=?";
 
-	String UPDATE_CALENDAR_EVENT_BY_PATIENT = "UPDATE calendar SET calendarTitle = ?, startDate = ?, endDate = ? WHERE calendarId =?";
+	String UPDATE_CALENDAR_EVENT = "UPDATE calendar SET calendarTitle = ?, startDate = ?, endDate = ? WHERE calendarId =?";
 
-	String DELETE_CALENDAR_EVENT_BY_PATIENT = "delete from calendar where calendarId=?";
+	String DELETE_CALENDAR_EVENT = "delete from calendar where calendarId=?";
 
 	String ADD_CALENDAR_EVENT_BY_DOCTOR = "INSERT INTO calendar(calendarEventId, calendarTitle, startDate, endDate, dId) VALUES(?,?,?,?,?)";
 

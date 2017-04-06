@@ -328,7 +328,7 @@ public class CommonDaoImpl implements CommonDao {
 	}
 
 	@Override
-	public String updateCalendarEventForPatient(CalendarService calendarService) {
+	public String updateCalendarEvent(CalendarService calendarService) {
 		String response;
 		if (!StringUtils.isEmpty(calendarService)) {
 			Object[] args = { calendarService.getCalendarTitle(),
@@ -336,7 +336,7 @@ public class CommonDaoImpl implements CommonDao {
 					calendarService.getEndDate(),
 					calendarService.getCalendarId() };
 			int res = jdbcTemplate.update(
-					CalendarQueryConstants.UPDATE_CALENDAR_EVENT_BY_PATIENT,
+					CalendarQueryConstants.UPDATE_CALENDAR_EVENT,
 					args);
 			if (res > 0) {
 				response = "Successfully calendar updated..!!!";
@@ -350,12 +350,12 @@ public class CommonDaoImpl implements CommonDao {
 	}
 
 	@Override
-	public String deleteCalendarEventForPatient(CalendarService calendarService) {
+	public String deleteCalendarEvent(CalendarService calendarService) {
 		String response;
 		if (!StringUtils.isEmpty(calendarService)) {
 			Object[] args = { calendarService.getCalendarId() };
 			int res = jdbcTemplate.update(
-					CalendarQueryConstants.DELETE_CALENDAR_EVENT_BY_PATIENT,
+					CalendarQueryConstants.DELETE_CALENDAR_EVENT,
 					args);
 			if (res > 0) {
 				response = "Successfully calendar deleted..!!!";
