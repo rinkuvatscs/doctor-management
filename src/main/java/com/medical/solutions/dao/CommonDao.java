@@ -47,9 +47,13 @@ public interface CommonDao {
 
 	public String addCalendarEventForPatient(CalendarService calendarService);
 
-	public String updateCalendarEventForPatient(CalendarService calendarService);
+	public String updateCalendarEvent(CalendarService calendarService);
 
-	public String deleteCalendarEventForPatient(CalendarService calendarService);
+	public String deleteCalendarEvent(CalendarService calendarService);
 
 	public List<CalendarService> getCalendarEventForPatient(int pId);
+
+	public String addCalendarEventForDoctor(CalendarService calendarService);
+
+	public List<CalendarService> getCalendarEventForDoctor(int dId);
 }
