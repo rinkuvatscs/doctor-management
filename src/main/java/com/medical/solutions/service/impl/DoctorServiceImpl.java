@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.medical.solutions.dao.DoctorDao;
 import com.medical.solutions.entity.Doctor;
-import com.medical.solutions.entity.DoctorAddress;
 import com.medical.solutions.service.DoctorService;
 import com.medical.solutions.util.ExpertiseParser;
 
@@ -18,11 +17,11 @@ public class DoctorServiceImpl implements DoctorService {
 	@Autowired
 	private DoctorDao doctorDao;
 
-	@Override
+/*	@Override
 	public String addDoctor(Doctor doctor) {
 
 		return doctorDao.addDoctor(doctor);
-	}
+	}*/
 
 	@Override
 	public String deleteDoctor(Integer doctorId) {
@@ -136,17 +135,6 @@ public class DoctorServiceImpl implements DoctorService {
 	public Integer doctorSignUp(Doctor doctor) {
 		
 		return doctorDao.doctorSignUp(doctor);
-	}
-
-	@Override
-	public Boolean checkMobile(String mobile) {
-		return doctorDao.checkMobile(mobile);
-		
-	}
-
-	@Override
-	public Boolean checkAdhaar(String adhaar) {
-		return doctorDao.checkAdhaar(adhaar);
 	}
 
 }

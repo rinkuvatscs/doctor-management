@@ -3,11 +3,10 @@ package com.medical.solutions.service;
 import java.util.List;
 
 import com.medical.solutions.entity.Doctor;
-import com.medical.solutions.entity.DoctorAddress;
 
 public interface DoctorService {
 
-    public String addDoctor(Doctor doctor);
+  //  public String addDoctor(Doctor doctor);
 
     public String deleteDoctor(Integer doctorId);
 
@@ -44,9 +43,4 @@ public interface DoctorService {
     public List<String> getUnApprovedExpertise() ;
     
     public Integer doctorSignUp(Doctor doctor);
-    
-    public Boolean checkMobile(String mobile);
-    
-    public Boolean checkAdhaar(String adhaar);
-    
 }

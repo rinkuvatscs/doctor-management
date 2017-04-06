@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.medical.solutions.entity.Doctor;
-import com.medical.solutions.entity.DoctorAddress;
 import com.medical.solutions.exceptionhandler.BadRequestException;
 import com.medical.solutions.mappers.DoctorMapper;
 import com.medical.solutions.request.DoctorRequest;
@@ -43,32 +42,35 @@ public class DoctorController {
 	@Autowired
 	private DoctorMapper doctorMapper;
 
-	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/", method = RequestMethod.POST)
-	@ResponseStatus(HttpStatus.CREATED)
-	@ApiOperation(value = "add new doctor", notes = "add new doctor")
-	@ApiResponses(value = {
-			@ApiResponse(code = 400, message = "Fields are with validation errors"),
-			@ApiResponse(code = 201, message = "") })
-	public Response addDoctor(
-			@RequestBody com.medical.solutions.request.DoctorRequest doctorRequest) {
-
-		Doctor doctor = new Doctor();
-		try {
-			BeanUtils.copyProperties(doctorRequest, doctor);
-		} catch (BeansException beansException) {
-			throw new BadRequestException(DOCTOR_BADREQEST_MESSAGE,
-					beansException);
-		}
-
-		if (!StringUtils.isEmpty(doctor)
-				&& !StringUtils.isEmpty(doctor.getAadhaarNumber())
-				&& !StringUtils.isEmpty(doctor.getMobile())) {
-			return new Response(doctorService.addDoctor(doctor));
-		} else {
-			throw new BadRequestException(
-					"Doctor Aaddhar Number and Mobile Number should not be blank");
-		}
-	}
+	/*
+	 * @RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces =
+	 * MediaType.APPLICATION_JSON_VALUE, value = "/", method =
+	 * RequestMethod.POST)
+	 * 
+	 * @ResponseStatus(HttpStatus.CREATED)
+	 * 
+	 * @ApiOperation(value = "add new doctor", notes = "add new doctor")
+	 * 
+	 * @ApiResponses(value = {
+	 * 
+	 * @ApiResponse(code = 400, message = "Fields are with validation errors"),
+	 * 
+	 * @ApiResponse(code = 201, message = "") }) public Response addDoctor(
+	 * 
+	 * @RequestBody com.medical.solutions.request.DoctorRequest doctorRequest) {
+	 * 
+	 * Doctor doctor = new Doctor(); try {
+	 * BeanUtils.copyProperties(doctorRequest, doctor); } catch (BeansException
+	 * beansException) { throw new BadRequestException(DOCTOR_BADREQEST_MESSAGE,
+	 * beansException); }
+	 * 
+	 * if (!StringUtils.isEmpty(doctor) &&
+	 * !StringUtils.isEmpty(doctor.getAadhaarNumber()) &&
+	 * !StringUtils.isEmpty(doctor.getMobile())) { return new
+	 * Response(doctorService.addDoctor(doctor)); } else { throw new
+	 * BadRequestException(
+	 * "Doctor Aaddhar Number and Mobile Number should not be blank"); } }
+	 */
 
 	@RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/delete/{id}/id")
 	@ResponseStatus(HttpStatus.OK)
@@ -186,11 +188,9 @@ public class DoctorController {
 		}
 	}
 
-	// TODO Location need to be added getDoctorByName
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/{name}/name")
 	@ResponseBody
 	public List<DoctorResponse> getDoctorByName(@PathVariable String name) {
-
 		if (!StringUtils.isEmpty(name)) {
 			return doctorMapper.mapDoctors(doctorService.getDoctorByName(name));
 		} else {
@@ -326,18 +326,21 @@ public class DoctorController {
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/checkMobile/{mobile}")
 	public Boolean checkMobile(@PathVariable String mobile) {
-		return doctorService.checkMobile(mobile);
+		return doctorService.getDoctorByMobileNumber(mobile).getdId() > 0 ? true
+				: false;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/checkAdhaar/{adhaar}")
 	public Boolean checkAdhaar(@PathVariable String adhaar) {
 		System.out.println(adhaar);
-		return doctorService.checkMobile(adhaar);
+		return doctorService.getDoctorByAdharNumber(adhaar).getdId() > 0 ? true
+				: false;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/checkEmail/{email}")
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/checkEmail/{email:.+}")
 	public Boolean checkEmail(@PathVariable String email) {
 		System.out.println(email);
-		return doctorService.checkMobile(email);
+		return doctorService.getDoctorByEmail(email).getdId() > 0 ? true
+				: false;
 	}
 }
