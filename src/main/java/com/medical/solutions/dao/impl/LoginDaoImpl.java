@@ -13,6 +13,7 @@ import com.medical.solutions.constants.LoginQueryConstants;
 import com.medical.solutions.dao.LoginDao;
 import com.medical.solutions.entity.Login;
 import com.medical.solutions.extractor.LoginExtractor;
+import com.medical.solutions.util.LoginEncrypt;
 
 @Repository
 public class LoginDaoImpl implements LoginDao {
@@ -41,7 +42,7 @@ public class LoginDaoImpl implements LoginDao {
 		}
 		if (!StringUtils.isEmpty(login.getPassword())) {
 			query.append(" and password = ? ");
-			args.add(login.getPassword());
+			args.add(LoginEncrypt.encrypt(login.getPassword(),"medicalsolutions@aaspaasdoctor"));
 		}
 		if (!StringUtils.isEmpty(login.getType())) {
 			query.append(" and type = ? ");

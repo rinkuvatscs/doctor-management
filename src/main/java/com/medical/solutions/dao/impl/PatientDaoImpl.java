@@ -411,9 +411,20 @@ public class PatientDaoImpl implements PatientDao {
 				args.add(patient.getDOB());
 				isDOB = true;
 			}
+			boolean isProfilePath = false; 
+			if (null != patient.getProfilePicPath()) {
+				if (isHomeAddress || isPatientName || isMobile || isAadhaar
+						|| isAge || isEmail || isGender || isAllergies|| isDOB) {
+					query.append(", profilePicPath = ? ");
+				} else {
+					query.append(" profilePicPath = ? ");
+				}
+				args.add(patient.getProfilePicPath());
+				isProfilePath = true;
+			}
 			int update = 0;
 			if (isHomeAddress || isPatientName || isMobile || isAadhaar
-					|| isAge || isEmail || isGender || isAllergies || isDOB) {
+					|| isAge || isEmail || isGender || isAllergies || isDOB || isProfilePath) {
 
 				query.append(", updatedDate = NOW() ");
 				query.append(" WHERE pId = ? ");

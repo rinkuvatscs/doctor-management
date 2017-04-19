@@ -18,6 +18,7 @@ import com.medical.solutions.extractor.ExpertizedExtractor;
 import com.medical.solutions.factory.LoginFactory;
 import com.medical.solutions.location.response.LocationResponse;
 import com.medical.solutions.location.service.LocationService;
+import com.medical.solutions.util.LoginEncrypt;
 
 @Component
 public class DoctorDaoImpl implements DoctorDao {
@@ -523,6 +524,34 @@ public class DoctorDaoImpl implements DoctorDao {
 		return updateRow;
 	}
 
+	private int appendDoctorProfilePicPath(int updateRow, Doctor doctor,
+			StringBuilder query, List<Object> args) {
+		if (null != doctor.getProfilePath()) {
+			if (updateRow > 0) {
+				query.append(", profilePicPath = ? ");
+			} else {
+				query.append(" profilePicPath = ? ");
+			}
+			args.add(doctor.getProfilePath());
+			return updateRow + 1;
+		}
+		return updateRow;
+	}
+
+	private int appendDoctorDOB(int updateRow, Doctor doctor,
+			StringBuilder query, List<Object> args) {
+		if (null != doctor.getDOB()) {
+			if (updateRow > 0) {
+				query.append(", dob = ? ");
+			} else {
+				query.append(" dob = ? ");
+			}
+			args.add(doctor.getDOB());
+			return updateRow + 1;
+		}
+		return updateRow;
+	}
+
 	@Override
 	public String updateDoctor(Doctor doctor) {
 
@@ -552,7 +581,10 @@ public class DoctorDaoImpl implements DoctorDao {
 			updateRow = appendDoctorEmail(updateRow, doctor, query, args);
 			updateRow = appendDoctorGender(updateRow, doctor, query, args);
 			updateRow = appendDoctorDesc(updateRow, doctor, query, args);
-			appendDoctorTiming(updateRow, doctor, query, args);
+			updateRow = appendDoctorTiming(updateRow, doctor, query, args);
+			updateRow = appendDoctorProfilePicPath(updateRow, doctor, query,
+					args);
+			appendDoctorDOB(updateRow, doctor, query, args);
 
 			query.append("  WHERE dId = ? ");
 			args.add(doctor.getdId());
@@ -751,13 +783,11 @@ public class DoctorDaoImpl implements DoctorDao {
 		}
 	}
 
-/*	private int validateNumber(String number) {
-		try {
-			return Integer.parseInt(number);
-		} catch (NumberFormatException numberFormatException) {
-			return 0;
-		}
-	}*/
+	/*
+	 * private int validateNumber(String number) { try { return
+	 * Integer.parseInt(number); } catch (NumberFormatException
+	 * numberFormatException) { return 0; } }
+	 */
 
 	@Override
 	public List<String> getAllExpertized() {
@@ -838,7 +868,7 @@ public class DoctorDaoImpl implements DoctorDao {
 			if (!StringUtils.isEmpty(doctorsList) && !doctorsList.isEmpty()) {
 				args = new ArrayList<>();
 				args.add(doctor.getMobile());
-				args.add(doctor.getPassword());
+				args.add(LoginEncrypt.encrypt(doctor.getPassword(),"medicalsolutions@aaspaasdoctor"));
 				args.add(doctor.getAadhaarNumber());
 				args.add(doctor.getEmail());
 				args.add("d");

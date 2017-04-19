@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 
 import com.medical.solutions.entity.Patient;
@@ -13,11 +12,10 @@ import com.medical.solutions.entity.Patient;
 public class PatientExtractor implements ResultSetExtractor<List<Patient>> {
 
 	@Override
-	public List<Patient> extractData(ResultSet rs) throws SQLException,
-			DataAccessException {
+	public List<Patient> extractData(ResultSet rs) throws SQLException {
 
 		List<Patient> patients = new ArrayList<Patient>();
-		Patient patient = null;
+		Patient patient;
 		while (rs.next()) {
 			patient = new Patient();
 			patient.setpId(rs.getInt("pId"));
@@ -28,6 +26,7 @@ public class PatientExtractor implements ResultSetExtractor<List<Patient>> {
 			patient.setGender(rs.getString("gender"));
 			patient.setAllergies(rs.getString("allergies"));
 			patient.setDOB(rs.getDate("dob"));
+			patient.setProfilePicPath(rs.getString("profilePicPath"));
 			patients.add(patient);
 
 		}

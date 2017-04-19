@@ -15,7 +15,6 @@ public class DoctorResponse {
 	private String clinicAddress;
 	private String email;
 	private String gender;
-	private int age;
 	private String desc;
 	private String profilePath;
 
@@ -50,14 +49,6 @@ public class DoctorResponse {
 
 	public void setGender(String gender) {
 		this.gender = gender;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
 	}
 
 	public Integer getDId() {
