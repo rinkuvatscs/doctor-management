@@ -45,6 +45,7 @@ public class DoctorExtractor implements ResultSetExtractor<List<Doctor>> {
 			doctor.setState(rs.getString("state"));
 			doctor.setDesc(rs.getString("desc"));
 			doctor.setProfilePath(rs.getString("profilePicPath"));
+			doctor.setDOB(rs.getDate("dob"));
 			doctorList.add(doctor);
 		}
 		return doctorList;
